@@ -22,16 +22,12 @@ import java.util.Observer;
 
 import javax.swing.JPanel;
 
+import static gameframework.game.ConstantValues.*;
+
 /**
  * Create a basic game application with menus and displays of lives and score
  */
 public class GameDefaultImpl implements Game, Observer {
-	protected static final int NB_ROWS = 31;
-	protected static final int NB_COLUMNS = 28;
-	protected static final int SPRITE_SIZE = 16;
-	public static final int MAX_NUMBER_OF_PLAYER = 4;
-	public static final int NUMBER_OF_LIVES = 1;
-
 	protected CanvasDefaultImpl defaultCanvas = null;
 	protected IntegerObservable score[] = new IntegerObservable[MAX_NUMBER_OF_PLAYER];
 	protected IntegerObservable life[] = new IntegerObservable[MAX_NUMBER_OF_PLAYER];
