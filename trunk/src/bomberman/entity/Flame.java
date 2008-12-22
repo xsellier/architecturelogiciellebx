@@ -9,16 +9,15 @@ import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
-
 import static gameframework.game.ConstantValues.*;
 
-public class SuperPacgum implements Drawable, GameEntity, Overlappable {
+public class Flame implements Drawable, GameEntity, Overlappable {
 	protected static DrawableImage image = null;
 	protected Point position;
 
-	public SuperPacgum(Canvas defaultCanvas, Point pos) {
+	public Flame(Canvas defaultCanvas, Point pos) {
 		if (image == null) {
-			image = new DrawableImage("images/superpacgum.gif", defaultCanvas);
+			image = new DrawableImage("images/flame.gif", defaultCanvas);
 		}
 		position = pos;
 	}
@@ -29,12 +28,12 @@ public class SuperPacgum implements Drawable, GameEntity, Overlappable {
 
 	public void draw(Graphics g) {
 		g.drawImage(image.getImage(), (int) getPosition().getX(),
-				(int) getPosition().getY(), SPRITE_SIZE, SPRITE_SIZE, null);
+				(int) getPosition().getY(), SPRITE_SIZE_X, SPRITE_SIZE_Y, null);
 
 	}
 
 	public Rectangle getBoundingBox() {
 		return (new Rectangle((int) position.getX(), (int) position.getY(),
-				SPRITE_SIZE, SPRITE_SIZE));
+				SPRITE_SIZE_X, SPRITE_SIZE_Y));
 	}
 }

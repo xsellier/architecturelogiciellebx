@@ -67,7 +67,8 @@ public class GameDefaultImpl implements Game, Observer {
 		Container c = createStatusBar();
 
 		defaultCanvas = new CanvasDefaultImpl();
-		defaultCanvas.setSize(SPRITE_SIZE * NB_COLUMNS, SPRITE_SIZE * NB_ROWS);
+		// Modification to SPRITE_SIZE_X and SPRITE_SIZE_Y
+		defaultCanvas.setSize(SPRITE_SIZE_X * NB_COLUMNS, SPRITE_SIZE_Y * NB_ROWS);
 		f.add(defaultCanvas);
 		f.add(c, BorderLayout.NORTH);
 		f.pack();
