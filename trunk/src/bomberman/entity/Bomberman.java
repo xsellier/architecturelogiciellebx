@@ -34,7 +34,7 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 
 	public Bomberman(Canvas defaultCanvas) {
 		if (image == null) {
-			image = new DrawableImage("images/bombermanblack.png",
+			image = new DrawableImage("images/bombermanBlack.png",
 					defaultCanvas);
 		}
 	}

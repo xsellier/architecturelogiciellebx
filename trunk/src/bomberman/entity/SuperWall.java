@@ -17,7 +17,7 @@ public class SuperWall implements Drawable, MoveBlocker, GameEntity {
 
 	public SuperWall(Canvas defaultCanvas, int xx, int yy) {
 		if (image == null) {
-			image = new DrawableImage("images/superwall.gif", defaultCanvas);
+			image = new DrawableImage("images/superWall.gif", defaultCanvas);
 		}
 		x = xx;
 		y = yy;
