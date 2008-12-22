@@ -11,13 +11,13 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import static gameframework.game.ConstantValues.*;
 
-public class Wall implements Drawable, MoveBlocker, GameEntity {
+public class SuperWall implements Drawable, MoveBlocker, GameEntity {
 	protected static DrawableImage image = null;
 	int x, y;
 
-	public Wall(Canvas defaultCanvas, int xx, int yy) {
+	public SuperWall(Canvas defaultCanvas, int xx, int yy) {
 		if (image == null) {
-			image = new DrawableImage("images/wall.gif", defaultCanvas);
+			image = new DrawableImage("images/superwall.gif", defaultCanvas);
 		}
 		x = xx;
 		y = yy;

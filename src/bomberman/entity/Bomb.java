@@ -12,13 +12,13 @@ import java.awt.Rectangle;
 
 import static gameframework.game.ConstantValues.*;
 
-public class Pacgum implements Drawable, GameEntity, Overlappable {
+public class Bomb implements Drawable, GameEntity, Overlappable {
 	protected static DrawableImage image = null;
 	protected Point position;
 
-	public Pacgum(Canvas defaultCanvas, Point pos) {
+	public Bomb(Canvas defaultCanvas, Point pos) {
 		if (image == null) {
-			image = new DrawableImage("images/pacgum.gif", defaultCanvas);
+			image = new DrawableImage("images/bomb.gif", defaultCanvas);
 		}
 		position = pos;
 	}

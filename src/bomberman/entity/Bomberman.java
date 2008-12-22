@@ -22,6 +22,7 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 	protected boolean movable = true;
 	protected boolean vulnerable = false;
 	protected int vulnerableTimer = 0;
+	private static int NB_SPRITE = 3;
 
 	public void setInvulnerable(int timer) {
 		vulnerableTimer = timer;
@@ -33,7 +34,8 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 
 	public Bomberman(Canvas defaultCanvas) {
 		if (image == null) {
-			image = new DrawableImage("images/pac1.gif", defaultCanvas);
+			image = new DrawableImage("images/bombermanblack.png",
+					defaultCanvas);
 		}
 	}
 
@@ -41,25 +43,32 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 		Point tmp = getSpeedVector().getDir();
 		movable = true;
 		if (tmp.getX() == 1) {
-			spriteType = (isVulnerable() ? 0 : 4);
+			spriteType = (isVulnerable() ? 5 : 4);
+			spriteNumber += 6;
 		} else if (tmp.getX() == -1) {
-			spriteType = (isVulnerable() ? 1 : 5);
+			spriteType = (isVulnerable() ? 4 : 5);
+			spriteNumber += 6;
 		} else if (tmp.getY() == 1) {
-			spriteType = (isVulnerable() ? 3 : 7);
+			spriteType = (isVulnerable() ? 4 : 7);
 		} else if (tmp.getY() == -1) {
-			spriteType = (isVulnerable() ? 2 : 6);
+			spriteType = (isVulnerable() ? 5 : 6);
 		} else {
-			spriteType = 9;
+			spriteType = 4;
 			spriteNumber = 0;
 			movable = false;
 		}
 
-		g.drawImage(image.getImage(), (int) getPosition().getX(),
-				(int) getPosition().getY(), (int) getPosition().getX()
-						+ SPRITE_SIZE,
-				(int) getPosition().getY() + SPRITE_SIZE, spriteNumber * 32,
-				spriteType * 32, (spriteNumber + 1) * 32,
-				(spriteType + 1) * 32, null);
+		/* 3 : Magic number which set center the bomberman */
+		g.drawImage(image.getImage(), 
+				(int) getPosition().getX() + 3,
+				(int) getPosition().getY() + 3,  
+				(int) getPosition().getX() + SPRITE_SIZE_X + 3,
+				(int) getPosition().getY() + SPRITE_SIZE_Y + 3, 
+				spriteNumber * SPRITE_SIZE_X,
+				spriteType * SPRITE_SIZE_Y, 
+				(spriteNumber + 1) * SPRITE_SIZE_X,
+				(spriteType + 1) * SPRITE_SIZE_Y, 
+				null);
 
 	}
 
@@ -67,7 +76,7 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 	public void oneStepMoveHandler() {
 		if (movable) {
 			spriteNumber++;
-			spriteNumber = spriteNumber % 6;
+			spriteNumber = spriteNumber % NB_SPRITE;
 			if (!isVulnerable()) {
 				vulnerableTimer--;
 			}
@@ -75,6 +84,6 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 	}
 
 	public Rectangle getBoundingBox() {
-		return (new Rectangle(0, 0, SPRITE_SIZE, SPRITE_SIZE));
+		return (new Rectangle(0, 0, SPRITE_SIZE_X, SPRITE_SIZE_Y));
 	}
 }

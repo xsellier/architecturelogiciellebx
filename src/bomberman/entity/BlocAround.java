@@ -9,15 +9,16 @@ import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
+
 import static gameframework.game.ConstantValues.*;
 
-public class Wall implements Drawable, MoveBlocker, GameEntity {
+public class BlocAround implements Drawable, MoveBlocker, GameEntity {
 	protected static DrawableImage image = null;
 	int x, y;
 
-	public Wall(Canvas defaultCanvas, int xx, int yy) {
+	public BlocAround(Canvas defaultCanvas, int xx, int yy) {
 		if (image == null) {
-			image = new DrawableImage("images/wall.gif", defaultCanvas);
+			image = new DrawableImage("images/blocaround.gif", defaultCanvas);
 		}
 		x = xx;
 		y = yy;
