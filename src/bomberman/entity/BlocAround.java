@@ -18,7 +18,7 @@ public class BlocAround implements Drawable, MoveBlocker, GameEntity {
 
 	public BlocAround(Canvas defaultCanvas, int xx, int yy) {
 		if (image == null) {
-			image = new DrawableImage("images/blocaround.gif", defaultCanvas);
+			image = new DrawableImage("images/blocAround.gif", defaultCanvas);
 		}
 		x = xx;
 		y = yy;
