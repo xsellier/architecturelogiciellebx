@@ -58,12 +58,12 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 			movable = false;
 		}
 
-		/* 3 : Magic number which set center the bomberman */
+		/* 3, 5 : Magic number which set center the bomberman */
 		g.drawImage(image.getImage(), 
 				(int) getPosition().getX() + 3,
-				(int) getPosition().getY() + 3,  
+				(int) getPosition().getY() + 5,  
 				(int) getPosition().getX() + SPRITE_SIZE_X + 3,
-				(int) getPosition().getY() + SPRITE_SIZE_Y + 3, 
+				(int) getPosition().getY() + SPRITE_SIZE_Y + 5, 
 				spriteNumber * SPRITE_SIZE_X,
 				spriteType * SPRITE_SIZE_Y, 
 				(spriteNumber + 1) * SPRITE_SIZE_X,
@@ -83,7 +83,8 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 		}
 	}
 
+	// 3 : set collision problems
 	public Rectangle getBoundingBox() {
-		return (new Rectangle(0, 0, SPRITE_SIZE_X, SPRITE_SIZE_Y));
+		return (new Rectangle(0, 0, SPRITE_SIZE_X - 3, SPRITE_SIZE_Y));
 	}
 }
