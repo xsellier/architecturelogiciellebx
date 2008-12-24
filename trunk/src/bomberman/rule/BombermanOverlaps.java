@@ -17,6 +17,8 @@ import pacman.entity.Pacgum;
 import pacman.entity.Pacman;
 import pacman.entity.SuperPacgum;
 import pacman.entity.TeleportPairOfPoints;
+import bomberman.entity.Bomb;
+import bomberman.entity.Bomberman;
 
 
 public class BombermanOverlaps extends OverlapRuleApplierDefaultImpl {
@@ -113,8 +115,8 @@ public class BombermanOverlaps extends OverlapRuleApplierDefaultImpl {
 		}
 	}
 
-	public void overlapRule(Pacman p, Pacgum pg) {
+	public void overlapRule(Bomberman bomber, Bomb b) {
 		score.setValue(score.getValue() + 1);
- 		universe.removeGameEntity(pg);
+ 		universe.removeGameEntity(b);
 	}
 }
