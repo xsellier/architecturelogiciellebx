@@ -1,0 +1,80 @@
+[ImageSequence]
+//0
+Graphics/Sprite/Player/Petit Maigre/Die1.gif|2|13
+Graphics/Sprite/Player/Petit Maigre/Die2.gif|2|13
+Graphics/Sprite/Player/Petit Maigre/Die3.gif|2|13
+Graphics/Sprite/Player/Petit Maigre/Die4.gif|2|13
+Graphics/Sprite/Player/Petit Maigre/Die5.gif|2|13
+
+//5
+Graphics/Sprite/Player/Petit Maigre/Idle1.gif|4|18
+Graphics/Sprite/Player/Petit Maigre/Idle2.gif|4|18
+Graphics/Sprite/Player/Petit Maigre/Idle3.gif|4|18
+Graphics/Sprite/Player/Petit Maigre/Idle4.gif|4|18
+Graphics/Sprite/Player/Petit Maigre/Idle5.gif|4|18
+Graphics/Sprite/Player/Petit Maigre/Idle6.gif|4|18
+Graphics/Sprite/Player/Petit Maigre/Idle7.gif|4|18
+Graphics/Sprite/Player/Petit Maigre/Idle8.gif|4|18
+
+//13 [DOWN]
+Graphics/Sprite/Player/Petit Maigre/Down1.gif|-1|15
+Graphics/Sprite/Player/Petit Maigre/Down2.gif|-1|15
+Graphics/Sprite/Player/Petit Maigre/Down3.gif|-1|15
+Graphics/Sprite/Player/Petit Maigre/Down4.gif|-1|15
+Graphics/Sprite/Player/Petit Maigre/Down5.gif|-1|15
+Graphics/Sprite/Player/Petit Maigre/Down6.gif|-1|15
+Graphics/Sprite/Player/Petit Maigre/Down7.gif|-1|15
+Graphics/Sprite/Player/Petit Maigre/Down8.gif|-1|15
+Graphics/Sprite/Player/Petit Maigre/Down9.gif|-1|15
+Graphics/Sprite/Player/Petit Maigre/Down10.gif|-1|15
+
+//23 [UP]
+Graphics/Sprite/Player/Petit Maigre/Up1.gif|-1|16
+Graphics/Sprite/Player/Petit Maigre/Up2.gif|-1|16
+Graphics/Sprite/Player/Petit Maigre/Up3.gif|-1|16
+Graphics/Sprite/Player/Petit Maigre/Up4.gif|-1|16
+Graphics/Sprite/Player/Petit Maigre/Up5.gif|-1|16
+Graphics/Sprite/Player/Petit Maigre/Up6.gif|-1|16
+Graphics/Sprite/Player/Petit Maigre/Up7.gif|-1|16
+Graphics/Sprite/Player/Petit Maigre/Up8.gif|-1|16
+Graphics/Sprite/Player/Petit Maigre/Up9.gif|-1|16
+Graphics/Sprite/Player/Petit Maigre/Up10.gif|-1|16
+
+//33 [LEFT]
+Graphics/Sprite/Player/Petit Maigre/Left1.gif|-1|16
+Graphics/Sprite/Player/Petit Maigre/Left2.gif|-1|16
+Graphics/Sprite/Player/Petit Maigre/Left3.gif|-1|16
+Graphics/Sprite/Player/Petit Maigre/Left4.gif|-1|16
+Graphics/Sprite/Player/Petit Maigre/Left5.gif|-1|16
+Graphics/Sprite/Player/Petit Maigre/Left6.gif|-1|16
+Graphics/Sprite/Player/Petit Maigre/Left7.gif|-1|16
+Graphics/Sprite/Player/Petit Maigre/Left8.gif|-1|16
+
+//41 [RIGHT]
+Graphics/Sprite/Player/Petit Maigre/Right1.gif|-1|16
+Graphics/Sprite/Player/Petit Maigre/Right2.gif|-1|16
+Graphics/Sprite/Player/Petit Maigre/Right3.gif|-1|16
+Graphics/Sprite/Player/Petit Maigre/Right4.gif|-1|16
+Graphics/Sprite/Player/Petit Maigre/Right5.gif|-1|16
+Graphics/Sprite/Player/Petit Maigre/Right6.gif|-1|16
+Graphics/Sprite/Player/Petit Maigre/Right7.gif|-1|16
+Graphics/Sprite/Player/Petit Maigre/Right8.gif|-1|16
+
+// 49
+Graphics/Sprite/Player/Petit Maigre/Invisible.gif|0|0
+
+// 50
+Graphics/Sprite/Player/Petit Maigre/Win1.gif|-1|15
+Graphics/Sprite/Player/Petit Maigre/Win2.gif|-1|15
+Graphics/Sprite/Player/Petit Maigre/Win3.gif|-1|15
+Graphics/Sprite/Player/Petit Maigre/Win4.gif|-1|15
+
+// 54
+Graphics/Sprite/Player/Petit Maigre/Lose1.gif|0|16
+Graphics/Sprite/Player/Petit Maigre/Lose2.gif|0|16
+Graphics/Sprite/Player/Petit Maigre/Lose3.gif|0|16
+Graphics/Sprite/Player/Petit Maigre/Lose4.gif|0|16
+
+// 58
+Graphics/Sprite/Player/Petit Maigre/Portrait.gif|0|0
+[/ImageSequence]
