@@ -1,0 +1,106 @@
+[DIE]
+looping
+0|2
+1|2
+2|2
+3|2
+4|2
+[/DIE]
+
+[IDLE]
+start_image 5
+0|2
+1|2
+2|2
+3|2
+4|2
+reverse
+5|3
+6|3
+7|3
+[/IDLE]
+
+[DOWN]
+start_image 13
+looping
+0|2
+1|2
+2|2
+3|2
+4|2
+5|2
+6|2
+7|2
+[/DOWN]
+
+[UP]
+start_image 23
+looping
+0|2
+1|2
+2|2
+3|2
+4|2
+5|2
+6|2
+7|2
+8|2
+9|2
+[/UP]
+
+[LEFT]
+start_image 33
+0|2
+looping
+1|2
+2|2
+3|2
+4|2
+5|2
+6|2
+7|2
+[/LEFT]
+
+[RIGHT]
+start_image 41
+0|2
+looping
+1|2
+2|2
+3|2
+4|2
+5|2
+6|2
+7|2
+[/RIGHT]
+
+[INVISIBLE]
+start_image 49
+looping
+0|1
+[/INVISIBLE]
+
+[WIN]
+start_image 50
+looping
+0|2
+1|2
+2|2
+3|2
+[/WIN]
+
+[KO]
+start_image 54
+0|2
+1|2
+2|2
+3|2
+2|2
+1|2
+0|2
+[/KO]
+
+[PORTRAIT]
+start_image 58
+0|1
+[/PORTRAIT]

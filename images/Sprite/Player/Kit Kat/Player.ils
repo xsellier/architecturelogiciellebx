@@ -1,0 +1,67 @@
+[ImageSequence]
+// 0
+Graphics/Sprite/Player/Kit Kat/Die1.gif|4|8
+Graphics/Sprite/Player/Kit Kat/Die2.gif|4|8
+Graphics/Sprite/Player/Kit Kat/Die3.gif|4|8
+Graphics/Sprite/Player/Kit Kat/Die4.gif|4|8
+Graphics/Sprite/Player/Kit Kat/Die5.gif|4|8
+
+// 5
+Graphics/Sprite/Player/Kit Kat/Idle1.gif|0|8
+Graphics/Sprite/Player/Kit Kat/Idle2.gif|0|8
+Graphics/Sprite/Player/Kit Kat/Idle3.gif|0|8
+Graphics/Sprite/Player/Kit Kat/Idle4.gif|0|8
+
+// 9
+Graphics/Sprite/Player/Kit Kat/Down1.gif|-1|8
+Graphics/Sprite/Player/Kit Kat/Down2.gif|-1|8
+Graphics/Sprite/Player/Kit Kat/Down3.gif|-1|8
+Graphics/Sprite/Player/Kit Kat/Down4.gif|-1|8
+Graphics/Sprite/Player/Kit Kat/Down5.gif|-1|8
+Graphics/Sprite/Player/Kit Kat/Down6.gif|-1|8
+Graphics/Sprite/Player/Kit Kat/Down7.gif|-1|8
+
+// 16
+Graphics/Sprite/Player/Kit Kat/Up1.gif|0|8
+Graphics/Sprite/Player/Kit Kat/Up2.gif|0|8
+Graphics/Sprite/Player/Kit Kat/Up3.gif|0|8
+Graphics/Sprite/Player/Kit Kat/Up4.gif|0|8
+Graphics/Sprite/Player/Kit Kat/Up5.gif|0|8
+Graphics/Sprite/Player/Kit Kat/Up6.gif|0|8
+Graphics/Sprite/Player/Kit Kat/Up7.gif|0|8
+
+// 23 
+Graphics/Sprite/Player/Kit Kat/Left1.gif|4|8
+Graphics/Sprite/Player/Kit Kat/Left2.gif|4|8
+Graphics/Sprite/Player/Kit Kat/Left3.gif|4|8
+Graphics/Sprite/Player/Kit Kat/Left4.gif|4|8
+Graphics/Sprite/Player/Kit Kat/Left5.gif|4|8
+Graphics/Sprite/Player/Kit Kat/Left6.gif|4|8
+
+// 29
+Graphics/Sprite/Player/Kit Kat/Right1.gif|4|8
+Graphics/Sprite/Player/Kit Kat/Right2.gif|4|8
+Graphics/Sprite/Player/Kit Kat/Right3.gif|4|8
+Graphics/Sprite/Player/Kit Kat/Right4.gif|4|8
+Graphics/Sprite/Player/Kit Kat/Right5.gif|4|8
+Graphics/Sprite/Player/Kit Kat/Right6.gif|4|8
+
+// 35
+Graphics/Sprite/Player/Kit Kat/Invisible.gif|0|0
+
+// 36
+Graphics/Sprite/Player/Kit Kat/Win1.gif|-1|8
+Graphics/Sprite/Player/Kit Kat/Win2.gif|-1|8
+Graphics/Sprite/Player/Kit Kat/Win3.gif|-1|8
+Graphics/Sprite/Player/Kit Kat/Win4.gif|-1|8
+Graphics/Sprite/Player/Kit Kat/Win5.gif|-1|8
+
+// 41
+Graphics/Sprite/Player/Kit Kat/Lose1.gif|0|0
+Graphics/Sprite/Player/Kit Kat/Lose2.gif|0|0
+Graphics/Sprite/Player/Kit Kat/Lose3.gif|0|0
+Graphics/Sprite/Player/Kit Kat/Lose4.gif|0|0
+
+// 45
+Graphics/Sprite/Player/Kit Kat/Portrait.gif|0|0
+[/ImageSequence]
