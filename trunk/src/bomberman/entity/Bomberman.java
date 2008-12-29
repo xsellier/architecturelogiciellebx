@@ -7,6 +7,7 @@ import gameframework.base.DrawableImage;
 import gameframework.base.Overlappable;
 import gameframework.game.GameEntity;
 import gameframework.game.GameMovable;
+import gameframework.game.GameUniverse;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
@@ -22,11 +23,13 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 	protected String spriteType;
 	private int spriteMax;
 	protected boolean movable = true;
+	private GameUniverse universe;
 
 	private static HashMap<String, ArrayList<DrawableImage>> imgMap = null;
 
-	public Bomberman(Canvas defaultCanvas) {
+	public Bomberman(Canvas defaultCanvas, GameUniverse universe) {
 		this.defaultCanvas = defaultCanvas;
+		this.universe = universe;
 
 		if (imgMap == null) {
 			imgMap = new HashMap<String, ArrayList<DrawableImage>>();
@@ -80,15 +83,15 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 			spriteType = "Up";
 		} else {
 			spriteType = "Idle";
-			spriteNumber = 0;
 			movable = false;
 		}
 
 		spriteMax = imgMap.get(spriteType).size();
-		
-		g.drawImage(imgMap.get(spriteType).get(spriteNumber).getImage(),
-				(int) getPosition().getX(), (int) getPosition().getY(),
-				SPRITE_SIZE_X, SPRITE_SIZE_Y, null);
+		if (spriteNumber < spriteMax) {
+			g.drawImage(imgMap.get(spriteType).get(spriteNumber).getImage(),
+					(int) getPosition().getX(), (int) getPosition().getY(),
+					SPRITE_SIZE_X, SPRITE_SIZE_Y, null);
+		}
 
 	}
 
@@ -102,5 +105,14 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 
 	public Rectangle getBoundingBox() {
 		return (new Rectangle(0, 0, SPRITE_SIZE_X, SPRITE_SIZE_Y));
+	}
+
+	public void putBomb() {
+		int x = getPosition().x;
+		int y = getPosition().y;
+		System.out.println("Ajout de bomb sur la carte à la position (" + x
+				+ ", " + y + ")");
+		universe.addGameEntity(new Bomb(defaultCanvas, new Point(x, y),
+				universe));
 	}
 }

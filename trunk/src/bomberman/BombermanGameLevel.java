@@ -20,14 +20,14 @@ import gameframework.game.OverlapRuleApplier;
 import java.awt.Canvas;
 import java.awt.Point;
 
-import pacman.rule.PacmanMoveBlockers;
-import pacman.rule.PacmanOverlaps;
 import bomberman.entity.BlocAround;
 import bomberman.entity.BombItem;
 import bomberman.entity.Bomberman;
 import bomberman.entity.FireItem;
 import bomberman.entity.SuperWall;
 import bomberman.entity.Wall;
+import bomberman.rule.BombermanMoveBlockers;
+import bomberman.rule.BombermanOverlaps;
 
 public class BombermanGameLevel extends GameLevelDefaultImpl {
 	Canvas canvas;
@@ -69,13 +69,13 @@ public class BombermanGameLevel extends GameLevelDefaultImpl {
 	@Override
 	protected void init() {
 		OverlapProcessor overlapProcessor = new OverlapProcessorDefaultImpl();
-		OverlapRuleApplier overlapRules = new PacmanOverlaps(new Point(
+		OverlapRuleApplier overlapRules = new BombermanOverlaps(new Point(
 				14 * SPRITE_SIZE_X, 17 * SPRITE_SIZE_Y), new Point(
 				14 * SPRITE_SIZE_X, 15 * SPRITE_SIZE_Y), life[0], score[0]);
 		overlapProcessor.setOverlapRules(overlapRules);
 
 		MoveBlockerChecker moveBlockerChecker = new MoveBlockerCheckerDefaultImpl();
-		moveBlockerChecker.setMoveBlockerRules(new PacmanMoveBlockers());
+		moveBlockerChecker.setMoveBlockerRules(new BombermanMoveBlockers());
 
 		universe = new GameUniverseDefaultImpl(moveBlockerChecker,
 				overlapProcessor);
@@ -112,9 +112,9 @@ public class BombermanGameLevel extends GameLevelDefaultImpl {
 		}
 
 		// Pacman creation and universe loading
-		Bomberman myPac = new Bomberman(canvas);
+		Bomberman myPac = new Bomberman(canvas, universe);
 		GameMovableDriverDefaultImpl pacDriver = new GameMovableDriverDefaultImpl();
-		MoveStrategyKeyboardExt keyStr = new MoveStrategyKeyboardExt(canvas, universe, myPac);
+		MoveStrategyKeyboardExt keyStr = new MoveStrategyKeyboardExt(myPac);
 		pacDriver.setStrategy(keyStr);
 		pacDriver.setmoveBlockerChecker(moveBlockerChecker);
 		canvas.addKeyListener(keyStr);

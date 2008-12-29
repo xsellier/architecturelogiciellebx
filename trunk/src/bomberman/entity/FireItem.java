@@ -1,27 +1,23 @@
 package bomberman.entity;
 
-import static gameframework.game.ConstantValues.*;
+import static gameframework.game.ConstantValues.SPRITE_SIZE;
+import static gameframework.game.ConstantValues.SPRITE_SIZE_X;
+import static gameframework.game.ConstantValues.SPRITE_SIZE_Y;
 import gameframework.base.Drawable;
 import gameframework.base.DrawableImage;
 import gameframework.base.Overlappable;
 import gameframework.game.GameEntity;
-import gameframework.game.GameUniverse;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class FireItem implements Drawable, GameEntity, Overlappable {
 	protected static DrawableImage image = null;
 	
 	protected Point position;
 
-	private GameUniverse universe;
-	private Timer timer;
-	
 	public FireItem(Canvas defaultCanvas, Point pos) {
 		if (image == null) {
 			image = new DrawableImage("images/Item/Flame.gif", defaultCanvas);
