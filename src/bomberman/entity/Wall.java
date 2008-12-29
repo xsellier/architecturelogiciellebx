@@ -32,6 +32,6 @@ public class Wall implements Drawable, MoveBlocker, GameEntity {
 	}
 
 	public Rectangle getBoundingBox() {
-		return (new Rectangle(x, y, SPRITE_SIZE, SPRITE_SIZE));
+		return (new Rectangle(x, y, SPRITE_SIZE_X, SPRITE_SIZE_Y));
 	}
 }

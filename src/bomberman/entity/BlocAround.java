@@ -18,7 +18,7 @@ public class BlocAround implements Drawable, MoveBlocker, GameEntity {
 
 	public BlocAround(Canvas defaultCanvas, int xx, int yy) {
 		if (image == null) {
-			image = new DrawableImage("images/blocAround.gif", defaultCanvas);
+			image = new DrawableImage("images/blocaround.gif", defaultCanvas);
 		}
 		x = xx;
 		y = yy;
@@ -33,6 +33,6 @@ public class BlocAround implements Drawable, MoveBlocker, GameEntity {
 	}
 
 	public Rectangle getBoundingBox() {
-		return (new Rectangle(x, y, SPRITE_SIZE, SPRITE_SIZE));
+		return (new Rectangle(x, y, SPRITE_SIZE_X, SPRITE_SIZE_Y));
 	}
 }

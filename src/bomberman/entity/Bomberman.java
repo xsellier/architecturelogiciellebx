@@ -1,8 +1,10 @@
 package bomberman.entity;
 
-import gameframework.base.Overlappable;
+import static gameframework.game.ConstantValues.SPRITE_SIZE_X;
+import static gameframework.game.ConstantValues.SPRITE_SIZE_Y;
 import gameframework.base.Drawable;
 import gameframework.base.DrawableImage;
+import gameframework.base.Overlappable;
 import gameframework.game.GameEntity;
 import gameframework.game.GameMovable;
 
@@ -10,65 +12,83 @@ import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
-
-import static gameframework.game.ConstantValues.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Bomberman extends GameMovable implements Drawable, GameEntity,
 		Overlappable {
-	protected static DrawableImage image = null;
 	protected Canvas defaultCanvas;
 	protected int spriteNumber = 0;
-	protected int spriteType = 0;
+	protected String spriteType;
+	private int spriteMax;
 	protected boolean movable = true;
-	protected boolean vulnerable = false;
-	protected int vulnerableTimer = 0;
-	private static int NB_SPRITE = 3;
 
-	public void setInvulnerable(int timer) {
-		vulnerableTimer = timer;
-	}
-
-	public boolean isVulnerable() {
-		return (vulnerableTimer <= 0);
-	}
+	private static HashMap<String, ArrayList<DrawableImage>> imgMap = null;
 
 	public Bomberman(Canvas defaultCanvas) {
-		if (image == null) {
-			image = new DrawableImage("images/bombermanBlack.png",
-					defaultCanvas);
+		this.defaultCanvas = defaultCanvas;
+
+		if (imgMap == null) {
+			imgMap = new HashMap<String, ArrayList<DrawableImage>>();
+			loadImage();
 		}
+	}
+
+	private void loadImage() {
+		ArrayList<DrawableImage> imgListLeft = loadImg(
+				"images/Sprite/Player/Bomberman/", "Left", "gif", 10);
+		ArrayList<DrawableImage> imgListRight = loadImg(
+				"images/Sprite/Player/Bomberman/", "Right", "gif", 10);
+		ArrayList<DrawableImage> imgListDown = loadImg(
+				"images/Sprite/Player/Bomberman/", "Down", "gif", 8);
+		ArrayList<DrawableImage> imgListUp = loadImg(
+				"images/Sprite/Player/Bomberman/", "Up", "gif", 10);
+		ArrayList<DrawableImage> imgListIdle = loadImg(
+				"images/Sprite/Player/Bomberman/", "Idle", "gif", 6);
+
+		imgMap.put("Left", imgListLeft);
+		imgMap.put("Right", imgListRight);
+		imgMap.put("Down", imgListDown);
+		imgMap.put("Up", imgListUp);
+		imgMap.put("Idle", imgListIdle);
+
+	}
+
+	private ArrayList<DrawableImage> loadImg(String path, String name,
+			String extension, int number) {
+		ArrayList<DrawableImage> result = new ArrayList<DrawableImage>(number);
+
+		for (int i = 0; i < number; i++) {
+			String s = path + name + i + "." + extension;
+			DrawableImage tmp = new DrawableImage(s, defaultCanvas);
+			result.add(tmp);
+		}
+
+		return result;
 	}
 
 	public void draw(Graphics g) {
 		Point tmp = getSpeedVector().getDir();
 		movable = true;
 		if (tmp.getX() == 1) {
-			spriteType = (isVulnerable() ? 5 : 4);
-			spriteNumber += 6;
+			spriteType = "Right";
 		} else if (tmp.getX() == -1) {
-			spriteType = (isVulnerable() ? 4 : 5);
-			spriteNumber += 6;
+			spriteType = "Left";
 		} else if (tmp.getY() == 1) {
-			spriteType = (isVulnerable() ? 4 : 7);
+			spriteType = "Down";
 		} else if (tmp.getY() == -1) {
-			spriteType = (isVulnerable() ? 5 : 6);
+			spriteType = "Up";
 		} else {
-			spriteType = 4;
+			spriteType = "Idle";
 			spriteNumber = 0;
 			movable = false;
 		}
 
-		/* 3, 5 : Magic number which set center the bomberman */
-		g.drawImage(image.getImage(), 
-				(int) getPosition().getX() + 3,
-				(int) getPosition().getY() + 5,  
-				(int) getPosition().getX() + SPRITE_SIZE_X + 3,
-				(int) getPosition().getY() + SPRITE_SIZE_Y + 5, 
-				spriteNumber * SPRITE_SIZE_X,
-				spriteType * SPRITE_SIZE_Y, 
-				(spriteNumber + 1) * SPRITE_SIZE_X,
-				(spriteType + 1) * SPRITE_SIZE_Y, 
-				null);
+		spriteMax = imgMap.get(spriteType).size();
+		
+		g.drawImage(imgMap.get(spriteType).get(spriteNumber).getImage(),
+				(int) getPosition().getX(), (int) getPosition().getY(),
+				SPRITE_SIZE_X, SPRITE_SIZE_Y, null);
 
 	}
 
@@ -76,15 +96,11 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 	public void oneStepMoveHandler() {
 		if (movable) {
 			spriteNumber++;
-			spriteNumber = spriteNumber % NB_SPRITE;
-			if (!isVulnerable()) {
-				vulnerableTimer--;
-			}
+			spriteNumber = spriteNumber % spriteMax;
 		}
 	}
 
-	// 3 : set collision problems
 	public Rectangle getBoundingBox() {
-		return (new Rectangle(0, 0, SPRITE_SIZE_X - 3, SPRITE_SIZE_Y));
+		return (new Rectangle(0, 0, SPRITE_SIZE_X, SPRITE_SIZE_Y));
 	}
 }
