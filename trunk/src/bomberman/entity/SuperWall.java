@@ -17,7 +17,7 @@ public class SuperWall implements Drawable, MoveBlocker, GameEntity {
 
 	public SuperWall(Canvas defaultCanvas, int xx, int yy) {
 		if (image == null) {
-			image = new DrawableImage("images/superWall.gif", defaultCanvas);
+			image = new DrawableImage("images/superwall.gif", defaultCanvas);
 		}
 		x = xx;
 		y = yy;
@@ -32,6 +32,6 @@ public class SuperWall implements Drawable, MoveBlocker, GameEntity {
 	}
 
 	public Rectangle getBoundingBox() {
-		return (new Rectangle(x, y, SPRITE_SIZE, SPRITE_SIZE));
+		return (new Rectangle(x, y, SPRITE_SIZE_X, SPRITE_SIZE_Y));
 	}
 }
