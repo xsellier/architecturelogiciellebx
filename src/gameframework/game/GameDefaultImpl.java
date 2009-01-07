@@ -67,8 +67,8 @@ public class GameDefaultImpl implements Game, Observer {
 		Container c = createStatusBar();
 
 		defaultCanvas = new CanvasDefaultImpl();
-		// Modification to SPRITE_SIZE_X and SPRITE_SIZE_Y
-		defaultCanvas.setSize(SPRITE_SIZE_X * NB_COLUMNS, SPRITE_SIZE_Y * NB_ROWS);
+		defaultCanvas.setSize(SPRITE_SIZE_X * NB_COLUMNS, SPRITE_SIZE_Y
+				* NB_ROWS);
 		f.add(defaultCanvas);
 		f.add(c, BorderLayout.NORTH);
 		f.pack();
@@ -135,7 +135,7 @@ public class GameDefaultImpl implements Game, Observer {
 		game.add(resume);
 	}
 
-	private Container createStatusBar() {
+	protected Container createStatusBar() {
 		JPanel c = new JPanel();
 		GridBagLayout layout = new GridBagLayout();
 		c.setLayout(layout);
@@ -178,7 +178,6 @@ public class GameDefaultImpl implements Game, Observer {
 			currentPlayedLevel.join();
 		} catch (Exception e) {
 		}
-
 	}
 
 	public void restore() {
@@ -212,8 +211,8 @@ public class GameDefaultImpl implements Game, Observer {
 	}
 
 	/*
-	 * update method so as to make Game as an updatable Observer
-	 * (TODO Handle 2 or more players)
+	 * update method so as to make Game as an updatable Observer (TODO Handle 2
+	 * or more players)
 	 */
 	public void update(Observable o, Object arg) {
 		if (o instanceof IntegerObservable) {
@@ -227,9 +226,9 @@ public class GameDefaultImpl implements Game, Observer {
 		for (IntegerObservable lifeObservable : life) {
 			if (observable == lifeObservable) {
 				int lives = observable.getValue();
- 				lifeValue.setText(Integer.toString(lives));
- 				if (lives == 0) {
- 					informationValue.setText("Defeat");
+				lifeValue.setText(Integer.toString(lives));
+				if (lives == 0) {
+					informationValue.setText("Defeat");
 					currentPlayedLevel.interrupt();
 					currentPlayedLevel.end();
 				}
@@ -244,5 +243,4 @@ public class GameDefaultImpl implements Game, Observer {
 			}
 		}
 	}
-
 }

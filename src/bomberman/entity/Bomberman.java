@@ -8,6 +8,7 @@ import gameframework.base.Overlappable;
 import gameframework.game.GameEntity;
 import gameframework.game.GameMovable;
 import gameframework.game.GameUniverse;
+import gameframework.utility.LoadImage;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
@@ -19,7 +20,7 @@ import java.util.HashMap;
 public class Bomberman extends GameMovable implements Drawable, GameEntity,
 		Overlappable {
 	protected Canvas defaultCanvas;
-	protected int spriteNumber = 0;
+	protected int spriteNumber = -1;
 	protected String spriteType;
 	private int spriteMax;
 	protected boolean movable = true;
@@ -32,42 +33,8 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 		this.universe = universe;
 
 		if (imgMap == null) {
-			imgMap = new HashMap<String, ArrayList<DrawableImage>>();
-			loadImage();
+			imgMap = LoadImage.loadImagePlayer(defaultCanvas);
 		}
-	}
-
-	private void loadImage() {
-		ArrayList<DrawableImage> imgListLeft = loadImg(
-				"images/Sprite/Player/Bomberman/", "Left", "gif", 10);
-		ArrayList<DrawableImage> imgListRight = loadImg(
-				"images/Sprite/Player/Bomberman/", "Right", "gif", 10);
-		ArrayList<DrawableImage> imgListDown = loadImg(
-				"images/Sprite/Player/Bomberman/", "Down", "gif", 8);
-		ArrayList<DrawableImage> imgListUp = loadImg(
-				"images/Sprite/Player/Bomberman/", "Up", "gif", 10);
-		ArrayList<DrawableImage> imgListIdle = loadImg(
-				"images/Sprite/Player/Bomberman/", "Idle", "gif", 6);
-
-		imgMap.put("Left", imgListLeft);
-		imgMap.put("Right", imgListRight);
-		imgMap.put("Down", imgListDown);
-		imgMap.put("Up", imgListUp);
-		imgMap.put("Idle", imgListIdle);
-
-	}
-
-	private ArrayList<DrawableImage> loadImg(String path, String name,
-			String extension, int number) {
-		ArrayList<DrawableImage> result = new ArrayList<DrawableImage>(number);
-
-		for (int i = 0; i < number; i++) {
-			String s = path + name + i + "." + extension;
-			DrawableImage tmp = new DrawableImage(s, defaultCanvas);
-			result.add(tmp);
-		}
-
-		return result;
 	}
 
 	public void draw(Graphics g) {
@@ -82,7 +49,8 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 		} else if (tmp.getY() == -1) {
 			spriteType = "Up";
 		} else {
-			spriteType = "Idle";
+			spriteType = "Down";
+			spriteNumber = 0;
 			movable = false;
 		}
 
@@ -110,9 +78,33 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 	public void putBomb() {
 		int x = getPosition().x;
 		int y = getPosition().y;
-		System.out.println("Ajout de bomb sur la carte à la position (" + x
-				+ ", " + y + ")");
+
+		double x1 = getPosition().getX();
+		double x2 = getPosition().getY();
+		
+		System.out.println("x = " + x + " y = " + y);
+
+		System.out.println("Ajout de bomb sur la carte à la position (" + x1
+				/ SPRITE_SIZE_X + ", " + x2 / SPRITE_SIZE_Y + ")");
+
+		double tmp1 = x1 / SPRITE_SIZE_X;
+		double tmp2 = x2 / SPRITE_SIZE_Y;
+
+		
+		
+		System.out.println("Ajout bomb position (" + tmp1 + ", " + tmp2 + ")");
+
 		universe.addGameEntity(new Bomb(defaultCanvas, new Point(x, y),
 				universe));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see gameframework.game.GameEntityExt#canStopFire()
+	 */
+	public boolean canStopFire() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

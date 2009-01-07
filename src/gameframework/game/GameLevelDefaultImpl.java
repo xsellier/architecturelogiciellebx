@@ -3,6 +3,8 @@ package gameframework.game;
 import gameframework.base.IntegerObservable;
 
 import java.util.Date;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public abstract class GameLevelDefaultImpl extends Thread implements GameLevel {
 	private static final int MINIMUM_DELAY_BETWEEN_GAME_CYCLES = 100;
@@ -14,8 +16,8 @@ public abstract class GameLevelDefaultImpl extends Thread implements GameLevel {
 	boolean stopGameLoop;
 
 	/**
-	 * To be implemented with respect to a specific game
-	 * Initialize universe and gameBoard
+	 * To be implemented with respect to a specific game Initialize universe and
+	 * gameBoard
 	 */
 	protected abstract void init();
 
@@ -35,11 +37,14 @@ public abstract class GameLevelDefaultImpl extends Thread implements GameLevel {
 		}
 	}
 
+	static Lock l = new ReentrantLock();
+
 	@Override
 	public void run() {
 		stopGameLoop = false;
 		// main game loop :
 		long start;
+
 		while (!stopGameLoop && !this.isInterrupted()) {
 			start = new Date().getTime();
 			gameBoard.paint();

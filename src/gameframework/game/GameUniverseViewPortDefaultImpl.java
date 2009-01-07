@@ -6,6 +6,7 @@ import gameframework.base.Drawable;
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 public class GameUniverseViewPortDefaultImpl implements GameUniverseViewPort {
@@ -28,15 +29,35 @@ public class GameUniverseViewPortDefaultImpl implements GameUniverseViewPort {
 	}
 
 	public void paint() {
+		// Modification qui ne fait que repousser l'echeance de l'exception
 		background.draw(bufferGraphics);
-		Iterator<GameEntity> gt = universe.gameEntities();
-		for (; gt.hasNext();) {
-			GameEntity tmp = gt.next();
-			if (tmp instanceof Drawable) {
-				((Drawable) tmp).draw(bufferGraphics);
+		synchronized (universe) {
+//			Iterator<GameEntity> gt = universe.gameEntities();
+//			
+//			for (; gt.hasNext();) {
+//				GameEntity tmp = gt.next();
+//				if (tmp instanceof Drawable) {
+//					((Drawable) tmp).draw(bufferGraphics);
+//				}
+//			}
+//			refresh();
+			
+			Iterator<GameEntity> gt = universe.gameEntities();
+			ArrayList<GameEntity> gtCopy = new ArrayList<GameEntity>();
+			
+			for(; gt.hasNext();) {
+				GameEntity tmp = gt.next();
+				gtCopy.add(tmp);
 			}
+			
+			for(GameEntity elem : gtCopy) {
+				if (elem instanceof Drawable) {
+					((Drawable) elem).draw(bufferGraphics);
+				}
+			}
+			
+			refresh();
 		}
-		refresh();
 	}
 
 	public void refresh() {

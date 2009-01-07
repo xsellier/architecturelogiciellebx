@@ -21,4 +21,5 @@ public interface Game {
 	public IntegerObservable[] score();
 
 	public IntegerObservable[] life();
+	
 }

@@ -1,18 +1,22 @@
 package gameframework.game;
 
-import gameframework.base.Overlappable;
 import gameframework.base.Movable;
+import gameframework.base.Overlappable;
 
 import java.util.Iterator;
 import java.util.Vector;
 
 public class GameUniverseDefaultImpl implements GameUniverse {
-	private Vector<GameEntity> gameEntities = new Vector<GameEntity>();
-	private OverlapProcessor overlapProcessor;
-	private MoveBlockerChecker moveBlockerChecker;
+	private volatile Vector<GameEntity> gameEntities = new Vector<GameEntity>();
+	private volatile OverlapProcessor overlapProcessor;
+	private volatile MoveBlockerChecker moveBlockerChecker;
 
-	public Iterator<GameEntity> gameEntities() {
-		return gameEntities.iterator();
+	public synchronized Iterator<GameEntity> gameEntities() {
+		Iterator<GameEntity> it;
+		synchronized (gameEntities.iterator()) {
+			it = gameEntities.iterator();
+		}
+		return it;
 	}
 
 	public GameUniverseDefaultImpl(MoveBlockerChecker obs, OverlapProcessor col) {
@@ -21,35 +25,53 @@ public class GameUniverseDefaultImpl implements GameUniverse {
 	}
 
 	public void addGameEntity(GameEntity gameEntity) {
-		gameEntities.add(gameEntity);
-		if (gameEntity instanceof Overlappable) {
-			overlapProcessor.addOverlappable((Overlappable) gameEntity);
-		}
-		if (gameEntity instanceof MoveBlocker) {
-			moveBlockerChecker.addMoveBlocker((MoveBlocker) gameEntity);
+		synchronized (gameEntities) {
+			gameEntities.add(gameEntity);
+			if (gameEntity instanceof Overlappable) {
+				synchronized (overlapProcessor) {
+					overlapProcessor.addOverlappable((Overlappable) gameEntity);
+				}
+			}
+			if (gameEntity instanceof MoveBlocker) {
+				synchronized (moveBlockerChecker) {
+					moveBlockerChecker.addMoveBlocker((MoveBlocker) gameEntity);
+				}
+			}
 		}
 	}
 
 	public void removeGameEntity(GameEntity gameEntity) {
-		gameEntities.remove(gameEntity);
-		if (gameEntity instanceof Overlappable) {
-			overlapProcessor.removeOverlappable((Overlappable) gameEntity);
-		}
-		if (gameEntity instanceof MoveBlocker) {
-			moveBlockerChecker.removeMoveBlocker((MoveBlocker) gameEntity);
+		synchronized (gameEntities) {
+			gameEntities.remove(gameEntity);
+			if (gameEntity instanceof Overlappable) {
+				synchronized (overlapProcessor) {
+					overlapProcessor
+							.removeOverlappable((Overlappable) gameEntity);
+				}
+			}
+			if (gameEntity instanceof MoveBlocker) {
+				synchronized (moveBlockerChecker) {
+					moveBlockerChecker
+							.removeMoveBlocker((MoveBlocker) gameEntity);
+				}
+			}
 		}
 	}
 
 	public void allOneStepMoves() {
-		for (GameEntity entity : gameEntities) {
-			if (entity instanceof Movable) {
-				((Movable) entity).oneStepMove();
+		synchronized (gameEntities) {
+			for (GameEntity entity : gameEntities) {
+				if (entity instanceof Movable) {
+					((Movable) entity).oneStepMove();
+				}
 			}
 		}
 	}
 
 	public void processAllOverlaps() {
-		overlapProcessor.processOverlapsAll();
+		synchronized (overlapProcessor) {
+			overlapProcessor.processOverlapsAll();
+		}
 	}
 
 }
