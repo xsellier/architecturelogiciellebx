@@ -72,10 +72,6 @@ public class Fire implements Drawable, GameEntity, Overlappable {
 			cycle++;
 			if (cycle > maxCycle) {
 				universe.removeGameEntity(Fire.this);
-				test++;
-//				if ((fireType.compareTo("Center") == 0) && (test <= firePower)) {
-//					fireExpansion();
-//				}
 				this.cancel();
 			}
 		}
@@ -88,13 +84,13 @@ public class Fire implements Drawable, GameEntity, Overlappable {
 		int x = getPosition().x;
 		int y = getPosition().y;
 
-		universe.addGameEntity(new Fire(defaultCanvas, new Point(x, y - 32),
+		universe.addGameEntity(new Fire(defaultCanvas, new Point(x, y - SPRITE_SIZE_Y),
 				universe, 1, "UpExt"));
-		universe.addGameEntity(new Fire(defaultCanvas, new Point(x, y + 32),
+		universe.addGameEntity(new Fire(defaultCanvas, new Point(x, y + SPRITE_SIZE_Y),
 				universe, 1, "DownExt"));
-		universe.addGameEntity(new Fire(defaultCanvas, new Point(x - 32, y),
+		universe.addGameEntity(new Fire(defaultCanvas, new Point(x - SPRITE_SIZE_X, y),
 				universe, 1, "LeftExt"));
-		universe.addGameEntity(new Fire(defaultCanvas, new Point(x + 32, y),
+		universe.addGameEntity(new Fire(defaultCanvas, new Point(x + SPRITE_SIZE_X, y),
 				universe, 1, "RightExt"));
 
 	}
@@ -104,11 +100,9 @@ public class Fire implements Drawable, GameEntity, Overlappable {
 	}
 
 	public void draw(Graphics g) {
-		// if (fireType.compareTo(fireType) == 0) {
 		g.drawImage(imgMap.get(fireType).get(spriteNumber).getImage(),
 				(int) getPosition().getX(), (int) getPosition().getY(),
 				SPRITE_SIZE_X, SPRITE_SIZE_Y, null);
-		// }
 	}
 
 	public Rectangle getBoundingBox() {

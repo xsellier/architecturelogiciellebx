@@ -57,6 +57,10 @@ public class BombermanOverlaps extends OverlapRuleApplierDefaultImpl {
 		System.out.println("Mort");
 	}
 	
+	public void overlapRule(Bomberman bm, Fire f) {
+		bm.die();
+	}
+	
 	public void overlapRule(Bomberman bm, FireItem f) {
 		universe.removeGameEntity(f);
 	}

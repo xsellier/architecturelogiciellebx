@@ -9,29 +9,31 @@ import java.util.HashMap;
 public class LoadImage {
 	
 	
-	private static final String DIRECTORY = "images/Sprite/Player/Bomberman/";
+	private static final String DIRECTORY_PLAYER = "images/Sprite/Player/Bomberman/";
 	private static final String DIRECTORY_FIRE = "images/Sprite/Fire/";
 	
 	
 	public static HashMap<String, ArrayList<DrawableImage>> loadImagePlayer(Canvas canvas) {
 		HashMap<String, ArrayList<DrawableImage>> imgMap = new HashMap<String, ArrayList<DrawableImage>>();
 
-		ArrayList<DrawableImage> imgListLeft = loadImg(canvas, DIRECTORY, "Left",
+		ArrayList<DrawableImage> imgListLeft = loadImg(canvas, DIRECTORY_PLAYER, "Left",
 				"gif", 10);
-		ArrayList<DrawableImage> imgListRight = loadImg(canvas, DIRECTORY, "Right",
+		ArrayList<DrawableImage> imgListRight = loadImg(canvas, DIRECTORY_PLAYER, "Right",
 				"gif", 10);
-		ArrayList<DrawableImage> imgListDown = loadImg(canvas, DIRECTORY, "Down",
+		ArrayList<DrawableImage> imgListDown = loadImg(canvas, DIRECTORY_PLAYER, "Down",
 				"gif", 8);
-		ArrayList<DrawableImage> imgListUp = loadImg(canvas, DIRECTORY, "Up", "gif",
+		ArrayList<DrawableImage> imgListUp = loadImg(canvas, DIRECTORY_PLAYER, "Up", "gif",
 				10);
-		ArrayList<DrawableImage> imgListIdle = loadImg(canvas, DIRECTORY, "Idle",
+		ArrayList<DrawableImage> imgListIdle = loadImg(canvas, DIRECTORY_PLAYER, "Idle",
 				"gif", 1);
+		ArrayList<DrawableImage> imgListDie = loadImg(canvas, DIRECTORY_PLAYER, "Die", "gif", 4);
 
 		imgMap.put("Left", imgListLeft);
 		imgMap.put("Right", imgListRight);
 		imgMap.put("Down", imgListDown);
 		imgMap.put("Up", imgListUp);
 		imgMap.put("Idle", imgListIdle);
+		imgMap.put("Die", imgListDie);
 
 		return imgMap;
 
@@ -43,7 +45,6 @@ public class LoadImage {
 
 		for (int i = 0; i < number; i++) {
 			String s = dir + name + i + "." + extension;
-			System.out.println(s);
 			DrawableImage tmp = new DrawableImage(s, canvas);
 			result.add(tmp);
 		}
