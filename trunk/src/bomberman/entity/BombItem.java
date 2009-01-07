@@ -1,16 +1,16 @@
 package bomberman.entity;
 
-import gameframework.base.Overlappable;
+import static gameframework.game.ConstantValues.SPRITE_SIZE_X;
+import static gameframework.game.ConstantValues.SPRITE_SIZE_Y;
 import gameframework.base.Drawable;
 import gameframework.base.DrawableImage;
+import gameframework.base.Overlappable;
 import gameframework.game.GameEntity;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
-
-import static gameframework.game.ConstantValues.*;
 
 public class BombItem implements Drawable, GameEntity, Overlappable {
 	protected static DrawableImage image = null;

@@ -8,12 +8,14 @@ import gameframework.base.DrawableImage;
 import gameframework.base.Overlappable;
 import gameframework.game.GameEntity;
 import gameframework.game.GameUniverse;
+import gameframework.utility.LoadImage;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -23,36 +25,31 @@ public class Fire implements Drawable, GameEntity, Overlappable {
 	protected static DrawableImage image2 = null;
 	protected static DrawableImage image3 = null;
 
-	protected static ArrayList<DrawableImage> imgList = null;
-	
+	protected static HashMap<String, ArrayList<DrawableImage>> imgMap = null;
+
 	protected Point position;
 
 	private GameUniverse universe;
 	private Timer timer;
 	private int spriteNumber = -1;
 	private int firePower;
+	private Canvas defaultCanvas;
+	private String fireType;
+
+	private static int test = -1;
 
 	public Fire(Canvas defaultCanvas, Point pos, GameUniverse universe,
-			int firePower) {
-		if (image0 == null || image1 == null || image2 == null
-				|| image3 == null) {
-			image0 = new DrawableImage("images/Sprite/Fire/Center/Center0.gif",
-					defaultCanvas);
-			image1 = new DrawableImage("images/Sprite/Fire/Center/Center1.gif",
-					defaultCanvas);
-			image2 = new DrawableImage("images/Sprite/Fire/Center/Center2.gif",
-					defaultCanvas);
-			image3 = new DrawableImage("images/Sprite/Fire/Center/Center3.gif",
-					defaultCanvas);
-			imgList = new ArrayList<DrawableImage>(3);
-			imgList.add(image0);
-			imgList.add(image1);
-			imgList.add(image2);
-			imgList.add(image3);
+			int firePower, String fireType) {
+		if (imgMap == null) {
+			imgMap = LoadImage.loadImageFire(defaultCanvas);
 		}
+
 		position = pos;
 		this.universe = universe;
 		this.firePower = firePower;
+		this.defaultCanvas = defaultCanvas;
+		this.fireType = fireType;
+
 		timer = new Timer();
 		timer.scheduleAtFixedRate(new TimerTaskExt(4), 0, 100);
 	}
@@ -71,23 +68,43 @@ public class Fire implements Drawable, GameEntity, Overlappable {
 			cycle++;
 			if (cycle > maxCycle) {
 				universe.removeGameEntity(Fire.this);
-				fireExpansion();
+				test++;
+				if (test <= 1) {
+					fireExpansion();
+				}
 				this.cancel();
 			}
 		}
 	};
 
 	private void fireExpansion() {
-		System.out.println("position = (" + getPosition().x / SPRITE_SIZE_X + ", " + getPosition().y / SPRITE_SIZE_Y + ")");
+		System.out.println("position = (" + getPosition().x / SPRITE_SIZE_X
+				+ ", " + getPosition().y / SPRITE_SIZE_Y + ")");
+
+		int x = getPosition().x;
+		int y = getPosition().y;
+
+		universe.addGameEntity(new Fire(defaultCanvas, new Point(x, y - 1),
+				universe, 1, "UpExt"));
+		universe.addGameEntity(new Fire(defaultCanvas, new Point(x, y + 1),
+				universe, 1, "DownExt"));
+		universe.addGameEntity(new Fire(defaultCanvas, new Point(x - 1, y),
+				universe, 1, "LeftExt"));
+		universe.addGameEntity(new Fire(defaultCanvas, new Point(x + 1, y),
+				universe, 1, "RightExt"));
+
 	}
-	
+
 	public Point getPosition() {
 		return position;
 	}
 
 	public void draw(Graphics g) {
-		g.drawImage(imgList.get(spriteNumber).getImage(), (int) getPosition().getX(),
-				(int) getPosition().getY(), SPRITE_SIZE_X, SPRITE_SIZE_Y, null);
+		// if (fireType.compareTo(fireType) == 0) {
+		g.drawImage(imgMap.get(fireType).get(spriteNumber).getImage(),
+				(int) getPosition().getX(), (int) getPosition().getY(),
+				SPRITE_SIZE_X, SPRITE_SIZE_Y, null);
+		// }
 	}
 
 	public Rectangle getBoundingBox() {

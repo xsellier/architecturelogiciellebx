@@ -21,7 +21,7 @@ public class Bomb implements Drawable, GameEntity, Overlappable {
 	protected static DrawableImage image0 = null;
 	protected static DrawableImage image1 = null;
 	protected static DrawableImage image2 = null;
-	
+
 	protected static ArrayList<DrawableImage> imgList = null;
 
 	private Canvas canvas;
@@ -43,19 +43,18 @@ public class Bomb implements Drawable, GameEntity, Overlappable {
 			imgList.add(image1);
 			imgList.add(image2);
 		}
-		
+
 		canvas = defaultCanvas;
 		position = pos;
 		this.universe = universe;
 		timer = new Timer();
-		// timer.schedule(new TimerTaskExt(3), 3000);
 		timer.scheduleAtFixedRate(new TimerTaskExt(9), 0, 250);
 	}
 
 	private class TimerTaskExt extends TimerTask {
 		int maxCycle;
 		private int cycle = 0;
-		
+
 		public TimerTaskExt(int maxCycle) {
 			this.maxCycle = maxCycle;
 		}
@@ -67,7 +66,7 @@ public class Bomb implements Drawable, GameEntity, Overlappable {
 			if (cycle == maxCycle) {
 				universe.removeGameEntity(Bomb.this);
 				universe.addGameEntity(new Fire(canvas, getPosition(),
-						universe, DEFAULT_FIRE_POWER));
+						universe, DEFAULT_FIRE_POWER, "Center"));
 				this.cancel();
 			}
 		}
@@ -78,8 +77,9 @@ public class Bomb implements Drawable, GameEntity, Overlappable {
 	}
 
 	public void draw(Graphics g) {
-		g.drawImage(imgList.get(spriteNumber).getImage(), (int) getPosition().getX(),
-					(int) getPosition().getY(), SPRITE_SIZE_X, SPRITE_SIZE_Y, null);
+		g.drawImage(imgList.get(spriteNumber).getImage(), (int) getPosition()
+				.getX(), (int) getPosition().getY(), SPRITE_SIZE_X,
+				SPRITE_SIZE_Y, null);
 	}
 
 	public Rectangle getBoundingBox() {
