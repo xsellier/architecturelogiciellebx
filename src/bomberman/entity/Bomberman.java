@@ -16,6 +16,8 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Bomberman extends GameMovable implements Drawable, GameEntity,
 		Overlappable {
@@ -25,9 +27,10 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 	private int spriteMax;
 	protected boolean movable = true;
 	private GameUniverse universe;
-
+	private boolean isDead = false;
+	private Timer timer;
 	private int firePower = 0;
-	
+
 	private static HashMap<String, ArrayList<DrawableImage>> imgMap = null;
 
 	public Bomberman(Canvas defaultCanvas, GameUniverse universe) {
@@ -38,24 +41,51 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 			imgMap = LoadImage.loadImagePlayer(defaultCanvas);
 		}
 	}
+	
+	private class TimerTaskExt extends TimerTask {
+		int maxCycle;
+		private int cycle = 0;
+
+		public TimerTaskExt(int maxCycle) {
+			this.maxCycle = maxCycle;
+			spriteNumber = -1;
+		}
+
+		public void run() {
+			spriteNumber++;
+			spriteNumber = spriteNumber % 4;
+			cycle++;
+			if (cycle > maxCycle) {
+				universe.removeGameEntity(Bomberman.this);
+				this.cancel();
+			}
+		}
+	};
 
 	public void draw(Graphics g) {
 		Point tmp = getSpeedVector().getDir();
 		movable = true;
-		if (tmp.getX() == 1) {
-			spriteType = "Right";
-		} else if (tmp.getX() == -1) {
-			spriteType = "Left";
-		} else if (tmp.getY() == 1) {
-			spriteType = "Down";
-		} else if (tmp.getY() == -1) {
-			spriteType = "Up";
+		if (!isDead) {
+			if (tmp.getX() == 1) {
+				spriteType = "Right";
+			} else if (tmp.getX() == -1) {
+				spriteType = "Left";
+			} else if (tmp.getY() == 1) {
+				spriteType = "Down";
+			} else if (tmp.getY() == -1) {
+				spriteType = "Up";
+			} else {
+				spriteType = "Down";
+				spriteNumber = 0;
+				movable = false;
+			}
 		} else {
-			spriteType = "Down";
-			spriteNumber = 0;
 			movable = false;
+			g.drawImage(imgMap.get("Die").get(spriteNumber).getImage(),
+					(int) getPosition().getX(), (int) getPosition().getY(),
+					SPRITE_SIZE_X, SPRITE_SIZE_Y, null);
 		}
-
+		
 		spriteMax = imgMap.get(spriteType).size();
 		if (spriteNumber < spriteMax) {
 			g.drawImage(imgMap.get(spriteType).get(spriteNumber).getImage(),
@@ -83,7 +113,7 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 
 		double x1 = getPosition().getX();
 		double x2 = getPosition().getY();
-		
+
 		System.out.println("x = " + x + " y = " + y);
 
 		System.out.println("Ajout de bomb sur la carte à la position (" + x1
@@ -92,21 +122,15 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 		double tmp1 = x1 / SPRITE_SIZE_X;
 		double tmp2 = x2 / SPRITE_SIZE_Y;
 
-		
-		
 		System.out.println("Ajout bomb position (" + tmp1 + ", " + tmp2 + ")");
 
 		universe.addGameEntity(new Bomb(defaultCanvas, new Point(x, y),
 				universe));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see gameframework.game.GameEntityExt#canStopFire()
-	 */
-	public boolean canStopFire() {
-		// TODO Auto-generated method stub
-		return false;
+	public void die() {
+		isDead = true;
+		timer = new Timer();
+		timer.scheduleAtFixedRate(new TimerTaskExt(4), 0, 100);
 	}
 }
