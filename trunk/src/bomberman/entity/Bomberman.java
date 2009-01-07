@@ -26,6 +26,8 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 	protected boolean movable = true;
 	private GameUniverse universe;
 
+	private int firePower = 0;
+	
 	private static HashMap<String, ArrayList<DrawableImage>> imgMap = null;
 
 	public Bomberman(Canvas defaultCanvas, GameUniverse universe) {

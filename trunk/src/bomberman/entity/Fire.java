@@ -36,7 +36,7 @@ public class Fire implements Drawable, GameEntity, Overlappable {
 	private Canvas defaultCanvas;
 	private String fireType;
 
-	private static int test = -1;
+	private int test = -1;
 
 	public Fire(Canvas defaultCanvas, Point pos, GameUniverse universe,
 			int firePower, String fireType) {
@@ -50,6 +50,10 @@ public class Fire implements Drawable, GameEntity, Overlappable {
 		this.defaultCanvas = defaultCanvas;
 		this.fireType = fireType;
 
+		if ((fireType.compareTo("Center") == 0) && (test <= firePower)) {
+			fireExpansion();
+		}
+		
 		timer = new Timer();
 		timer.scheduleAtFixedRate(new TimerTaskExt(4), 0, 100);
 	}
@@ -69,9 +73,9 @@ public class Fire implements Drawable, GameEntity, Overlappable {
 			if (cycle > maxCycle) {
 				universe.removeGameEntity(Fire.this);
 				test++;
-				if (test <= 1) {
-					fireExpansion();
-				}
+//				if ((fireType.compareTo("Center") == 0) && (test <= firePower)) {
+//					fireExpansion();
+//				}
 				this.cancel();
 			}
 		}
@@ -84,13 +88,13 @@ public class Fire implements Drawable, GameEntity, Overlappable {
 		int x = getPosition().x;
 		int y = getPosition().y;
 
-		universe.addGameEntity(new Fire(defaultCanvas, new Point(x, y - 1),
+		universe.addGameEntity(new Fire(defaultCanvas, new Point(x, y - 32),
 				universe, 1, "UpExt"));
-		universe.addGameEntity(new Fire(defaultCanvas, new Point(x, y + 1),
+		universe.addGameEntity(new Fire(defaultCanvas, new Point(x, y + 32),
 				universe, 1, "DownExt"));
-		universe.addGameEntity(new Fire(defaultCanvas, new Point(x - 1, y),
+		universe.addGameEntity(new Fire(defaultCanvas, new Point(x - 32, y),
 				universe, 1, "LeftExt"));
-		universe.addGameEntity(new Fire(defaultCanvas, new Point(x + 1, y),
+		universe.addGameEntity(new Fire(defaultCanvas, new Point(x + 32, y),
 				universe, 1, "RightExt"));
 
 	}
