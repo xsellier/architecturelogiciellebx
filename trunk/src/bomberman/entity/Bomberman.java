@@ -1,14 +1,12 @@
 package bomberman.entity;
 
-import static gameframework.game.ConstantValues.SPRITE_SIZE_X;
-import static gameframework.game.ConstantValues.SPRITE_SIZE_Y;
+import static bomberman.game.ConstantValues.*;
 import gameframework.base.Drawable;
 import gameframework.base.DrawableImage;
 import gameframework.base.Overlappable;
 import gameframework.game.GameEntity;
 import gameframework.game.GameMovable;
 import gameframework.game.GameUniverse;
-import gameframework.utility.LoadImage;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
@@ -19,10 +17,12 @@ import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import bomberman.utility.LoadImage;
+
 public class Bomberman extends GameMovable implements Drawable, GameEntity,
 		Overlappable {
 	protected Canvas defaultCanvas;
-	protected int spriteNumber = -1;
+	private int spriteNumber = -1;
 	protected String spriteType;
 	private int spriteMax;
 	protected boolean movable = true;
@@ -41,7 +41,7 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 			imgMap = LoadImage.loadImagePlayer(defaultCanvas);
 		}
 	}
-	
+
 	private class TimerTaskExt extends TimerTask {
 		int maxCycle;
 		private int cycle = 0;
@@ -54,6 +54,7 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 		public void run() {
 			spriteNumber++;
 			spriteNumber = spriteNumber % 4;
+			System.out.println("spriteNumberDead = " + spriteNumber);
 			cycle++;
 			if (cycle > maxCycle) {
 				universe.removeGameEntity(Bomberman.this);
@@ -79,16 +80,15 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 				spriteNumber = 0;
 				movable = false;
 			}
+			spriteMax = imgMap.get(spriteType).size();
+			if (spriteNumber < spriteMax) {
+				g.drawImage(
+						imgMap.get(spriteType).get(spriteNumber).getImage(),
+						(int) getPosition().getX(), (int) getPosition().getY(),
+						SPRITE_SIZE_X, SPRITE_SIZE_Y, null);
+			}
 		} else {
-			movable = false;
 			g.drawImage(imgMap.get("Die").get(spriteNumber).getImage(),
-					(int) getPosition().getX(), (int) getPosition().getY(),
-					SPRITE_SIZE_X, SPRITE_SIZE_Y, null);
-		}
-		
-		spriteMax = imgMap.get(spriteType).size();
-		if (spriteNumber < spriteMax) {
-			g.drawImage(imgMap.get(spriteType).get(spriteNumber).getImage(),
 					(int) getPosition().getX(), (int) getPosition().getY(),
 					SPRITE_SIZE_X, SPRITE_SIZE_Y, null);
 		}
@@ -130,7 +130,8 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 
 	public void die() {
 		isDead = true;
+		movable = false;
 		timer = new Timer();
-		timer.scheduleAtFixedRate(new TimerTaskExt(4), 0, 100);
+		timer.scheduleAtFixedRate(new TimerTaskExt(4), 0, 300);
 	}
 }

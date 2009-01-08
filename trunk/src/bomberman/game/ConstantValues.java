@@ -1,4 +1,4 @@
-package gameframework.game;
+package bomberman.game;
 
 public class ConstantValues {
 	private ConstantValues(){}

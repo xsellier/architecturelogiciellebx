@@ -1,10 +1,6 @@
 package bomberman;
 
-import static gameframework.game.ConstantValues.NB_COLUMNS;
-import static gameframework.game.ConstantValues.NB_ROWS;
-import static gameframework.game.ConstantValues.SPRITE_SIZE_X;
-import static gameframework.game.ConstantValues.SPRITE_SIZE_Y;
-import gameframework.base.MoveStrategyKeyboardExt;
+import static bomberman.game.ConstantValues.*;
 import gameframework.game.CanvasDefaultImpl;
 import gameframework.game.Game;
 import gameframework.game.GameLevelDefaultImpl;
@@ -20,6 +16,7 @@ import gameframework.game.OverlapRuleApplier;
 import java.awt.Canvas;
 import java.awt.Point;
 
+import bomberman.base.MoveStrategyKeyboardExt;
 import bomberman.entity.BlocAround;
 import bomberman.entity.BombItem;
 import bomberman.entity.Bomberman;

@@ -58,7 +58,7 @@ public class BombermanOverlaps extends OverlapRuleApplierDefaultImpl {
 	}
 	
 	public void overlapRule(Bomberman bm, Fire f) {
-		bm.die();
+//		bm.die();
 	}
 	
 	public void overlapRule(Bomberman bm, FireItem f) {

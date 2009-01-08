@@ -1,14 +1,11 @@
 package bomberman.entity;
 
-import static gameframework.game.ConstantValues.SPRITE_SIZE;
-import static gameframework.game.ConstantValues.SPRITE_SIZE_X;
-import static gameframework.game.ConstantValues.SPRITE_SIZE_Y;
+import static bomberman.game.ConstantValues.*;
 import gameframework.base.Drawable;
 import gameframework.base.DrawableImage;
 import gameframework.base.Overlappable;
 import gameframework.game.GameEntity;
 import gameframework.game.GameUniverse;
-import gameframework.utility.LoadImage;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
@@ -19,12 +16,10 @@ import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Fire implements Drawable, GameEntity, Overlappable {
-	protected static DrawableImage image0 = null;
-	protected static DrawableImage image1 = null;
-	protected static DrawableImage image2 = null;
-	protected static DrawableImage image3 = null;
+import bomberman.utility.LoadImage;
 
+public class Fire implements Drawable, GameEntity, Overlappable {
+	
 	protected static HashMap<String, ArrayList<DrawableImage>> imgMap = null;
 
 	protected Point position;

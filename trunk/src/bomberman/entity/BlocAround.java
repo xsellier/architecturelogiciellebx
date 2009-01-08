@@ -1,7 +1,7 @@
 package bomberman.entity;
 
-import static gameframework.game.ConstantValues.SPRITE_SIZE_X;
-import static gameframework.game.ConstantValues.SPRITE_SIZE_Y;
+import static bomberman.game.ConstantValues.SPRITE_SIZE_X;
+import static bomberman.game.ConstantValues.SPRITE_SIZE_Y;
 import gameframework.base.Drawable;
 import gameframework.base.DrawableImage;
 import gameframework.game.GameEntity;

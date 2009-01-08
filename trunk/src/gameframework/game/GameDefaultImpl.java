@@ -22,12 +22,16 @@ import java.util.Observer;
 
 import javax.swing.JPanel;
 
-import static gameframework.game.ConstantValues.*;
-
 /**
  * Create a basic game application with menus and displays of lives and score
  */
 public class GameDefaultImpl implements Game, Observer {
+	protected static final int NB_ROWS = 31;
+	protected static final int NB_COLUMNS = 28;
+	protected static final int SPRITE_SIZE = 16;
+	public static final int MAX_NUMBER_OF_PLAYER = 4;
+	public static final int NUMBER_OF_LIVES = 1;
+
 	protected CanvasDefaultImpl defaultCanvas = null;
 	protected IntegerObservable score[] = new IntegerObservable[MAX_NUMBER_OF_PLAYER];
 	protected IntegerObservable life[] = new IntegerObservable[MAX_NUMBER_OF_PLAYER];
@@ -67,8 +71,7 @@ public class GameDefaultImpl implements Game, Observer {
 		Container c = createStatusBar();
 
 		defaultCanvas = new CanvasDefaultImpl();
-		defaultCanvas.setSize(SPRITE_SIZE_X * NB_COLUMNS, SPRITE_SIZE_Y
-				* NB_ROWS);
+		defaultCanvas.setSize(SPRITE_SIZE * NB_COLUMNS, SPRITE_SIZE * NB_ROWS);
 		f.add(defaultCanvas);
 		f.add(c, BorderLayout.NORTH);
 		f.pack();
@@ -135,7 +138,7 @@ public class GameDefaultImpl implements Game, Observer {
 		game.add(resume);
 	}
 
-	protected Container createStatusBar() {
+	private Container createStatusBar() {
 		JPanel c = new JPanel();
 		GridBagLayout layout = new GridBagLayout();
 		c.setLayout(layout);
@@ -178,6 +181,7 @@ public class GameDefaultImpl implements Game, Observer {
 			currentPlayedLevel.join();
 		} catch (Exception e) {
 		}
+
 	}
 
 	public void restore() {
@@ -211,8 +215,8 @@ public class GameDefaultImpl implements Game, Observer {
 	}
 
 	/*
-	 * update method so as to make Game as an updatable Observer (TODO Handle 2
-	 * or more players)
+	 * update method so as to make Game as an updatable Observer
+	 * (TODO Handle 2 or more players)
 	 */
 	public void update(Observable o, Object arg) {
 		if (o instanceof IntegerObservable) {
@@ -226,9 +230,9 @@ public class GameDefaultImpl implements Game, Observer {
 		for (IntegerObservable lifeObservable : life) {
 			if (observable == lifeObservable) {
 				int lives = observable.getValue();
-				lifeValue.setText(Integer.toString(lives));
-				if (lives == 0) {
-					informationValue.setText("Defeat");
+ 				lifeValue.setText(Integer.toString(lives));
+ 				if (lives == 0) {
+ 					informationValue.setText("Defeat");
 					currentPlayedLevel.interrupt();
 					currentPlayedLevel.end();
 				}
@@ -243,4 +247,5 @@ public class GameDefaultImpl implements Game, Observer {
 			}
 		}
 	}
+
 }

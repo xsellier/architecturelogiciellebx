@@ -1,4 +1,4 @@
-package gameframework.utility;
+package bomberman.utility;
 
 import gameframework.base.DrawableImage;
 
@@ -26,7 +26,8 @@ public class LoadImage {
 				10);
 		ArrayList<DrawableImage> imgListIdle = loadImg(canvas, DIRECTORY_PLAYER, "Idle",
 				"gif", 1);
-		ArrayList<DrawableImage> imgListDie = loadImg(canvas, DIRECTORY_PLAYER, "Die", "gif", 4);
+		ArrayList<DrawableImage> imgListDie = loadImg(canvas, DIRECTORY_PLAYER,
+				"Die", "gif", 4);
 
 		imgMap.put("Left", imgListLeft);
 		imgMap.put("Right", imgListRight);
