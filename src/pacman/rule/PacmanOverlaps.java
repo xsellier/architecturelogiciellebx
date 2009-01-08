@@ -114,6 +114,7 @@ public class PacmanOverlaps extends OverlapRuleApplierDefaultImpl {
 	}
 
 	public void overlapRule(Pacman p, Pacgum pg) {
+		score.setValue(score.getValue() + 1);
  		universe.removeGameEntity(pg);
 	}
 }

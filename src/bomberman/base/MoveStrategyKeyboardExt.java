@@ -1,4 +1,8 @@
-package gameframework.base;
+package bomberman.base;
+
+import gameframework.base.MoveStrategy;
+import gameframework.base.SpeedVector;
+import gameframework.base.SpeedVectorDefaultImpl;
 
 import java.awt.Point;
 import java.awt.event.KeyAdapter;
