@@ -1,6 +1,5 @@
 package bomberman.game;
 
-import gameframework.base.IntegerObservable;
 import gameframework.game.CanvasDefaultImpl;
 import gameframework.game.GameDefaultImpl;
 

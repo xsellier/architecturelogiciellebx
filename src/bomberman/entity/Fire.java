@@ -1,6 +1,8 @@
 package bomberman.entity;
 
-import static bomberman.game.ConstantValues.*;
+import static bomberman.game.ConstantValues.SPRITE_SIZE;
+import static bomberman.game.ConstantValues.SPRITE_SIZE_X;
+import static bomberman.game.ConstantValues.SPRITE_SIZE_Y;
 import gameframework.base.Drawable;
 import gameframework.base.DrawableImage;
 import gameframework.base.Overlappable;
