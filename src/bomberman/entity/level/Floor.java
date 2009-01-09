@@ -1,6 +1,8 @@
-package bomberman.entity;
+package bomberman.entity.level;
 
-import static bomberman.game.ConstantValues.*;
+import static bomberman.game.ConstantValues.SPRITE_SIZE;
+import static bomberman.game.ConstantValues.SPRITE_SIZE_X;
+import static bomberman.game.ConstantValues.SPRITE_SIZE_Y;
 import gameframework.base.Drawable;
 import gameframework.base.DrawableImage;
 import gameframework.base.Overlappable;
@@ -11,14 +13,16 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 
-public class FireItem implements Drawable, GameEntity, Overlappable {
+import bomberman.utility.LoadImage;
+
+public class Floor implements Drawable, GameEntity, Overlappable {
 	protected static DrawableImage image = null;
-	
+
 	protected Point position;
 
-	public FireItem(Canvas defaultCanvas, Point pos) {
+	public Floor(Canvas defaultCanvas, Point pos) {
 		if (image == null) {
-			image = new DrawableImage("images/Item/Flame.gif", defaultCanvas);
+			image = LoadImage.getImgLevel(defaultCanvas).get("Floor");
 		}
 		position = pos;
 	}
@@ -28,8 +32,8 @@ public class FireItem implements Drawable, GameEntity, Overlappable {
 	}
 
 	public void draw(Graphics g) {
-			g.drawImage(image.getImage(), (int) getPosition().getX(),
-					(int) getPosition().getY(), SPRITE_SIZE_X, SPRITE_SIZE_Y, null);
+		g.drawImage(image.getImage(), (int) getPosition().getX(),
+				(int) getPosition().getY(), SPRITE_SIZE_X, SPRITE_SIZE_Y, null);
 	}
 
 	public Rectangle getBoundingBox() {

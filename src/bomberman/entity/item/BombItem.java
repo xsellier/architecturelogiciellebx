@@ -1,4 +1,4 @@
-package bomberman.entity;
+package bomberman.entity.item;
 
 import static bomberman.game.ConstantValues.*;
 import gameframework.base.Drawable;
@@ -11,13 +11,15 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 
+import bomberman.utility.LoadImage;
+
 public class BombItem implements Drawable, GameEntity, Overlappable {
 	protected static DrawableImage image = null;
 	protected Point position;
 
 	public BombItem(Canvas defaultCanvas, Point pos) {
 		if (image == null) {
-			image = new DrawableImage("images/Item/Bomb.gif", defaultCanvas);
+			image = LoadImage.getImgItem(defaultCanvas).get("Bomb");
 		}
 		position = pos;
 	}

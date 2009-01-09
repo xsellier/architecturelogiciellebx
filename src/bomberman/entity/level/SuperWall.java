@@ -1,6 +1,7 @@
-package bomberman.entity;
+package bomberman.entity.level;
 
-import static bomberman.game.ConstantValues.*;
+import static bomberman.game.ConstantValues.SPRITE_SIZE_X;
+import static bomberman.game.ConstantValues.SPRITE_SIZE_Y;
 import gameframework.base.Drawable;
 import gameframework.base.DrawableImage;
 import gameframework.game.GameEntity;
@@ -11,13 +12,15 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 
+import bomberman.utility.LoadImage;
+
 public class SuperWall implements Drawable, MoveBlocker, GameEntity {
 	protected static DrawableImage image = null;
 	int x, y;
 
 	public SuperWall(Canvas defaultCanvas, int xx, int yy) {
 		if (image == null) {
-			image = new DrawableImage("images/superWall.gif", defaultCanvas);
+			image = LoadImage.getImgLevel(defaultCanvas).get("SuperWall");
 		}
 		x = xx;
 		y = yy;

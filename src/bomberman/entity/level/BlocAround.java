@@ -1,4 +1,4 @@
-package bomberman.entity;
+package bomberman.entity.level;
 
 import static bomberman.game.ConstantValues.SPRITE_SIZE_X;
 import static bomberman.game.ConstantValues.SPRITE_SIZE_Y;
@@ -12,13 +12,15 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 
+import bomberman.utility.LoadImage;
+
 public class BlocAround implements Drawable, MoveBlocker, GameEntity {
 	protected static DrawableImage image = null;
 	int x, y;
 
 	public BlocAround(Canvas defaultCanvas, int xx, int yy) {
 		if (image == null) {
-			image = new DrawableImage("images/blocAround.gif", defaultCanvas);
+			image = LoadImage.getImgLevel(defaultCanvas).get("BlocAround");
 		}
 		x = xx;
 		y = yy;
