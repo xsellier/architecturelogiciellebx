@@ -1,32 +1,24 @@
 package bomberman.entity.item;
 
-import static bomberman.game.ConstantValues.*;
-import gameframework.base.Drawable;
+import static bomberman.game.ConstantValues.SPRITE_SIZE_X;
+import static bomberman.game.ConstantValues.SPRITE_SIZE_Y;
 import gameframework.base.DrawableImage;
-import gameframework.base.Overlappable;
-import gameframework.game.GameEntity;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.Rectangle;
 
 import bomberman.utility.LoadImage;
 
-public class FireItem implements Drawable, GameEntity, Overlappable {
+public class FireItem extends AbstractItem {
 	protected static DrawableImage image = null;
-	
-	protected Point position;
 
 	public FireItem(Canvas defaultCanvas, Point pos) {
+		super();
 		if (image == null) {
 			image = LoadImage.getImgItem(defaultCanvas).get("Fire");
 		}
 		position = pos;
-	}
-
-	public Point getPosition() {
-		return position;
 	}
 
 	public void draw(Graphics g) {
@@ -34,8 +26,4 @@ public class FireItem implements Drawable, GameEntity, Overlappable {
 					(int) getPosition().getY(), SPRITE_SIZE_X, SPRITE_SIZE_Y, null);
 	}
 
-	public Rectangle getBoundingBox() {
-		return (new Rectangle((int) position.getX(), (int) position.getY(),
-				SPRITE_SIZE, SPRITE_SIZE));
-	}
 }

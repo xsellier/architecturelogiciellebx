@@ -4,7 +4,6 @@ import static bomberman.game.ConstantValues.NB_COLUMNS;
 import static bomberman.game.ConstantValues.NB_ROWS;
 import static bomberman.game.ConstantValues.SPRITE_SIZE_X;
 import static bomberman.game.ConstantValues.SPRITE_SIZE_Y;
-import gameframework.base.DrawableImage;
 import gameframework.game.CanvasDefaultImpl;
 import gameframework.game.Game;
 import gameframework.game.GameLevelDefaultImpl;
@@ -18,7 +17,6 @@ import gameframework.game.OverlapRuleApplier;
 
 import java.awt.Canvas;
 import java.awt.Point;
-import java.util.HashMap;
 
 import bomberman.base.MoveStrategyKeyboardExt;
 import bomberman.entity.Bomberman;
@@ -31,7 +29,6 @@ import bomberman.entity.level.Wall;
 import bomberman.game.OverlapProcessorDefaultImplExt;
 import bomberman.rule.BombermanMoveBlockers;
 import bomberman.rule.BombermanOverlaps;
-import bomberman.utility.LoadImage;
 
 public class BombermanGameLevel extends GameLevelDefaultImpl {
 	Canvas canvas;
@@ -96,16 +93,16 @@ public class BombermanGameLevel extends GameLevelDefaultImpl {
 						* SPRITE_SIZE_X, i * SPRITE_SIZE_Y)));
 				
 				if (tab[i][j] == 1) {
-					universe.addGameEntity(new BlocAround(canvas, j
-							* SPRITE_SIZE_X, i * SPRITE_SIZE_Y));
+					universe.addGameEntity(new BlocAround(canvas, new Point(j
+							* SPRITE_SIZE_X, i * SPRITE_SIZE_Y)));
 				}
 				if (tab[i][j] == 2) {
-					universe.addGameEntity(new SuperWall(canvas, j
-							* SPRITE_SIZE_X, i * SPRITE_SIZE_Y));
+					universe.addGameEntity(new SuperWall(canvas, new Point(j
+							* SPRITE_SIZE_X, i * SPRITE_SIZE_Y)));
 				}
 				if (tab[i][j] == 3) {
-					universe.addGameEntity(new Wall(canvas, j * SPRITE_SIZE_X,
-							i * SPRITE_SIZE_Y));
+					universe.addGameEntity(new Wall(canvas, new Point(j * SPRITE_SIZE_X,
+							i * SPRITE_SIZE_Y)));
 				}
 				if (tab[i][j] == 4) {
 					universe.addGameEntity(new BombItem(canvas, new Point(j
