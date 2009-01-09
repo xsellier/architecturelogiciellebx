@@ -1,6 +1,9 @@
 package bomberman;
 
-import static bomberman.game.ConstantValues.*;
+import static bomberman.game.ConstantValues.NB_COLUMNS;
+import static bomberman.game.ConstantValues.NB_ROWS;
+import static bomberman.game.ConstantValues.SPRITE_SIZE_X;
+import static bomberman.game.ConstantValues.SPRITE_SIZE_Y;
 import gameframework.game.CanvasDefaultImpl;
 import gameframework.game.Game;
 import gameframework.game.GameLevelDefaultImpl;
@@ -10,7 +13,6 @@ import gameframework.game.GameUniverseViewPortDefaultImpl;
 import gameframework.game.MoveBlockerChecker;
 import gameframework.game.MoveBlockerCheckerDefaultImpl;
 import gameframework.game.OverlapProcessor;
-import gameframework.game.OverlapProcessorDefaultImpl;
 import gameframework.game.OverlapRuleApplier;
 
 import java.awt.Canvas;
@@ -23,6 +25,7 @@ import bomberman.entity.Bomberman;
 import bomberman.entity.FireItem;
 import bomberman.entity.SuperWall;
 import bomberman.entity.Wall;
+import bomberman.game.OverlapProcessorDefaultImplExt;
 import bomberman.rule.BombermanMoveBlockers;
 import bomberman.rule.BombermanOverlaps;
 
@@ -65,7 +68,7 @@ public class BombermanGameLevel extends GameLevelDefaultImpl {
 
 	@Override
 	protected void init() {
-		OverlapProcessor overlapProcessor = new OverlapProcessorDefaultImpl();
+		OverlapProcessor overlapProcessor = new OverlapProcessorDefaultImplExt();
 		OverlapRuleApplier overlapRules = new BombermanOverlaps(new Point(
 				14 * SPRITE_SIZE_X, 17 * SPRITE_SIZE_Y), new Point(
 				14 * SPRITE_SIZE_X, 15 * SPRITE_SIZE_Y), life[0], score[0]);
