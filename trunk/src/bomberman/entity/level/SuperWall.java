@@ -2,39 +2,28 @@ package bomberman.entity.level;
 
 import static bomberman.game.ConstantValues.SPRITE_SIZE_X;
 import static bomberman.game.ConstantValues.SPRITE_SIZE_Y;
-import gameframework.base.Drawable;
 import gameframework.base.DrawableImage;
-import gameframework.game.GameEntity;
 import gameframework.game.MoveBlocker;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.Rectangle;
 
 import bomberman.utility.LoadImage;
 
-public class SuperWall implements Drawable, MoveBlocker, GameEntity {
+public class SuperWall extends AbstractLevel implements MoveBlocker {
 	protected static DrawableImage image = null;
-	int x, y;
 
-	public SuperWall(Canvas defaultCanvas, int xx, int yy) {
+	public SuperWall(Canvas defaultCanvas, Point position) {
 		if (image == null) {
 			image = LoadImage.getImgLevel(defaultCanvas).get("SuperWall");
 		}
-		x = xx;
-		y = yy;
+		this.position = position;
 	}
 
 	public void draw(Graphics g) {
-		g.drawImage(image.getImage(), x, y, SPRITE_SIZE_X, SPRITE_SIZE_Y, null);
+		g.drawImage(image.getImage(), position.x, position.y, SPRITE_SIZE_X,
+				SPRITE_SIZE_Y, null);
 	}
 
-	public Point getPos() {
-		return (new Point(x, y));
-	}
-
-	public Rectangle getBoundingBox() {
-		return (new Rectangle(x, y, SPRITE_SIZE_X, SPRITE_SIZE_Y));
-	}
 }
