@@ -45,6 +45,7 @@ public abstract class GameMovable implements Movable {
 		position.translate((int) direction.getDir().getX()
 				* direction.getSpeed(), (int) direction.getDir().getY()
 				* direction.getSpeed());
+		
 		oneStepMoveHandler();
 	}
 

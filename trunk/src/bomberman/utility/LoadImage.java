@@ -11,7 +11,11 @@ public class LoadImage {
 	
 	private static final String DIRECTORY_PLAYER = "images/Sprite/Player/Bomberman/";
 	private static final String DIRECTORY_FIRE = "images/Sprite/Fire/";
+	private static final String DIRECTORY_LEVEL = "images/Level/LevelSnow/";
+	private static final String DIRECTORY_ITEM = "images/Item/";
 	
+	private static HashMap<String, DrawableImage> imgLevel = null;
+	private static HashMap<String, DrawableImage> imgItem = null;
 	
 	public static HashMap<String, ArrayList<DrawableImage>> loadImagePlayer(Canvas canvas) {
 		HashMap<String, ArrayList<DrawableImage>> imgMap = new HashMap<String, ArrayList<DrawableImage>>();
@@ -87,6 +91,36 @@ public class LoadImage {
 
 		return imgMap;
 
+	}
+	
+	public static HashMap<String, DrawableImage> getImgLevel(Canvas canvas) {
+		if (imgLevel == null) {
+			loadLevel(canvas);
+		}
+		return imgLevel;
+	}
+	
+	private static void loadLevel(Canvas canvas) {
+		imgLevel = new HashMap<String, DrawableImage>();
+		
+		imgLevel.put("Wall", new DrawableImage(DIRECTORY_LEVEL + "Wall.gif", canvas));
+		imgLevel.put("SuperWall", new DrawableImage(DIRECTORY_LEVEL + "SuperWall.gif", canvas));
+		imgLevel.put("BlocAround", new DrawableImage(DIRECTORY_LEVEL + "BlocAround.gif", canvas));
+		imgLevel.put("Floor", new DrawableImage(DIRECTORY_LEVEL + "Floor.gif", canvas));
+	}
+	
+	public static HashMap<String, DrawableImage> getImgItem(Canvas canvas) {
+		if (imgItem == null) {
+			loadItem(canvas);
+		}
+		return imgItem;
+	}
+	
+	private static void loadItem(Canvas canvas) {
+		imgItem = new HashMap<String, DrawableImage>();
+		
+		imgItem.put("Bomb", new DrawableImage(DIRECTORY_ITEM + "Bomb.gif", canvas));
+		imgItem.put("Fire", new DrawableImage(DIRECTORY_ITEM + "Fire.gif", canvas));
 	}
 
 }

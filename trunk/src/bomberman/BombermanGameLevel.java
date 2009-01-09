@@ -4,6 +4,7 @@ import static bomberman.game.ConstantValues.NB_COLUMNS;
 import static bomberman.game.ConstantValues.NB_ROWS;
 import static bomberman.game.ConstantValues.SPRITE_SIZE_X;
 import static bomberman.game.ConstantValues.SPRITE_SIZE_Y;
+import gameframework.base.DrawableImage;
 import gameframework.game.CanvasDefaultImpl;
 import gameframework.game.Game;
 import gameframework.game.GameLevelDefaultImpl;
@@ -17,17 +18,20 @@ import gameframework.game.OverlapRuleApplier;
 
 import java.awt.Canvas;
 import java.awt.Point;
+import java.util.HashMap;
 
 import bomberman.base.MoveStrategyKeyboardExt;
-import bomberman.entity.BlocAround;
-import bomberman.entity.BombItem;
 import bomberman.entity.Bomberman;
-import bomberman.entity.FireItem;
-import bomberman.entity.SuperWall;
-import bomberman.entity.Wall;
+import bomberman.entity.item.BombItem;
+import bomberman.entity.item.FireItem;
+import bomberman.entity.level.BlocAround;
+import bomberman.entity.level.Floor;
+import bomberman.entity.level.SuperWall;
+import bomberman.entity.level.Wall;
 import bomberman.game.OverlapProcessorDefaultImplExt;
 import bomberman.rule.BombermanMoveBlockers;
 import bomberman.rule.BombermanOverlaps;
+import bomberman.utility.LoadImage;
 
 public class BombermanGameLevel extends GameLevelDefaultImpl {
 	Canvas canvas;
@@ -36,20 +40,20 @@ public class BombermanGameLevel extends GameLevelDefaultImpl {
 	static int[][] tab = {
 		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,	1, 1, 1, 1, 1, 1 },
 		{ 1, 0, 0, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1 },
-		{ 1, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 2, 2, 0,	1, 2, 2, 2, 2, 1 },
-		{ 1, 0, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 2, 2, 0,	1, 2, 2, 2, 0, 1 },
-		{ 1, 0, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 0, 1 },
-		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1 },
-		{ 1, 0, 2, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 2, 2, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 2, 0, 1 },
-		{ 1, 0, 2, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 2, 2, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 2, 0, 1 },
-		{ 1, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0,	0, 0, 0, 0, 0, 1 },
-		{ 1, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 5, 2, 2, 5, 2, 2, 2, 2, 2, 0,	1, 2, 2, 2, 2, 1 },
-		{ 1, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 5, 2, 2, 5, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 1 },
-		{ 1, 2, 2, 2, 2, 2, 0, 2, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 2, 2, 0, 2, 2, 2, 2, 2, 1 },
-		{ 1, 2, 2, 2, 2, 2, 0, 2, 2, 5, 2, 2, 2, 3, 3, 2, 2, 2, 5, 2, 2, 0, 2, 2, 2, 2, 2, 1 },
-		{ 1, 2, 2, 2, 2, 2, 0, 2, 2, 5, 2, 4, 4, 4, 4, 4, 4, 2, 5, 2, 2, 0, 2, 2, 2, 2, 2, 1 },
-		{ 5, 5, 5, 5, 5, 5, 0, 5, 5, 5, 2, 4, 4, 4, 4, 4, 4, 2, 5, 2, 5, 0, 5, 5, 5, 5, 5, 5 },
-		{ 1, 1, 1, 1, 1, 1, 0, 1, 1, 5, 1, 4, 4, 4, 4, 4, 4, 1, 5, 1, 1, 0, 1, 1, 1, 1, 1, 1 },
+		{ 1, 0, 2, 2, 2, 2, 0, 2, 3, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 1, 2, 0,	1, 2, 2, 2, 2, 1 },
+		{ 1, 0, 2, 2, 2, 2, 0, 3, 3, 3, 0, 3, 0, 2, 2, 0, 2, 2, 2, 1, 2, 0,	1, 2, 2, 2, 0, 1 },
+		{ 1, 0, 2, 2, 2, 2, 0, 2, 3, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 1, 2, 0, 2, 2, 2, 2, 0, 1 },
+		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1 },
+		{ 1, 0, 2, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 2, 2, 2, 2, 2, 0, 1, 2, 0, 2, 2, 2, 2, 0, 1 },
+		{ 1, 0, 2, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 2, 2, 2, 2, 2, 0, 1, 2, 0, 2, 2, 2, 2, 0, 1 },
+		{ 1, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 1, 2, 0,	0, 0, 0, 0, 0, 1 },
+		{ 1, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 5, 2, 2, 5, 2, 2, 2, 1, 2, 0,	1, 2, 2, 2, 2, 1 },
+		{ 1, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 5, 2, 2, 5, 2, 2, 2, 1, 2, 0, 2, 2, 2, 2, 2, 1 },
+		{ 1, 2, 2, 2, 2, 2, 0, 2, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 1, 2, 0, 2, 2, 2, 2, 2, 1 },
+		{ 1, 2, 2, 2, 2, 2, 0, 2, 2, 5, 2, 2, 2, 3, 3, 2, 2, 2, 5, 1, 2, 0, 2, 2, 2, 2, 2, 1 },
+		{ 1, 2, 2, 2, 2, 2, 0, 2, 2, 5, 2, 4, 4, 4, 4, 4, 4, 2, 5, 1, 2, 0, 2, 2, 2, 2, 2, 1 },
+		{ 1, 5, 5, 5, 5, 5, 0, 5, 5, 5, 2, 4, 4, 4, 4, 4, 4, 2, 5, 1, 5, 0, 5, 5, 5, 5, 5, 5 },
+		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1 },
 		{ 1, 1, 1, 1, 1, 1, 0, 1, 1, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1 },
 		{ 1, 1, 1, 1, 1, 1, 0, 1, 1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 1, 1, 0, 1, 1, 1, 1, 1, 1 },
 		{ 1, 1, 1, 1, 1, 1, 0, 1, 1, 5, 1, 1, 1, 1, 1, 1, 1, 1, 5, 1, 1, 0, 1, 1, 1, 1, 1, 1 },
@@ -83,10 +87,14 @@ public class BombermanGameLevel extends GameLevelDefaultImpl {
 
 		gameBoard = new GameUniverseViewPortDefaultImpl(canvas, universe);
 		((CanvasDefaultImpl) canvas).setDrawingGameBoard(gameBoard);
-
+		
 		// Universe loading
 		for (int i = 0; i < NB_ROWS; ++i) {
 			for (int j = 0; j < NB_COLUMNS; ++j) {
+				
+				universe.addGameEntity(new Floor(canvas, new Point(j
+						* SPRITE_SIZE_X, i * SPRITE_SIZE_Y)));
+				
 				if (tab[i][j] == 1) {
 					universe.addGameEntity(new BlocAround(canvas, j
 							* SPRITE_SIZE_X, i * SPRITE_SIZE_Y));

@@ -13,6 +13,10 @@ public class BombermanMoveBlockers extends MoveBlockerRuleApplierDefaultImpl {
 //		}
 //
 //	}
+	
+//	public void moveBlockerRule(Bomberman bm, SuperWall w) throws IllegalMoveException {
+//		
+//	}
 
 
 }

@@ -8,15 +8,16 @@ import gameframework.game.OverlapRuleApplierDefaultImpl;
 import java.awt.Point;
 import java.util.Vector;
 
-import bomberman.entity.BombItem;
 import bomberman.entity.Bomberman;
 import bomberman.entity.Fire;
-import bomberman.entity.FireItem;
-
+import bomberman.entity.item.BombItem;
+import bomberman.entity.item.FireItem;
+import bomberman.entity.level.Floor;
+import bomberman.entity.level.Wall;
 
 public class BombermanOverlaps extends OverlapRuleApplierDefaultImpl {
 	protected GameUniverse universe;
-//	protected Vector<Ghost> vGhosts = new Vector<Ghost>();
+	// protected Vector<Ghost> vGhosts = new Vector<Ghost>();
 
 	// Delay during which pacman is invulnerable and during which ghosts can be
 	// eaten (in number of cycles)
@@ -26,8 +27,8 @@ public class BombermanOverlaps extends OverlapRuleApplierDefaultImpl {
 	private IntegerObservable score;
 	private IntegerObservable life;
 
-	public BombermanOverlaps(Point pacPos, Point gPos,
-			IntegerObservable life, IntegerObservable score) {
+	public BombermanOverlaps(Point pacPos, Point gPos, IntegerObservable life,
+			IntegerObservable score) {
 		pacManStartPos = (Point) pacPos.clone();
 		ghostStartPos = (Point) gPos.clone();
 		this.life = life;
@@ -38,9 +39,9 @@ public class BombermanOverlaps extends OverlapRuleApplierDefaultImpl {
 		this.universe = universe;
 	}
 
-//	public void addGhost(Ghost g) {
-//		vGhosts.addElement(g);
-//	}
+	// public void addGhost(Ghost g) {
+	// vGhosts.addElement(g);
+	// }
 
 	@Override
 	public void applyOverlapRules(Vector<Overlap> overlappables) {
@@ -50,18 +51,27 @@ public class BombermanOverlaps extends OverlapRuleApplierDefaultImpl {
 
 	public void overlapRule(Bomberman bm, BombItem b) {
 		score.setValue(score.getValue() + 1);
- 		universe.removeGameEntity(b);
+		universe.removeGameEntity(b);
 	}
-
+	
 	public void overlapRule(Fire f, Bomberman bm) {
 		System.out.println("Mort");
 	}
-	
+
 	public void overlapRule(Bomberman bm, Fire f) {
-//		bm.die();
+		// bm.die();
 	}
-	
+
 	public void overlapRule(Bomberman bm, FireItem f) {
 		universe.removeGameEntity(f);
+	}
+
+	public void overlapRule(Bomberman bm, Floor f) {
+//		bm.setPosition(f.getPosition());
+//		MoveStrategyKeyboardExt strat = new MoveStrategyKeyboardExt(bm);
+//		GameMovableDriverDefaultImpl bomberDriver = (GameMovableDriverDefaultImpl) bm
+//				.getDriver();
+//		bomberDriver.setStrategy(strat);
+//		bm.setPosition(f.getPosition());
 	}
 }
