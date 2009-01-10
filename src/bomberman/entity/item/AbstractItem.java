@@ -26,7 +26,7 @@ public abstract class AbstractItem implements Drawable, GameEntity, Overlappable
 	
 	public AbstractItem(Canvas canvas, GameUniverse universe) {
 		if (imgBurnList == null) {
-			imgBurnList = LoadImage.getImgBurnList(canvas);
+			imgBurnList = LoadImage.getImgBurnItemList(canvas);
 		}
 		this.universe = universe;
 	}
@@ -37,8 +37,9 @@ public abstract class AbstractItem implements Drawable, GameEntity, Overlappable
 
 	public Rectangle getBoundingBox() {
 		return (new Rectangle((int) position.getX(), (int) position.getY(),
-				SPRITE_SIZE_X, SPRITE_SIZE_Y));
+				SPRITE_SIZE_X  / 5, SPRITE_SIZE_Y / 5));
 	}
 	
 	public abstract void burnItem();
+
 }
