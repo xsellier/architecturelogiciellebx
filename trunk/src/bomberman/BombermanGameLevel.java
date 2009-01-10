@@ -37,13 +37,13 @@ public class BombermanGameLevel extends GameLevelDefaultImpl {
 	static int[][] tab = {
 		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,	1, 1, 1, 1, 1, 1 },
 		{ 1, 0, 0, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1 },
-		{ 1, 0, 2, 2, 2, 2, 0, 2, 3, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 1, 2, 0,	1, 2, 2, 2, 2, 1 },
-		{ 1, 0, 2, 2, 2, 2, 0, 3, 3, 3, 0, 3, 0, 2, 2, 0, 2, 2, 2, 1, 2, 0,	1, 2, 2, 2, 0, 1 },
-		{ 1, 0, 2, 2, 2, 2, 0, 2, 3, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 1, 2, 0, 2, 2, 2, 2, 0, 1 },
-		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1 },
-		{ 1, 0, 2, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 2, 2, 2, 2, 2, 0, 1, 2, 0, 2, 2, 2, 2, 0, 1 },
-		{ 1, 0, 2, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 2, 2, 2, 2, 2, 0, 1, 2, 0, 2, 2, 2, 2, 0, 1 },
-		{ 1, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 1, 2, 0,	0, 0, 0, 0, 0, 1 },
+		{ 1, 0, 2, 3, 2, 2, 0, 2, 3, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 1, 2, 0,	1, 2, 2, 2, 2, 1 },
+		{ 1, 5, 3, 2, 2, 2, 0, 3, 3, 3, 0, 3, 0, 2, 2, 0, 2, 2, 2, 1, 2, 0,	1, 2, 2, 2, 0, 1 },
+		{ 1, 5, 2, 2, 2, 2, 0, 2, 3, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 1, 2, 0, 2, 2, 2, 2, 0, 1 },
+		{ 1, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1 },
+		{ 1, 5, 2, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 2, 2, 2, 2, 2, 0, 1, 2, 0, 2, 2, 2, 2, 0, 1 },
+		{ 1, 5, 2, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 2, 2, 2, 2, 2, 0, 1, 2, 0, 2, 2, 2, 2, 0, 1 },
+		{ 1, 5, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 1, 2, 0,	0, 0, 0, 0, 0, 1 },
 		{ 1, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 5, 2, 2, 5, 2, 2, 2, 1, 2, 0,	1, 2, 2, 2, 2, 1 },
 		{ 1, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 5, 2, 2, 5, 2, 2, 2, 1, 2, 0, 2, 2, 2, 2, 2, 1 },
 		{ 1, 2, 2, 2, 2, 2, 0, 2, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 1, 2, 0, 2, 2, 2, 2, 2, 1 },
@@ -71,8 +71,7 @@ public class BombermanGameLevel extends GameLevelDefaultImpl {
 	protected void init() {
 		OverlapProcessor overlapProcessor = new OverlapProcessorDefaultImplExt();
 		OverlapRuleApplier overlapRules = new BombermanOverlaps(new Point(
-				14 * SPRITE_SIZE_X, 17 * SPRITE_SIZE_Y), new Point(
-				14 * SPRITE_SIZE_X, 15 * SPRITE_SIZE_Y), life[0], score[0]);
+				1 * SPRITE_SIZE_X, 1 * SPRITE_SIZE_Y), life[0], score[0]);
 		overlapProcessor.setOverlapRules(overlapRules);
 
 		MoveBlockerChecker moveBlockerChecker = new MoveBlockerCheckerDefaultImpl();
@@ -106,11 +105,11 @@ public class BombermanGameLevel extends GameLevelDefaultImpl {
 				}
 				if (tab[i][j] == 4) {
 					universe.addGameEntity(new BombItem(canvas, new Point(j
-							* SPRITE_SIZE_X, i * SPRITE_SIZE_Y)));
+							* SPRITE_SIZE_X, i * SPRITE_SIZE_Y), universe));
 				}
 				if (tab[i][j] == 5) {
 					universe.addGameEntity(new FireItem(canvas, new Point(j
-							* SPRITE_SIZE_X, i * SPRITE_SIZE_Y)));
+							* SPRITE_SIZE_X, i * SPRITE_SIZE_Y), universe));
 				}
 			}
 		}

@@ -115,10 +115,10 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 		System.out.println("Ajout de bomb sur la carte à la position (" + x
 				/ SPRITE_SIZE_X + ", " + x / SPRITE_SIZE_Y + ")");
 
-		new Bomb(defaultCanvas, new Point(x, y), universe);
+		// new Bomb(defaultCanvas, new Point(x, y), universe);
 
-		// universe.addGameEntity(new Bomb(defaultCanvas, new Point(x, y),
-		// universe));
+		 universe.addGameEntity(new Bomb(defaultCanvas, new Point(x, y),
+		 universe));
 	}
 
 	public void die() {

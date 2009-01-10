@@ -10,27 +10,21 @@ import java.util.Vector;
 
 import bomberman.entity.Bomberman;
 import bomberman.entity.Fire;
+import bomberman.entity.item.AbstractItem;
 import bomberman.entity.item.BombItem;
 import bomberman.entity.item.FireItem;
 import bomberman.entity.level.Floor;
-import bomberman.entity.level.Wall;
 
 public class BombermanOverlaps extends OverlapRuleApplierDefaultImpl {
 	protected GameUniverse universe;
-	// protected Vector<Ghost> vGhosts = new Vector<Ghost>();
-
-	// Delay during which pacman is invulnerable and during which ghosts can be
-	// eaten (in number of cycles)
-	protected Point pacManStartPos;
-	protected Point ghostStartPos;
+	protected Point BombermanStartPos;
 	protected boolean managePacmanDeath;
 	private IntegerObservable score;
 	private IntegerObservable life;
 
-	public BombermanOverlaps(Point pacPos, Point gPos, IntegerObservable life,
+	public BombermanOverlaps(Point pacPos, IntegerObservable life,
 			IntegerObservable score) {
-		pacManStartPos = (Point) pacPos.clone();
-		ghostStartPos = (Point) gPos.clone();
+		BombermanStartPos = (Point) pacPos.clone();
 		this.life = life;
 		this.score = score;
 	}
@@ -38,10 +32,6 @@ public class BombermanOverlaps extends OverlapRuleApplierDefaultImpl {
 	public void setUniverse(GameUniverse universe) {
 		this.universe = universe;
 	}
-
-	// public void addGhost(Ghost g) {
-	// vGhosts.addElement(g);
-	// }
 
 	@Override
 	public void applyOverlapRules(Vector<Overlap> overlappables) {
@@ -57,12 +47,21 @@ public class BombermanOverlaps extends OverlapRuleApplierDefaultImpl {
 	public void overlapRule(Fire f, Bomberman bm) {
 		System.out.println("Mort");
 	}
+	
+	public void overlapRule(Fire f, FireItem fi) {
+		fi.burnItem();
+	}
+	
+	public void overlapRule(Fire f, BombItem bi) {
+		bi.burnItem();
+	}
 
 	public void overlapRule(Bomberman bm, Fire f) {
 		// bm.die();
 	}
 
 	public void overlapRule(Bomberman bm, FireItem f) {
+		life.setValue(life.getValue() + 1);
 		universe.removeGameEntity(f);
 	}
 

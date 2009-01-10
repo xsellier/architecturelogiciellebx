@@ -48,7 +48,7 @@ public class Bomb implements Drawable, GameEntity, Overlappable {
 		position = pos;
 		this.universe = universe;
 		
-		universe.addGameEntity(this);
+//		universe.addGameEntity(this);
 		
 		timer = new Timer();
 		timer.scheduleAtFixedRate(new TimerTaskExt(9), 0, 250);
@@ -67,9 +67,9 @@ public class Bomb implements Drawable, GameEntity, Overlappable {
 			spriteNumber = spriteNumber % 3;
 			cycle++;
 			if (cycle == maxCycle) {
-//				universe.removeGameEntity(Bomb.this);
-//				universe.addGameEntity(new Fire(canvas, getPosition(),
-//						universe, DEFAULT_FIRE_POWER, "Center"));
+				universe.removeGameEntity(Bomb.this);
+				universe.addGameEntity(new Fire(canvas, getPosition(),
+						universe, DEFAULT_FIRE_POWER, "Center"));
 				this.cancel();
 			}
 		}

@@ -123,4 +123,8 @@ public class LoadImage {
 		imgItem.put("Fire", new DrawableImage(DIRECTORY_ITEM + "Fire.gif", canvas));
 	}
 
+	public static ArrayList<DrawableImage> getImgBurnList(Canvas canvas) {
+		return loadImg(canvas, DIRECTORY_ITEM + "ItemBurning/", "ItemBurning", "gif", 7);
+	}
+	
 }
