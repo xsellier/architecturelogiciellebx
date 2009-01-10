@@ -10,10 +10,10 @@ import java.util.Vector;
 
 import bomberman.entity.Bomberman;
 import bomberman.entity.Fire;
-import bomberman.entity.item.AbstractItem;
 import bomberman.entity.item.BombItem;
 import bomberman.entity.item.FireItem;
 import bomberman.entity.level.Floor;
+import bomberman.entity.level.Wall;
 
 public class BombermanOverlaps extends OverlapRuleApplierDefaultImpl {
 	protected GameUniverse universe;
@@ -44,10 +44,6 @@ public class BombermanOverlaps extends OverlapRuleApplierDefaultImpl {
 		universe.removeGameEntity(b);
 	}
 	
-	public void overlapRule(Fire f, Bomberman bm) {
-		System.out.println("Mort");
-	}
-	
 	public void overlapRule(Fire f, FireItem fi) {
 		fi.burnItem();
 	}
@@ -55,9 +51,18 @@ public class BombermanOverlaps extends OverlapRuleApplierDefaultImpl {
 	public void overlapRule(Fire f, BombItem bi) {
 		bi.burnItem();
 	}
+	
+	public void overlapRule(Fire f, Floor fl) {
+		f.burn();
+	}
+	
+	public void overlapRule(Fire f, Wall w) {
+		f.burn();
+		w.burnWall();
+	}
 
 	public void overlapRule(Bomberman bm, Fire f) {
-		// bm.die();
+//		 bm.die();
 	}
 
 	public void overlapRule(Bomberman bm, FireItem f) {

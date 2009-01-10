@@ -82,39 +82,42 @@ public class BombermanGameLevel extends GameLevelDefaultImpl {
 		overlapRules.setUniverse(universe);
 
 		gameBoard = new GameUniverseViewPortDefaultImpl(canvas, universe);
+		((GameUniverseViewPortDefaultImpl) gameBoard).setBackground("images/Level/LevelSnow/Floor.gif");
+		
 		((CanvasDefaultImpl) canvas).setDrawingGameBoard(gameBoard);
 		
 		// Universe loading
 		for (int i = 0; i < NB_ROWS; ++i) {
 			for (int j = 0; j < NB_COLUMNS; ++j) {
-				
-				universe.addGameEntity(new Floor(canvas, new Point(j
-						* SPRITE_SIZE_X, i * SPRITE_SIZE_Y)));
-				
+						
 				if (tab[i][j] == 1) {
 					universe.addGameEntity(new BlocAround(canvas, new Point(j
 							* SPRITE_SIZE_X, i * SPRITE_SIZE_Y)));
-				}
-				if (tab[i][j] == 2) {
+				} else if (tab[i][j] == 2) {
 					universe.addGameEntity(new SuperWall(canvas, new Point(j
 							* SPRITE_SIZE_X, i * SPRITE_SIZE_Y)));
-				}
-				if (tab[i][j] == 3) {
-					universe.addGameEntity(new Wall(canvas, new Point(j * SPRITE_SIZE_X,
-							i * SPRITE_SIZE_Y)));
-				}
-				if (tab[i][j] == 4) {
-					universe.addGameEntity(new BombItem(canvas, new Point(j
-							* SPRITE_SIZE_X, i * SPRITE_SIZE_Y), universe));
-				}
-				if (tab[i][j] == 5) {
-					universe.addGameEntity(new FireItem(canvas, new Point(j
-							* SPRITE_SIZE_X, i * SPRITE_SIZE_Y), universe));
+				} else {
+				
+					universe.addGameEntity(new Floor(canvas, new Point(j
+							* SPRITE_SIZE_X, i * SPRITE_SIZE_Y)));
+					
+					if (tab[i][j] == 3) {
+						universe.addGameEntity(new Wall(canvas, new Point(j * SPRITE_SIZE_X,
+								i * SPRITE_SIZE_Y), universe));
+					}
+					if (tab[i][j] == 4) {
+						universe.addGameEntity(new BombItem(canvas, new Point(j
+								* SPRITE_SIZE_X, i * SPRITE_SIZE_Y), universe));
+					}
+					if (tab[i][j] == 5) {
+						universe.addGameEntity(new FireItem(canvas, new Point(j
+								* SPRITE_SIZE_X, i * SPRITE_SIZE_Y), universe));
+					}
 				}
 			}
 		}
 
-		// Pacman creation and universe loading
+		// Bomberman creation and universe loading
 		Bomberman myPac = new Bomberman(canvas, universe);
 		GameMovableDriverDefaultImpl pacDriver = new GameMovableDriverDefaultImpl();
 		MoveStrategyKeyboardExt keyStr = new MoveStrategyKeyboardExt(myPac);

@@ -105,7 +105,8 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 	}
 
 	public Rectangle getBoundingBox() {
-		return (new Rectangle(0, 0, SPRITE_SIZE_X, SPRITE_SIZE_Y));
+		return (new Rectangle(getPosition().x, getPosition().y, SPRITE_SIZE_X,
+				SPRITE_SIZE_Y));
 	}
 
 	public void putBomb() {
@@ -117,8 +118,8 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 
 		// new Bomb(defaultCanvas, new Point(x, y), universe);
 
-		 universe.addGameEntity(new Bomb(defaultCanvas, new Point(x, y),
-		 universe));
+		universe.addGameEntity(new Bomb(defaultCanvas, new Point(x, y),
+				universe));
 	}
 
 	public void die() {

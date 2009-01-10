@@ -50,6 +50,7 @@ public class LoadImage {
 
 		for (int i = 0; i < number; i++) {
 			String s = dir + name + i + "." + extension;
+			System.out.println(s);
 			DrawableImage tmp = new DrawableImage(s, canvas);
 			result.add(tmp);
 		}
@@ -123,8 +124,12 @@ public class LoadImage {
 		imgItem.put("Fire", new DrawableImage(DIRECTORY_ITEM + "Fire.gif", canvas));
 	}
 
-	public static ArrayList<DrawableImage> getImgBurnList(Canvas canvas) {
+	public static ArrayList<DrawableImage> getImgBurnItemList(Canvas canvas) {
 		return loadImg(canvas, DIRECTORY_ITEM + "ItemBurning/", "ItemBurning", "gif", 7);
 	}
 	
+	
+	public static ArrayList<DrawableImage> getImgBurnWallList(Canvas canvas) {
+		return loadImg(canvas, DIRECTORY_LEVEL + "FireWall/", "FireWall", "gif", 5);
+	}
 }

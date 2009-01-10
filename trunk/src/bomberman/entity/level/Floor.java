@@ -25,4 +25,10 @@ public class Floor extends AbstractLevel implements Overlappable {
 		g.drawImage(image.getImage(), (int) getPosition().getX(),
 				(int) getPosition().getY(), SPRITE_SIZE_X, SPRITE_SIZE_Y, null);
 	}
+
+	public Object getClassAtPoint(Point p) {
+		if (p == getPosition())
+			return getClass();
+		return null;
+	}
 }

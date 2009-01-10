@@ -21,8 +21,9 @@ import java.util.TimerTask;
 
 import bomberman.utility.LoadImage;
 
-public class Fire extends GameMovable implements Drawable, GameEntity, Overlappable {
-	
+public class Fire extends GameMovable implements Drawable, GameEntity,
+		Overlappable {
+
 	protected static HashMap<String, ArrayList<DrawableImage>> imgMap = null;
 
 	protected Point position;
@@ -35,6 +36,8 @@ public class Fire extends GameMovable implements Drawable, GameEntity, Overlappa
 	private String fireType;
 
 	private int test = -1;
+
+	private boolean isBurnable = false;
 
 	public Fire(Canvas defaultCanvas, Point pos, GameUniverse universe,
 			int firePower, String fireType) {
@@ -51,7 +54,7 @@ public class Fire extends GameMovable implements Drawable, GameEntity, Overlappa
 		if ((fireType.compareTo("Center") == 0) && (test <= firePower)) {
 			fireExpansion();
 		}
-		
+
 		timer = new Timer();
 		timer.scheduleAtFixedRate(new TimerTaskExt(4), 0, 100);
 	}
@@ -82,14 +85,14 @@ public class Fire extends GameMovable implements Drawable, GameEntity, Overlappa
 		int x = getPosition().x;
 		int y = getPosition().y;
 
-		universe.addGameEntity(new Fire(defaultCanvas, new Point(x, y - SPRITE_SIZE_Y),
-				universe, 1, "UpExt"));
-		universe.addGameEntity(new Fire(defaultCanvas, new Point(x, y + SPRITE_SIZE_Y),
-				universe, 1, "DownExt"));
-		universe.addGameEntity(new Fire(defaultCanvas, new Point(x - SPRITE_SIZE_X, y),
-				universe, 1, "LeftExt"));
-		universe.addGameEntity(new Fire(defaultCanvas, new Point(x + SPRITE_SIZE_X, y),
-				universe, 1, "RightExt"));
+		universe.addGameEntity(new Fire(defaultCanvas, new Point(x, y
+				- SPRITE_SIZE_Y), universe, 1, "UpExt"));
+		universe.addGameEntity(new Fire(defaultCanvas, new Point(x, y
+				+ SPRITE_SIZE_Y), universe, 1, "DownExt"));
+		universe.addGameEntity(new Fire(defaultCanvas, new Point(x
+				- SPRITE_SIZE_X, y), universe, 1, "LeftExt"));
+		universe.addGameEntity(new Fire(defaultCanvas, new Point(x
+				+ SPRITE_SIZE_X, y), universe, 1, "RightExt"));
 
 	}
 
@@ -97,10 +100,20 @@ public class Fire extends GameMovable implements Drawable, GameEntity, Overlappa
 		return position;
 	}
 
+	public void burn() {
+		System.out.println(this.toString());
+		isBurnable = true;
+	}
+
 	public void draw(Graphics g) {
-		g.drawImage(imgMap.get(fireType).get(spriteNumber).getImage(),
-				(int) getPosition().getX(), (int) getPosition().getY(),
-				SPRITE_SIZE_X, SPRITE_SIZE_Y, null);
+		if (isBurnable) {
+			g.drawImage(imgMap.get(fireType).get(spriteNumber).getImage(),
+					(int) getPosition().getX(), (int) getPosition().getY(),
+					SPRITE_SIZE_X, SPRITE_SIZE_Y, null);
+		} else {
+			g.drawImage(null, getPosition().x, getPosition().y, SPRITE_SIZE_X,
+					SPRITE_SIZE_Y, null);
+		}
 	}
 
 	public Rectangle getBoundingBox() {
@@ -111,6 +124,7 @@ public class Fire extends GameMovable implements Drawable, GameEntity, Overlappa
 	@Override
 	public void oneStepMoveHandler() {
 		// TODO Auto-generated method stub
-		
+
 	}
+
 }
