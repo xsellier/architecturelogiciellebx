@@ -7,6 +7,7 @@ import gameframework.base.Drawable;
 import gameframework.base.DrawableImage;
 import gameframework.base.Overlappable;
 import gameframework.game.GameEntity;
+import gameframework.game.GameMovable;
 import gameframework.game.GameUniverse;
 
 import java.awt.Canvas;
@@ -20,7 +21,7 @@ import java.util.TimerTask;
 
 import bomberman.utility.LoadImage;
 
-public class Fire implements Drawable, GameEntity, Overlappable {
+public class Fire extends GameMovable implements Drawable, GameEntity, Overlappable {
 	
 	protected static HashMap<String, ArrayList<DrawableImage>> imgMap = null;
 
@@ -105,5 +106,11 @@ public class Fire implements Drawable, GameEntity, Overlappable {
 	public Rectangle getBoundingBox() {
 		return (new Rectangle((int) position.getX(), (int) position.getY(),
 				SPRITE_SIZE, SPRITE_SIZE));
+	}
+
+	@Override
+	public void oneStepMoveHandler() {
+		// TODO Auto-generated method stub
+		
 	}
 }
