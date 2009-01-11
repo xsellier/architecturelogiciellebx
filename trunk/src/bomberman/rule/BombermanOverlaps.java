@@ -41,41 +41,44 @@ public class BombermanOverlaps extends OverlapRuleApplierDefaultImpl {
 
 	public void overlapRule(Bomberman bm, BombItem b) {
 		score.setValue(score.getValue() + 1);
+		bm.updateNbBomb();
 		universe.removeGameEntity(b);
-	}
-	
-	public void overlapRule(Fire f, FireItem fi) {
-		fi.burnItem();
-	}
-	
-	public void overlapRule(Fire f, BombItem bi) {
-		bi.burnItem();
-	}
-	
-	public void overlapRule(Fire f, Floor fl) {
-		f.burn();
-	}
-	
-	public void overlapRule(Fire f, Wall w) {
-		f.burn();
-		w.burnWall();
-	}
-
-	public void overlapRule(Bomberman bm, Fire f) {
-//		 bm.die();
 	}
 
 	public void overlapRule(Bomberman bm, FireItem f) {
 		life.setValue(life.getValue() + 1);
+		bm.updateFirePower();
 		universe.removeGameEntity(f);
 	}
 
-	public void overlapRule(Bomberman bm, Floor f) {
-//		bm.setPosition(f.getPosition());
-//		MoveStrategyKeyboardExt strat = new MoveStrategyKeyboardExt(bm);
-//		GameMovableDriverDefaultImpl bomberDriver = (GameMovableDriverDefaultImpl) bm
-//				.getDriver();
-//		bomberDriver.setStrategy(strat);
-//		bm.setPosition(f.getPosition());
+	public void overlapRule(Fire f, FireItem fi) {
+		fi.burnItem();
+		f.fireExpansion(f.getType(), f.getPower());
 	}
+
+	public void overlapRule(Fire f, BombItem bi) {
+		bi.burnItem();
+		f.fireExpansion(f.getType(), f.getPower());
+	}
+
+	public void overlapRule(Fire f, Wall w) {
+		f.setBurnable();
+		w.burnWall();
+		f.stopExpansion(f.getType());
+	}
+	
+	public void overlapRule(Fire f, Floor fl) {
+		f.setBurnable();
+		if (Fire.getFireExpansion().get(f.getType()).booleanValue()) {
+			f.fireExpansion(f.getType(), f.getPower());
+		}
+	}
+
+	public void overlapRule(Bomberman bm, Fire f) {
+		// bm.die();
+	}
+
+	// public void overlapRule(Bomberman bm, Floor f) {
+	//		
+	// }
 }

@@ -1,6 +1,5 @@
 package bomberman.entity;
 
-import static bomberman.game.ConstantValues.DEFAULT_FIRE_POWER;
 import static bomberman.game.ConstantValues.SPRITE_SIZE_X;
 import static bomberman.game.ConstantValues.SPRITE_SIZE_Y;
 import gameframework.base.Drawable;
@@ -29,8 +28,11 @@ public class Bomb implements Drawable, GameEntity, Overlappable {
 	private Timer timer;
 	private int spriteNumber = -1;
 	private GameUniverse universe;
+	private int firePower;
+	private Bomberman bm;
 
-	public Bomb(Canvas defaultCanvas, Point pos, GameUniverse universe) {
+	public Bomb(Canvas defaultCanvas, Point pos, Bomberman bm, int firePower,
+			GameUniverse universe) {
 		if (image0 == null || image1 == null || image2 == null) {
 			image0 = new DrawableImage("images/Sprite/Bomb/Bomb0.gif",
 					defaultCanvas);
@@ -47,9 +49,9 @@ public class Bomb implements Drawable, GameEntity, Overlappable {
 		canvas = defaultCanvas;
 		position = pos;
 		this.universe = universe;
-		
-//		universe.addGameEntity(this);
-		
+		this.bm = bm;
+		this.firePower = firePower;
+
 		timer = new Timer();
 		timer.scheduleAtFixedRate(new TimerTaskExt(9), 0, 250);
 	}
@@ -68,8 +70,9 @@ public class Bomb implements Drawable, GameEntity, Overlappable {
 			cycle++;
 			if (cycle == maxCycle) {
 				universe.removeGameEntity(Bomb.this);
+				bm.updateNbBomb();
 				universe.addGameEntity(new Fire(canvas, getPosition(),
-						universe, DEFAULT_FIRE_POWER, "Center"));
+						universe, firePower, firePower, "Center"));
 				this.cancel();
 			}
 		}

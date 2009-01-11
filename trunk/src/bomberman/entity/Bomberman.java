@@ -30,7 +30,8 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 	private GameUniverse universe;
 	private boolean isDead = false;
 	private Timer timer;
-	private int firePower = 0;
+	private int firePower = 1;
+	private int nbBomb = 1;
 
 	private static HashMap<String, ArrayList<DrawableImage>> imgMap = null;
 
@@ -108,18 +109,22 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 		return (new Rectangle(getPosition().x, getPosition().y, SPRITE_SIZE_X,
 				SPRITE_SIZE_Y));
 	}
+	
+	public void updateNbBomb() {
+		nbBomb++;
+	}
 
+	public void updateFirePower() {
+		firePower++;
+	}
+	
 	public void putBomb() {
-		int x = getPosition().x;
-		int y = getPosition().y;
-
-		System.out.println("Ajout de bomb sur la carte à la position (" + x
-				/ SPRITE_SIZE_X + ", " + x / SPRITE_SIZE_Y + ")");
-
-		// new Bomb(defaultCanvas, new Point(x, y), universe);
-
-		universe.addGameEntity(new Bomb(defaultCanvas, new Point(x, y),
-				universe));
+		// int x = getPosition().x;
+		// int y = getPosition().y;
+		if (nbBomb-- > 0) {
+			universe.addGameEntity(new Bomb(defaultCanvas, new Point(
+					getPosition()), this, firePower, universe));
+		}
 	}
 
 	public void die() {
