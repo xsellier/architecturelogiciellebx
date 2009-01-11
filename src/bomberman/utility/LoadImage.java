@@ -50,7 +50,6 @@ public class LoadImage {
 
 		for (int i = 0; i < number; i++) {
 			String s = dir + name + i + "." + extension;
-			System.out.println(s);
 			DrawableImage tmp = new DrawableImage(s, canvas);
 			result.add(tmp);
 		}

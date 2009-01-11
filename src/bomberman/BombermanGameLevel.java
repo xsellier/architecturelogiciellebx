@@ -9,7 +9,6 @@ import gameframework.game.Game;
 import gameframework.game.GameLevelDefaultImpl;
 import gameframework.game.GameMovableDriverDefaultImpl;
 import gameframework.game.GameUniverseDefaultImpl;
-import gameframework.game.GameUniverseViewPortDefaultImpl;
 import gameframework.game.MoveBlockerChecker;
 import gameframework.game.MoveBlockerCheckerDefaultImpl;
 import gameframework.game.OverlapProcessor;
@@ -26,6 +25,7 @@ import bomberman.entity.level.BlocAround;
 import bomberman.entity.level.Floor;
 import bomberman.entity.level.SuperWall;
 import bomberman.entity.level.Wall;
+import bomberman.game.GameUniverseViewPortDefaultImplExt;
 import bomberman.game.OverlapProcessorDefaultImplExt;
 import bomberman.rule.BombermanMoveBlockers;
 import bomberman.rule.BombermanOverlaps;
@@ -36,19 +36,19 @@ public class BombermanGameLevel extends GameLevelDefaultImpl {
 	// Flames;
 	static int[][] tab = {
 		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,	1, 1, 1, 1, 1, 1 },
-		{ 1, 0, 0, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1 },
-		{ 1, 0, 2, 3, 2, 2, 0, 2, 3, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 1, 2, 0,	1, 2, 2, 2, 2, 1 },
-		{ 1, 5, 3, 2, 2, 2, 0, 3, 3, 3, 0, 3, 0, 2, 2, 0, 2, 2, 2, 1, 2, 0,	1, 2, 2, 2, 0, 1 },
-		{ 1, 5, 2, 2, 2, 2, 0, 2, 3, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 1, 2, 0, 2, 2, 2, 2, 0, 1 },
-		{ 1, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1 },
-		{ 1, 5, 2, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 2, 2, 2, 2, 2, 0, 1, 2, 0, 2, 2, 2, 2, 0, 1 },
-		{ 1, 5, 2, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 2, 2, 2, 2, 2, 0, 1, 2, 0, 2, 2, 2, 2, 0, 1 },
-		{ 1, 5, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 1, 2, 0,	0, 0, 0, 0, 0, 1 },
-		{ 1, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 5, 2, 2, 5, 2, 2, 2, 1, 2, 0,	1, 2, 2, 2, 2, 1 },
-		{ 1, 2, 2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 5, 2, 2, 5, 2, 2, 2, 1, 2, 0, 2, 2, 2, 2, 2, 1 },
-		{ 1, 2, 2, 2, 2, 2, 0, 2, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 1, 2, 0, 2, 2, 2, 2, 2, 1 },
-		{ 1, 2, 2, 2, 2, 2, 0, 2, 2, 5, 2, 2, 2, 3, 3, 2, 2, 2, 5, 1, 2, 0, 2, 2, 2, 2, 2, 1 },
-		{ 1, 2, 2, 2, 2, 2, 0, 2, 2, 5, 2, 4, 4, 4, 4, 4, 4, 2, 5, 1, 2, 0, 2, 2, 2, 2, 2, 1 },
+		{ 1, 0, 0, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1 },
+		{ 1, 0, 2, 3, 2, 3, 0, 2, 3, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 1, 2, 0,	1, 2, 2, 2, 2, 1 },
+		{ 1, 3, 3, 3, 3, 3, 0, 3, 3, 3, 0, 3, 0, 2, 2, 0, 2, 2, 2, 1, 2, 0,	1, 2, 2, 2, 0, 1 },
+		{ 1, 5, 2, 3, 2, 3, 0, 2, 3, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 1, 2, 0, 2, 2, 2, 2, 0, 1 },
+		{ 1, 5, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1 },
+		{ 1, 5, 2, 3, 2, 3, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 1, 2, 0, 2, 2, 2, 2, 0, 1 },
+		{ 1, 5, 0, 3, 3, 3, 0, 2, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 1, 2, 0, 2, 2, 2, 2, 0, 1 },
+		{ 1, 5, 2, 3, 2, 3, 0, 3, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 1, 2, 0,	0, 0, 0, 0, 0, 1 },
+		{ 1, 2, 0, 3, 3, 3, 0, 2, 0, 0, 0, 0, 0, 2, 2, 5, 2, 2, 2, 1, 2, 0,	1, 2, 2, 2, 2, 1 },
+		{ 1, 2, 2, 3, 2, 3, 0, 2, 0, 0, 0, 0, 0, 2, 2, 5, 2, 2, 2, 1, 2, 0, 2, 2, 2, 2, 2, 1 },
+		{ 1, 2, 0, 3, 3, 3, 0, 2, 2, 2, 2, 2, 2, 2, 5, 5, 5, 5, 5, 1, 2, 0, 2, 2, 2, 2, 2, 1 },
+		{ 1, 2, 2, 3, 2, 3, 0, 2, 2, 5, 2, 2, 2, 3, 3, 2, 2, 2, 5, 1, 2, 0, 2, 2, 2, 2, 2, 1 },
+		{ 1, 2, 0, 3, 3, 3, 0, 2, 2, 5, 2, 4, 4, 4, 4, 4, 4, 2, 5, 1, 2, 0, 2, 2, 2, 2, 2, 1 },
 		{ 1, 5, 5, 5, 5, 5, 0, 5, 5, 5, 2, 4, 4, 4, 4, 4, 4, 2, 5, 1, 5, 0, 5, 5, 5, 5, 5, 5 },
 		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1 },
 		{ 1, 1, 1, 1, 1, 1, 0, 1, 1, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1 },
@@ -81,8 +81,8 @@ public class BombermanGameLevel extends GameLevelDefaultImpl {
 				overlapProcessor);
 		overlapRules.setUniverse(universe);
 
-		gameBoard = new GameUniverseViewPortDefaultImpl(canvas, universe);
-		((GameUniverseViewPortDefaultImpl) gameBoard).setBackground("images/Level/LevelSnow/Floor.gif");
+		gameBoard = new GameUniverseViewPortDefaultImplExt(canvas, universe);
+		((GameUniverseViewPortDefaultImplExt) gameBoard).setBackground("images/Level/LevelSnow/Floor.gif");
 		
 		((CanvasDefaultImpl) canvas).setDrawingGameBoard(gameBoard);
 		
@@ -96,6 +96,9 @@ public class BombermanGameLevel extends GameLevelDefaultImpl {
 				} else if (tab[i][j] == 2) {
 					universe.addGameEntity(new SuperWall(canvas, new Point(j
 							* SPRITE_SIZE_X, i * SPRITE_SIZE_Y)));
+//				} else if (tab[i][j] == 3) {
+//					universe.addGameEntity(new Wall(canvas, new Point(j * SPRITE_SIZE_X,
+//							i * SPRITE_SIZE_Y), universe));
 				} else {
 				
 					universe.addGameEntity(new Floor(canvas, new Point(j

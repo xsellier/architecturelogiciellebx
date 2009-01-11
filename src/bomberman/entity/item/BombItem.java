@@ -48,7 +48,6 @@ public class BombItem extends AbstractItem {
 
 		public void run() {
 			spriteNumber++;
-			System.out.println(spriteNumber);
 			spriteNumber = spriteNumber % 7;
 			cycle++;
 			if (cycle == maxCycle) {

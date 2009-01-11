@@ -32,15 +32,16 @@ public class Fire extends GameMovable implements Drawable, GameEntity,
 	private Timer timer;
 	private int spriteNumber = -1;
 	private int firePower;
+	private int firePowerLeft;
 	private Canvas defaultCanvas;
 	private String fireType;
 
-	private int test = -1;
-
 	private boolean isBurnable = false;
 
+	protected static volatile HashMap<String, Boolean> fireExpansion = null;
+
 	public Fire(Canvas defaultCanvas, Point pos, GameUniverse universe,
-			int firePower, String fireType) {
+			int firePower, int firePowerLeft, String fireType) {
 		if (imgMap == null) {
 			imgMap = LoadImage.loadImageFire(defaultCanvas);
 		}
@@ -50,9 +51,18 @@ public class Fire extends GameMovable implements Drawable, GameEntity,
 		this.firePower = firePower;
 		this.defaultCanvas = defaultCanvas;
 		this.fireType = fireType;
+		this.firePowerLeft = firePowerLeft;
 
-		if ((fireType.compareTo("Center") == 0) && (test <= firePower)) {
-			fireExpansion();
+		if (fireType.compareTo("Center") == 0) {
+			fireExpansion = new HashMap<String, Boolean>();
+			fireExpansion.put("Up", true);
+			fireExpansion.put("Down", true);
+			fireExpansion.put("Left", true);
+			fireExpansion.put("Right", true);
+		}
+
+		if ((fireType.compareTo("Center") == 0)) {
+			fireStartExpansion();
 		}
 
 		timer = new Timer();
@@ -78,30 +88,111 @@ public class Fire extends GameMovable implements Drawable, GameEntity,
 		}
 	};
 
-	private void fireExpansion() {
+	private void fireStartExpansion() {
 		System.out.println("position = (" + getPosition().x / SPRITE_SIZE_X
 				+ ", " + getPosition().y / SPRITE_SIZE_Y + ")");
 
 		int x = getPosition().x;
 		int y = getPosition().y;
 
-		universe.addGameEntity(new Fire(defaultCanvas, new Point(x, y
-				- SPRITE_SIZE_Y), universe, 1, "UpExt"));
-		universe.addGameEntity(new Fire(defaultCanvas, new Point(x, y
-				+ SPRITE_SIZE_Y), universe, 1, "DownExt"));
-		universe.addGameEntity(new Fire(defaultCanvas, new Point(x
-				- SPRITE_SIZE_X, y), universe, 1, "LeftExt"));
-		universe.addGameEntity(new Fire(defaultCanvas, new Point(x
-				+ SPRITE_SIZE_X, y), universe, 1, "RightExt"));
+		if (firePower == 1) {
+			universe.addGameEntity(new Fire(defaultCanvas, new Point(x, y
+					- SPRITE_SIZE_Y), universe, 1, 0, "UpExt"));
+			universe.addGameEntity(new Fire(defaultCanvas, new Point(x, y
+					+ SPRITE_SIZE_Y), universe, 1, 0, "DownExt"));
+			universe.addGameEntity(new Fire(defaultCanvas, new Point(x
+					- SPRITE_SIZE_X, y), universe, 1, 0, "LeftExt"));
+			universe.addGameEntity(new Fire(defaultCanvas, new Point(x
+					+ SPRITE_SIZE_X, y), universe, 1, 0, "RightExt"));
+		} else {
+			firePowerLeft -= 2;
+			universe
+					.addGameEntity(new Fire(defaultCanvas, new Point(x, y
+							- SPRITE_SIZE_Y), universe, firePower,
+							firePowerLeft, "Up"));
+			 universe.addGameEntity(new Fire(defaultCanvas, new Point(x, y
+					+ SPRITE_SIZE_Y), universe, firePower, firePowerLeft,
+					"Down"));
+			universe.addGameEntity(new Fire(defaultCanvas, new Point(x
+					- SPRITE_SIZE_X, y), universe, firePower, firePowerLeft,
+					"Left"));
+			universe.addGameEntity(new Fire(defaultCanvas, new Point(x
+					+ SPRITE_SIZE_X, y), universe, firePower, firePowerLeft,
+					"Right"));
+		}
+	}
 
+	public void stopExpansion(String fireType) {
+		fireExpansion.put(fireType, false);
+	}
+
+	private int doOneTime = 0;
+
+	public void fireExpansion(String fireType, int firePowerLeft) {
+		if (doOneTime++ < 1) {
+			int x = getPosition().x;
+			int y = getPosition().y;
+
+			if (firePowerLeft > 0) {
+				firePowerLeft--;
+				if (fireType.compareTo("Up") == 0
+						&& fireExpansion.get("Up").booleanValue()) {
+					universe.addGameEntity(new Fire(defaultCanvas, new Point(x,
+							y - SPRITE_SIZE_Y), universe, firePower,
+							firePowerLeft, "Up"));
+				} else if (fireType.compareTo("Down") == 0
+						&& fireExpansion.get("Down").booleanValue()) {
+					System.out.println(fireType + "BIS="
+							+ fireExpansion.get(fireType));
+					universe.addGameEntity(new Fire(defaultCanvas, new Point(x,
+							y + SPRITE_SIZE_X), universe, firePower,
+							firePowerLeft, "Down"));
+				} else if (fireType.compareTo("Left") == 0
+						&& fireExpansion.get("Left").booleanValue()) {
+					universe.addGameEntity(new Fire(defaultCanvas, new Point(x
+							- SPRITE_SIZE_X, y), universe, firePower,
+							firePowerLeft, "Left"));
+				} else if (fireType.compareTo("Right") == 0
+						&& fireExpansion.get("Right").booleanValue()) {
+					universe.addGameEntity(new Fire(defaultCanvas, new Point(x
+							+ SPRITE_SIZE_X, y), universe, firePower,
+							firePowerLeft, "Right"));
+				}
+			} else if (firePowerLeft == 0) {
+				if (fireType.compareTo("Up") == 0) {
+					universe.addGameEntity(new Fire(defaultCanvas, new Point(x,
+							y - SPRITE_SIZE_Y), universe, 1, 0, "UpExt"));
+				} else if (fireType.compareTo("Down") == 0) {
+					universe.addGameEntity(new Fire(defaultCanvas, new Point(x,
+							y + SPRITE_SIZE_Y), universe, 1, 0, "DownExt"));
+				} else if (fireType.compareTo("Left") == 0) {
+					universe.addGameEntity(new Fire(defaultCanvas, new Point(x
+							- SPRITE_SIZE_X, y), universe, 1, 0, "LeftExt"));
+				} else if (fireType.compareTo("Right") == 0) {
+					universe.addGameEntity(new Fire(defaultCanvas, new Point(x
+							+ SPRITE_SIZE_X, y), universe, 1, -1, "RightExt"));
+				}
+			}
+		}
+	}
+
+	public String getType() {
+		return fireType;
+	}
+
+	public int getPower() {
+		return firePowerLeft;
+	}
+
+	public static HashMap<String, Boolean> getFireExpansion() {
+		return fireExpansion;
 	}
 
 	public Point getPosition() {
 		return position;
 	}
 
-	public void burn() {
-		System.out.println(this.toString());
+	public void setBurnable() {
 		isBurnable = true;
 	}
 

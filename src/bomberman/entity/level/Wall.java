@@ -9,7 +9,6 @@ import gameframework.game.GameUniverse;
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -23,12 +22,14 @@ public class Wall extends AbstractLevel implements Overlappable {
 	private boolean isActive = true;
 	private int spriteNumber = -1;
 	protected GameUniverse universe;
+	private Canvas canvas;
 
 	public Wall(Canvas defaultCanvas, Point position, GameUniverse universe) {
 		if (image == null) {
 			image = LoadImage.getImgLevel(defaultCanvas).get("Wall");
 			imgBurnWallList = LoadImage.getImgBurnWallList(defaultCanvas);
 		}
+		this.canvas = defaultCanvas;
 		this.position = position;
 		this.universe = universe;
 	}
@@ -60,11 +61,11 @@ public class Wall extends AbstractLevel implements Overlappable {
 
 		public void run() {
 			spriteNumber++;
-			System.out.println(spriteNumber);
 			spriteNumber = spriteNumber % 5;
 			cycle++;
 			if (cycle == maxCycle) {
 				universe.removeGameEntity(Wall.this);
+//				universe.addGameEntity(new Floor(canvas, new Point(position.x, position.y)));
 				this.cancel();
 			}
 		}

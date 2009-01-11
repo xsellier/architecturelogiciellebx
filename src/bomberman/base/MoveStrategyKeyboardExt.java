@@ -39,8 +39,6 @@ public class MoveStrategyKeyboardExt extends KeyAdapter implements MoveStrategy 
 		int keycode = event.getKeyCode();
 		currentPosition = bm.getPosition();
 		
-		System.out.println("x = " + currentPosition.x + ", y = " + currentPosition.y);
-		
 		switch (keycode) {
 		
 		case KeyEvent.VK_RIGHT:
