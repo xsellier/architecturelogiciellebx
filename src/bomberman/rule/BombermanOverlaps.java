@@ -78,7 +78,4 @@ public class BombermanOverlaps extends OverlapRuleApplierDefaultImpl {
 		// bm.die();
 	}
 
-	// public void overlapRule(Bomberman bm, Floor f) {
-	//		
-	// }
 }
