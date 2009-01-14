@@ -1,57 +1,5 @@
 % -*- mode: latex; coding: latin-1-unix -*- %
 
-\section{R\^oles XP}
-Les r\^oles XP affect\'es aux membres du groupe de projet pour cette
-it\'eration sont:
-
-\begin{itemize}
-\item Architecte : Gael
-\item \textsl{Coach} : Nicolas
-\item Ergonome : Herv\'e
-\item Testeurs : Fr\'ed\'eric et Phetsana
-\item \textsl{Tracker} : Gizem
-\end{itemize}
-
-\section{T\^aches XP}
-Le groupe a d\'efini avec le client la priorit\'e des t\^aches que l'on peut
-classer en trois cat\'egories. Les t\^aches devront \^etre accompagn\'ees de tests.
-
-\subsection{Fonctionnalit\'es indispensables - Priorit\'e A}
-\paragraph{D\'efinition du protocole de communication} 
-Le but de cette t\^ache est de d\'efinir le protocole de communication
-utilis\'e entre Firefox et Laperouse
-\begin{itemize}
-\item D\'efinition du protocole de communication
-\item R\'edaction d'une documentation
-\end{itemize}
-
-\paragraph{Cr\'eation d'un Adaptateur pour Astrolabe} 
-Nous allons mettre en place:
-\begin{itemize}
-\item un adaptateur mono-fen\^etre
-\item une documentation
-\end{itemize}
-
-\paragraph{Mise en place du protocole c\^ot\'e Firefox} 
-Le but est de refaire une extension pour firefox qui permettra de
-communiquer avec Laperouse via le r\'eseau.
-
-
-\subsection{T\^aches importantes - Priorit\'e B}
-\paragraph{Mise en place du multifen\^etre c\^ot\'e Firefox}
-Gestion de plusieurs Astrolabes, un Astrolabe par onglet.
-
-\paragraph{Mise en place du multifen\^etre c\^ot\'e Laperouse}
- Gestion de plusieurs onglets un Astrolable par onglet.
-
-
-\section{D\'eroulement it\'eration (planning)}
-
-L'enchainement des t\^aches \'etait assez lin\'eaire. Nous devions
-commencer par le protocole, nous devions ensuite impl\'ementer le
-monofen\^etre parrallement entre Firefox et Lap\'erouse. Nous devions
-ensuite finir par l'impl\'ementation du multi client cot\'e Firefox et Lap\'erouse.
-
 
 %\begin{figure}[!h]
 %\begin{center}
@@ -61,85 +9,23 @@ ensuite finir par l'impl\'ementation du multi client cot\'e Firefox et Lap\'erou
 %\end{center}
 %\end{figure}
 
-
-\section{Bilan}
-\subsection{T\^aches}
-Dans cette it\'eration, nous n'avons pas pu r\'ealiser toutes les t\^aches
-initialement pr\'evues. Nous avons bien s\^ur d\'efini le protocole que
-nous allons utliser. Nous avons aussi mis en place le mono-fen\^etre,
-mais nous n'avons malheureusement pas pu impl\'ementer le multifen\^etre.
-
-\subsection{R\^oles}
- 
-\subsubsection{Architecte} Durant cette it\'eration, nous devions
-int\'egrer Astrolabe dans notre projet. Il nous fallait donc remplacer
-la console par Astrolabe. Pour cela nous avons cr\'e\'e un parser de
-donn\'ees qui va analyser les donn\'ees et les interpr\'eter pour les
-retransmettre \`a Laperouse. 
-La connexion du cot\'e de Laperouse est g\'er\'ee dans le package
-Socket ainsi que l'analyse des donn\'ees \'echang\'ees. 
-Pour ce qui est de l'architecture g\'en\'erale de Laperouse, nous
-avons gard\'e le code du groupe de l'ENSERB. Nous avons cependant
-modifi\'e le Builder afin qu'il cr\'ee bien la connexion via socket. 
+\section{Bomberman}
 
 
+\subsection{Joueur}
 
-\subsubsection{\textsl{Coach}} 
+\subsection{Niveau}
 
-J'ai endoss\'e le r\^ole de coach pour la derni\`ere it\'eration,
-cette derni\`ere it\'eration ne n\'ecessitait pas trop d'organisation
-entre les t\^aches, les grandes d\'ecisions \'etaient d\'ej\`a prises,
-il ne restait plus qu' attribuer les t\^aches aux bonnes
-personnes. C'est quand m\^eme au coach que revient la responsabilit\'e
-des choix. Un des choix qui a \'et\'e fait a \'et\'e de tenter de
-faire fonctionner correctement ce qui a \'et\'e fait plut\^ot que de
-faire les autres t\^aches en ignorant les bugs existants. 
+\subsubsection{Murs indestructibles}
 
-\subsubsection{Ergonome}
-A l'it\'eration pr\'ec\'edente, nous avions r\'eussi \`a \'etablir une
-communication \`a double sens, entre Firefox et une interface Java,
-repr\'esent\'ee en l'occurrence par une simple console. Il s'agissait
-pour cette it\'eration de remplacer cette console par Astrolabe. Du
-point de vue de l'ergonomie, il a fallu r\ 'efl\'echir \`a la
-mani\`ere la plus pratique d'utiliser Laperouse, que ce soit c\^ot\'e
-Firefox ou c\^ot\'e Astrolabe. Comme il s'agissait en priorit\'e de
-r\'ealiser un r\'eel \'echange d'informations entre les deux
-applications, nous nous sommes concentr\'es sur une interface
-utilisateur plut\^ot simplifi\'ee.\\ Ainsi, c\^ot\'e Firefox, nous
-avons laiss\'e le bouton d'activation de Laperouse. D\'esormais, le
-num\'ero de port choisi est sauvegard\'e dans un fichier afin d'\^etre
-directement s\'electionn\'e \`a la prochaine utilisation. C\^ot\'e
-Astrolabe, nous avons pens\'e \`a rajouter un menu "Laperouse"
-d\'edi\'e  \`a la communication sus-cit\'ee. Par manque de temps, tous
-les d\'etails d'ergonomie que nous aurions voulu impl\'ementer n'ont
-pas pu tous \^etre r\'ealis\'es. 
+\subsubsection{Murs destructibles}
 
-\subsubsection{Testeurs} 
-\input{test}
-\input{test}
+\subsection{Objets}
 
-\subsubsection{\textsl{Tracker}} 
-Le r\^ole de tracker a \'et\'e a tr\`es important dans cette
-it\'eration, car il devait surveiller le travail et informer les
-autres de l'avancement. Cela \'etait tr\`es utile ici car les binomes
-travaillaient tous sur des corrections de bugs. Il \'etait donc tr\`es
-important d'informer le coach de l'\'etat d'avancement afin qu'il puisse
-mieux répartir le travail restant, et la correction de nouveaux bugs
-d\'ecouverts. Ce travail a \'et\'e rendu plus difficile par la
-distance entre les binomes due aux vacances.
+\subsubsection{Bombe}
+
+\subsubsection{Flame}
+
+\section{Architecture}
 
 
-\subsection{It\'eration}
-
-Pour cette it\'eration, le travail a \'et\'e sous-estim\'e. Nous avions
-consid\'er\'e que Laperouse fonctionnait. Nous avons donc commenc\'e par
-mettre en place les sockets dans le Laperouse avec l'ancien Astrolabe,
-tel que cela nous a \'et\'e donn\'e par le client. Mais une fois mis en
-place, nous nous sommes rendus compte que Laperouse avait encore son lot
-de bugs, bugs qui nous ont beaucoup retard\'e, et que nous n'avons pas
-encore r\'eussi \`a r\'esoudre. Nous avons aussi constat\'e qu'il serait tr\`es
-difficile de mettre \`a jour Astrolable, sans r\'e\'ecrire une bonne partie
-de Laperouse. Car le code d'Astrolabe a \'et\'e modifi\'e directement dans
-certaines classes, des classes ont \'et\'e rajout\'ees dans les paquets
-propres \`a Astrolabe au lieu d'\^etre dans ceux de Laperouse. Cette
-it\'eration est donc inachev\'ee, celle ci constituant la derni\`ere.
