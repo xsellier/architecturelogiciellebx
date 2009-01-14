@@ -119,9 +119,8 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 	}
 	
 	public void putBomb() {
-		// int x = getPosition().x;
-		// int y = getPosition().y;
-		if (nbBomb-- > 0) {
+		if (nbBomb > 0) {
+			nbBomb--;
 			universe.addGameEntity(new Bomb(defaultCanvas, new Point(
 					getPosition()), this, firePower, universe));
 		}
