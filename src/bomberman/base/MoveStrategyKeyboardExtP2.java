@@ -1,5 +1,7 @@
 package bomberman.base;
 
+import static bomberman.game.ConstantValues.SPRITE_SIZE_X;
+import static bomberman.game.ConstantValues.SPRITE_SIZE_Y;
 import gameframework.base.MoveStrategy;
 import gameframework.base.SpeedVector;
 import gameframework.base.SpeedVectorDefaultImpl;
@@ -10,10 +12,7 @@ import java.awt.event.KeyEvent;
 
 import bomberman.entity.Bomberman;
 
-import static bomberman.game.ConstantValues.*;
-
-public class MoveStrategyKeyboardExt extends KeyAdapter implements MoveStrategy {
-
+public class MoveStrategyKeyboardExtP2 extends KeyAdapter implements MoveStrategy {
 	private SpeedVector currentMove = new SpeedVectorDefaultImpl(
 			new Point(0, 0));
 
@@ -21,7 +20,7 @@ public class MoveStrategyKeyboardExt extends KeyAdapter implements MoveStrategy 
 	private Point currentPosition;
 	private Point nextPosition = new Point(-1, -1);
 
-	public MoveStrategyKeyboardExt(Bomberman bm) {
+	public MoveStrategyKeyboardExtP2(Bomberman bm) {
 		this.bm = bm;
 		currentPosition = bm.getPosition();
 	}
@@ -41,56 +40,25 @@ public class MoveStrategyKeyboardExt extends KeyAdapter implements MoveStrategy 
 		
 		switch (keycode) {
 		
-		case KeyEvent.VK_D:
+		case KeyEvent.VK_RIGHT:
 			currentMove.setDir(new Point(1, 0));
 			nextPosition = new Point(currentPosition.x + SPRITE_SIZE_X, -1);
 			break;
-		case KeyEvent.VK_Q:
+		case KeyEvent.VK_LEFT:
 			currentMove.setDir(new Point(-1, 0));
 			nextPosition = new Point(currentPosition.x - SPRITE_SIZE_X, -1);
 			break;
-		case KeyEvent.VK_Z:
+		case KeyEvent.VK_UP:
 			currentMove.setDir(new Point(0, -1));
 			nextPosition = new Point(-1, currentPosition.y - SPRITE_SIZE_Y);
 			break;
-		case KeyEvent.VK_S:
+		case KeyEvent.VK_DOWN:
 			currentMove.setDir(new Point(0, 1));
 			nextPosition = new Point(-1, currentPosition.y + SPRITE_SIZE_Y);
 			break;
-		case KeyEvent.VK_SPACE:
+		case KeyEvent.VK_NUMPAD0:
 			bm.putBomb();
 			break;
 		}
 	}
-	
-//	public SpeedVector getSpeedVector() {
-//		return currentMove;
-//	}
-//
-//	@Override
-//	public void keyPressed(KeyEvent event) {
-//		int keycode = event.getKeyCode();
-//		switch (keycode) {
-//		case KeyEvent.VK_RIGHT:
-//			currentMove.setDir(new Point(1, 0));
-//			break;
-//		case KeyEvent.VK_LEFT:
-//			currentMove.setDir(new Point(-1, 0));
-//			break;
-//		case KeyEvent.VK_UP:
-//			currentMove.setDir(new Point(0, -1));
-//			break;
-//		case KeyEvent.VK_DOWN:
-//			currentMove.setDir(new Point(0, 1));
-//			break;
-//		case KeyEvent.VK_SPACE:
-//			bm.putBomb();
-//			break;
-//		}
-//	}
-	
-//	@Override
-//	public void keyReleased(KeyEvent event) {
-//		currentMove.setDir(new Point(0, 0));
-//	}
 }

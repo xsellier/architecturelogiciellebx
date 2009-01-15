@@ -18,6 +18,7 @@ import java.awt.Canvas;
 import java.awt.Point;
 
 import bomberman.base.MoveStrategyKeyboardExt;
+import bomberman.base.MoveStrategyKeyboardExtP2;
 import bomberman.entity.Bomberman;
 import bomberman.entity.item.BombItem;
 import bomberman.entity.item.FireItem;
@@ -35,37 +36,23 @@ public class BombermanGameLevel extends GameLevelDefaultImpl {
 	// 0 : Empty; 1 : Blocs Around; 2 : Super Walls; 3 : Walls; 4 : Bombs; 5 :
 	// Flames;
 	static int[][] tab = {
-		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,	1, 1, 1, 1, 1, 1 },
-		{ 1, 0, 0, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1 },
-		{ 1, 0, 2, 3, 2, 3, 0, 2, 3, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 1, 2, 0,	1, 2, 2, 2, 2, 1 },
-		{ 1, 3, 3, 3, 3, 3, 0, 3, 3, 3, 0, 3, 0, 2, 2, 0, 2, 2, 2, 1, 2, 0,	1, 2, 2, 2, 0, 1 },
-		{ 1, 5, 2, 3, 2, 3, 0, 2, 3, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 1, 2, 0, 2, 2, 2, 2, 0, 1 },
-		{ 1, 5, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1 },
-		{ 1, 5, 2, 3, 2, 3, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 1, 2, 0, 2, 2, 2, 2, 0, 1 },
-		{ 1, 5, 0, 3, 3, 3, 0, 2, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 1, 2, 0, 2, 2, 2, 2, 0, 1 },
-		{ 1, 5, 2, 3, 2, 3, 0, 3, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 1, 2, 0,	0, 0, 0, 0, 0, 1 },
-		{ 1, 2, 0, 3, 3, 3, 0, 2, 0, 0, 0, 0, 0, 2, 2, 5, 2, 2, 2, 1, 2, 0,	1, 2, 2, 2, 2, 1 },
-		{ 1, 2, 2, 3, 2, 3, 0, 2, 0, 0, 0, 0, 0, 2, 2, 5, 2, 2, 2, 1, 2, 0, 2, 2, 2, 2, 2, 1 },
-		{ 1, 2, 0, 3, 3, 3, 0, 2, 2, 2, 2, 2, 2, 2, 5, 5, 5, 5, 5, 1, 2, 0, 2, 2, 2, 2, 2, 1 },
-		{ 1, 2, 2, 3, 2, 3, 0, 2, 2, 5, 2, 2, 2, 3, 3, 2, 2, 2, 5, 1, 2, 0, 2, 2, 2, 2, 2, 1 },
-		{ 1, 2, 0, 3, 3, 3, 0, 2, 2, 5, 2, 4, 4, 4, 4, 4, 4, 2, 5, 1, 2, 0, 2, 2, 2, 2, 2, 1 },
-		{ 1, 5, 5, 5, 5, 5, 0, 5, 5, 5, 2, 4, 4, 4, 4, 4, 4, 2, 5, 1, 5, 0, 5, 5, 5, 5, 5, 5 },
-		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1 },
-		{ 1, 1, 1, 1, 1, 1, 0, 1, 1, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1 },
-		{ 1, 1, 1, 1, 1, 1, 0, 1, 1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 1, 1, 0, 1, 1, 1, 1, 1, 1 },
-		{ 1, 1, 1, 1, 1, 1, 0, 1, 1, 5, 1, 1, 1, 1, 1, 1, 1, 1, 5, 1, 1, 0, 1, 1, 1, 1, 1, 1 },
-		{ 1, 1, 1, 1, 1, 1, 0, 1, 1, 5, 1, 1, 1, 1, 1, 1, 1, 1, 5, 1, 1, 0, 1, 1, 1, 1, 1, 1 },
-		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-		{ 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1 },
-		{ 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1 },
-		{ 1, 2, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2, 1 },
-		{ 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1 },
-		{ 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1 },
-		{ 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1 },
-		{ 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1 },
-		{ 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1 },
-		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 } };
+		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+		{ 1, 0, 0, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1 },
+		{ 1, 0, 2, 3, 2, 3, 0, 2, 3, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 1 },
+		{ 1, 3, 3, 3, 3, 3, 0, 3, 3, 3, 0, 3, 0, 2, 2, 0, 2, 2, 2, 1 },
+		{ 1, 5, 2, 3, 2, 3, 0, 2, 3, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 1 },
+		{ 1, 5, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+		{ 1, 5, 2, 3, 2, 3, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 1 },
+		{ 1, 5, 0, 3, 3, 3, 0, 2, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 1 },
+		{ 1, 5, 2, 3, 2, 3, 0, 3, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 1 },
+		{ 1, 2, 0, 3, 3, 3, 0, 2, 0, 0, 0, 0, 0, 2, 2, 5, 2, 2, 2, 1 },
+		{ 1, 2, 2, 3, 2, 3, 0, 2, 0, 0, 0, 0, 0, 2, 2, 5, 2, 2, 2, 1 },
+		{ 1, 2, 0, 3, 3, 3, 0, 2, 2, 2, 2, 2, 2, 2, 5, 5, 5, 5, 5, 1 },
+		{ 1, 2, 2, 3, 2, 3, 0, 2, 2, 5, 2, 2, 2, 3, 3, 2, 2, 2, 5, 1 },
+		{ 1, 2, 0, 3, 3, 3, 0, 2, 2, 5, 2, 4, 4, 4, 4, 4, 4, 2, 5, 1 },
+		{ 1, 5, 5, 5, 5, 5, 0, 5, 5, 5, 2, 4, 4, 4, 4, 4, 4, 2, 0, 1 },
+		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }};
+		
 
 	@Override
 	protected void init() {
@@ -121,15 +108,33 @@ public class BombermanGameLevel extends GameLevelDefaultImpl {
 		}
 
 		// Bomberman creation and universe loading
-		Bomberman myPac = new Bomberman(canvas, universe);
-		GameMovableDriverDefaultImpl pacDriver = new GameMovableDriverDefaultImpl();
-		MoveStrategyKeyboardExt keyStr = new MoveStrategyKeyboardExt(myPac);
-		pacDriver.setStrategy(keyStr);
-		pacDriver.setmoveBlockerChecker(moveBlockerChecker);
-		canvas.addKeyListener(keyStr);
-		myPac.setDriver(pacDriver);
-		myPac.setPosition(new Point(1 * SPRITE_SIZE_X, 1 * SPRITE_SIZE_Y));
-		universe.addGameEntity(myPac);
+		/* Player choice :
+		 * 	- Bomberman
+		 * 	- Link
+		 *  - KitKat
+		 *  - PetitGros
+		 *  - PetitMaigre
+		 */
+		Bomberman bm = new Bomberman(canvas, universe, "Bomberman");
+		GameMovableDriverDefaultImpl bmDriver = new GameMovableDriverDefaultImpl();
+		MoveStrategyKeyboardExt keyStrBm = new MoveStrategyKeyboardExt(bm);
+		bmDriver.setStrategy(keyStrBm);
+		bmDriver.setmoveBlockerChecker(moveBlockerChecker);
+		canvas.addKeyListener(keyStrBm);
+		bm.setDriver(bmDriver);
+		bm.setPosition(new Point(1 * SPRITE_SIZE_X, 1 * SPRITE_SIZE_Y));
+		universe.addGameEntity(bm);
+		
+		// Player 2
+		Bomberman link = new Bomberman(canvas, universe, "Link");
+		GameMovableDriverDefaultImpl linkDriver = new GameMovableDriverDefaultImpl();
+		MoveStrategyKeyboardExtP2 keyStrLink = new MoveStrategyKeyboardExtP2(link);
+		linkDriver.setStrategy(keyStrLink);
+		linkDriver.setmoveBlockerChecker(moveBlockerChecker);
+		canvas.addKeyListener(keyStrLink);
+		link.setDriver(linkDriver);
+		link.setPosition(new Point(18 * SPRITE_SIZE_X, 14 * SPRITE_SIZE_Y));
+		universe.addGameEntity(link);
 		
 	}
 

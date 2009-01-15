@@ -8,6 +8,7 @@ import gameframework.game.OverlapRuleApplierDefaultImpl;
 import java.awt.Point;
 import java.util.Vector;
 
+import bomberman.entity.Bomb;
 import bomberman.entity.Bomberman;
 import bomberman.entity.Fire;
 import bomberman.entity.item.BombItem;
@@ -72,6 +73,10 @@ public class BombermanOverlaps extends OverlapRuleApplierDefaultImpl {
 		if (Fire.getFireExpansion().get(f.getType()).booleanValue()) {
 			f.fireExpansion(f.getType(), f.getPower());
 		}
+	}
+	
+	public void overlapRule(Fire f, Bomb b) {
+		b.exploseBomb();
 	}
 
 	public void overlapRule(Bomberman bm, Fire f) {
