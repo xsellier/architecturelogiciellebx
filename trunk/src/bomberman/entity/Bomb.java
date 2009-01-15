@@ -30,6 +30,7 @@ public class Bomb implements Drawable, GameEntity, Overlappable {
 	private GameUniverse universe;
 	private int firePower;
 	private Bomberman bm;
+	private boolean isActive = true;
 
 	public Bomb(Canvas defaultCanvas, Point pos, Bomberman bm, int firePower,
 			GameUniverse universe) {
@@ -69,14 +70,21 @@ public class Bomb implements Drawable, GameEntity, Overlappable {
 			spriteNumber = spriteNumber % 3;
 			cycle++;
 			if (cycle == maxCycle) {
-				universe.removeGameEntity(Bomb.this);
-				bm.updateNbBomb();
-				universe.addGameEntity(new Fire(canvas, getPosition(),
-						universe, firePower, firePower, "Center"));
-				this.cancel();
+				if (isActive) {
+					exploseBomb();
+				}
 			}
 		}
 	};
+
+	public void exploseBomb() {
+		isActive = false;
+		universe.removeGameEntity(Bomb.this);
+		bm.updateNbBomb();
+		universe.addGameEntity(new Fire(canvas, getPosition(), universe,
+				firePower, firePower, "Center"));
+		timer.cancel();
+	}
 
 	public Point getPosition() {
 		return position;
@@ -90,6 +98,6 @@ public class Bomb implements Drawable, GameEntity, Overlappable {
 
 	public Rectangle getBoundingBox() {
 		return (new Rectangle((int) position.getX(), (int) position.getY(),
-				SPRITE_SIZE_X / 2 * 3, SPRITE_SIZE_Y / 2 * 3));
+				SPRITE_SIZE_X, SPRITE_SIZE_Y));
 	}
 }

@@ -32,15 +32,17 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 	private Timer timer;
 	private int firePower = 1;
 	private int nbBomb = 1;
+	private String playerType;
 
-	private static HashMap<String, ArrayList<DrawableImage>> imgMap = null;
+	private HashMap<String, ArrayList<DrawableImage>> imgMap = null;
 
-	public Bomberman(Canvas defaultCanvas, GameUniverse universe) {
+	public Bomberman(Canvas defaultCanvas, GameUniverse universe, String playerType) {
 		this.defaultCanvas = defaultCanvas;
 		this.universe = universe;
-
+		this.playerType = playerType;
+		
 		if (imgMap == null) {
-			imgMap = LoadImage.loadImagePlayer(defaultCanvas);
+			imgMap = LoadImage.loadImagePlayer(defaultCanvas, playerType);
 		}
 	}
 
