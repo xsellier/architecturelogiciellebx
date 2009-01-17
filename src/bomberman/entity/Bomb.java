@@ -12,11 +12,9 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Bomb extends AbstractEntity {
-	protected static DrawableImage image0 = null;
-	protected static DrawableImage image1 = null;
-	protected static DrawableImage image2 = null;
+import bomberman.utility.LoadImage;
 
+public class Bomb extends AbstractEntity {
 	protected static ArrayList<DrawableImage> imgList = null;
 
 	private Canvas canvas;
@@ -29,17 +27,8 @@ public class Bomb extends AbstractEntity {
 
 	public Bomb(Canvas defaultCanvas, Point pos, Bomberman bm, int firePower) {
 		super(null);
-		if (image0 == null || image1 == null || image2 == null) {
-			image0 = new DrawableImage("images/Sprite/Bomb/Bomb0.gif",
-					defaultCanvas);
-			image1 = new DrawableImage("images/Sprite/Bomb/Bomb1.gif",
-					defaultCanvas);
-			image2 = new DrawableImage("images/Sprite/Bomb/Bomb2.gif",
-					defaultCanvas);
-			imgList = new ArrayList<DrawableImage>(3);
-			imgList.add(image0);
-			imgList.add(image1);
-			imgList.add(image2);
+		if (imgList == null) {
+			imgList = LoadImage.getImgBomb(defaultCanvas);
 		}
 
 		canvas = defaultCanvas;
