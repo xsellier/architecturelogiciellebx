@@ -3,7 +3,6 @@ package bomberman.entity.level;
 import static bomberman.game.ConstantValues.SPRITE_SIZE_X;
 import static bomberman.game.ConstantValues.SPRITE_SIZE_Y;
 import gameframework.base.DrawableImage;
-import gameframework.game.MoveBlocker;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
@@ -11,7 +10,7 @@ import java.awt.Point;
 
 import bomberman.utility.LoadImage;
 
-public class BlocAround extends AbstractLevel implements MoveBlocker {
+public class BlocAround extends AbstractLevel {
 	protected static DrawableImage image = null;
 
 	public BlocAround(Canvas defaultCanvas, Point position) {

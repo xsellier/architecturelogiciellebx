@@ -1,19 +1,24 @@
-package bomberman.entity.level;
+package bomberman.entity;
 
 import static bomberman.game.ConstantValues.SPRITE_SIZE_X;
 import static bomberman.game.ConstantValues.SPRITE_SIZE_Y;
+import gameframework.base.Drawable;
 import gameframework.base.DrawableImage;
 import gameframework.base.Overlappable;
+import gameframework.game.GameEntity;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Rectangle;
 
 import bomberman.utility.LoadImage;
 
-public class Floor extends AbstractLevel implements Overlappable {
+public class Floor implements Overlappable, Drawable, GameEntity {
 	protected static DrawableImage image = null;
 
+	protected Point position;
+	
 	public Floor(Canvas defaultCanvas, Point pos) {
 		if (image == null) {
 			image = LoadImage.getImgLevel(defaultCanvas).get("Floor");
@@ -26,9 +31,12 @@ public class Floor extends AbstractLevel implements Overlappable {
 				(int) getPosition().getY(), SPRITE_SIZE_X, SPRITE_SIZE_Y, null);
 	}
 
-	public Object getClassAtPoint(Point p) {
-		if (p == getPosition())
-			return getClass();
-		return null;
+	public Point getPosition() {
+		return position;
+	}
+
+	public Rectangle getBoundingBox() {
+		return (new Rectangle(position.x, position.y, SPRITE_SIZE_X,
+				SPRITE_SIZE_Y));
 	}
 }

@@ -1,7 +1,6 @@
 package bomberman.entity;
 
-import static bomberman.game.ConstantValues.SPRITE_SIZE_X;
-import static bomberman.game.ConstantValues.SPRITE_SIZE_Y;
+import static bomberman.game.ConstantValues.*;
 import gameframework.base.Drawable;
 import gameframework.base.DrawableImage;
 import gameframework.base.Overlappable;
@@ -30,16 +29,15 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 	private GameUniverse universe;
 	private boolean isDead = false;
 	private Timer timer;
-	private int firePower = 1;
-	private int nbBomb = 1;
-	private String playerType;
+	private int firePower = DEFAULT_FIRE_POWER;
+//	private int nbBomb = DEFAULT_NB_BOMB;
+	private int nbBomb = 99;
 
 	private HashMap<String, ArrayList<DrawableImage>> imgMap = null;
 
 	public Bomberman(Canvas defaultCanvas, GameUniverse universe, String playerType) {
 		this.defaultCanvas = defaultCanvas;
 		this.universe = universe;
-		this.playerType = playerType;
 		
 		if (imgMap == null) {
 			imgMap = LoadImage.loadImagePlayer(defaultCanvas, playerType);

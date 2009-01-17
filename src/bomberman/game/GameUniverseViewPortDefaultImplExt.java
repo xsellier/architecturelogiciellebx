@@ -15,9 +15,6 @@ import java.util.Iterator;
 public class GameUniverseViewPortDefaultImplExt extends GameUniverseViewPortDefaultImpl {
 	private Image buffer;
 	private Graphics bufferGraphics;
-	protected Canvas canvas;
-	protected BackgroundImage background;
-	protected GameUniverse universe;
 
 	public GameUniverseViewPortDefaultImplExt(Canvas canvas, GameUniverse universe) {
 		super(canvas, universe);
@@ -26,10 +23,6 @@ public class GameUniverseViewPortDefaultImplExt extends GameUniverseViewPortDefa
 		bufferGraphics = buffer.getGraphics();
 		background = new BackgroundImage("images/background_image.gif", canvas);
 		this.universe = universe;
-	}
-
-	public void setBackground(String filename) {
-		background = new BackgroundImage(filename, canvas);
 	}
 
 	public void paint() {
