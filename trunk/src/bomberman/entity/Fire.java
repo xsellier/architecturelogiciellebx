@@ -3,12 +3,7 @@ package bomberman.entity;
 import static bomberman.game.ConstantValues.SPRITE_SIZE;
 import static bomberman.game.ConstantValues.SPRITE_SIZE_X;
 import static bomberman.game.ConstantValues.SPRITE_SIZE_Y;
-import gameframework.base.Drawable;
 import gameframework.base.DrawableImage;
-import gameframework.base.Overlappable;
-import gameframework.game.GameEntity;
-import gameframework.game.GameMovable;
-import gameframework.game.GameUniverse;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
@@ -21,14 +16,12 @@ import java.util.TimerTask;
 
 import bomberman.utility.LoadImage;
 
-public class Fire extends GameMovable implements Drawable, GameEntity,
-		Overlappable {
+public class Fire extends AbstractEntity {
 
 	protected static HashMap<String, ArrayList<DrawableImage>> imgMap = null;
 
 	protected Point position;
 
-	private GameUniverse universe;
 	private Timer timer;
 	private int spriteNumber = -1;
 	private int firePower;
@@ -40,14 +33,14 @@ public class Fire extends GameMovable implements Drawable, GameEntity,
 
 	protected static volatile HashMap<String, Boolean> fireExpansion = null;
 
-	public Fire(Canvas defaultCanvas, Point pos, GameUniverse universe,
-			int firePower, int firePowerLeft, String fireType) {
+	public Fire(Canvas defaultCanvas, Point pos, int firePower,
+			int firePowerLeft, String fireType) {
+		super(null);
 		if (imgMap == null) {
 			imgMap = LoadImage.loadImageFire(defaultCanvas);
 		}
 
 		position = pos;
-		this.universe = universe;
 		this.firePower = firePower;
 		this.defaultCanvas = defaultCanvas;
 		this.fireType = fireType;
@@ -67,6 +60,8 @@ public class Fire extends GameMovable implements Drawable, GameEntity,
 
 		timer = new Timer();
 		timer.scheduleAtFixedRate(new TimerTaskExt(4), 0, 100);
+
+		System.out.println(fireType);
 	}
 
 	private class TimerTaskExt extends TimerTask {
@@ -82,43 +77,35 @@ public class Fire extends GameMovable implements Drawable, GameEntity,
 			spriteNumber = spriteNumber % 4;
 			cycle++;
 			if (cycle > maxCycle) {
-				universe.removeGameEntity(Fire.this);
+				operation.removeGameEntity(Fire.this);
 				this.cancel();
 			}
 		}
 	};
 
 	private void fireStartExpansion() {
-		System.out.println("position = (" + getPosition().x / SPRITE_SIZE_X
-				+ ", " + getPosition().y / SPRITE_SIZE_Y + ")");
-
 		int x = getPosition().x;
 		int y = getPosition().y;
 
 		if (firePower == 1) {
-			universe.addGameEntity(new Fire(defaultCanvas, new Point(x, y
-					- SPRITE_SIZE_Y), universe, 1, 0, "UpExt"));
-			universe.addGameEntity(new Fire(defaultCanvas, new Point(x, y
-					+ SPRITE_SIZE_Y), universe, 1, 0, "DownExt"));
-			universe.addGameEntity(new Fire(defaultCanvas, new Point(x
-					- SPRITE_SIZE_X, y), universe, 1, 0, "LeftExt"));
-			universe.addGameEntity(new Fire(defaultCanvas, new Point(x
-					+ SPRITE_SIZE_X, y), universe, 1, 0, "RightExt"));
+			operation.addGameEntity(new Fire(defaultCanvas, new Point(x, y
+					- SPRITE_SIZE_Y), 1, 0, "UpExt"));
+			operation.addGameEntity(new Fire(defaultCanvas, new Point(x, y
+					+ SPRITE_SIZE_Y), 1, 0, "DownExt"));
+			operation.addGameEntity(new Fire(defaultCanvas, new Point(x
+					- SPRITE_SIZE_X, y), 1, 0, "LeftExt"));
+			operation.addGameEntity(new Fire(defaultCanvas, new Point(x
+					+ SPRITE_SIZE_X, y), 1, 0, "RightExt"));
 		} else {
 			firePowerLeft -= 2;
-			universe
-					.addGameEntity(new Fire(defaultCanvas, new Point(x, y
-							- SPRITE_SIZE_Y), universe, firePower,
-							firePowerLeft, "Up"));
-			 universe.addGameEntity(new Fire(defaultCanvas, new Point(x, y
-					+ SPRITE_SIZE_Y), universe, firePower, firePowerLeft,
-					"Down"));
-			universe.addGameEntity(new Fire(defaultCanvas, new Point(x
-					- SPRITE_SIZE_X, y), universe, firePower, firePowerLeft,
-					"Left"));
-			universe.addGameEntity(new Fire(defaultCanvas, new Point(x
-					+ SPRITE_SIZE_X, y), universe, firePower, firePowerLeft,
-					"Right"));
+			operation.addGameEntity(new Fire(defaultCanvas, new Point(x, y
+					- SPRITE_SIZE_Y), firePower, firePowerLeft, "Up"));
+			operation.addGameEntity(new Fire(defaultCanvas, new Point(x, y
+					+ SPRITE_SIZE_Y), firePower, firePowerLeft, "Down"));
+			operation.addGameEntity(new Fire(defaultCanvas, new Point(x
+					- SPRITE_SIZE_X, y), firePower, firePowerLeft, "Left"));
+			operation.addGameEntity(new Fire(defaultCanvas, new Point(x
+					+ SPRITE_SIZE_X, y), firePower, firePowerLeft, "Right"));
 		}
 	}
 
@@ -137,40 +124,40 @@ public class Fire extends GameMovable implements Drawable, GameEntity,
 				firePowerLeft--;
 				if (fireType.compareTo("Up") == 0
 						&& fireExpansion.get("Up").booleanValue()) {
-					universe.addGameEntity(new Fire(defaultCanvas, new Point(x,
-							y - SPRITE_SIZE_Y), universe, firePower,
-							firePowerLeft, "Up"));
+					operation.addGameEntity(new Fire(defaultCanvas, new Point(
+							x, y - SPRITE_SIZE_Y), firePower, firePowerLeft,
+							"Up"));
 				} else if (fireType.compareTo("Down") == 0
 						&& fireExpansion.get("Down").booleanValue()) {
 					System.out.println(fireType + "BIS="
 							+ fireExpansion.get(fireType));
-					universe.addGameEntity(new Fire(defaultCanvas, new Point(x,
-							y + SPRITE_SIZE_X), universe, firePower,
-							firePowerLeft, "Down"));
+					operation.addGameEntity(new Fire(defaultCanvas, new Point(
+							x, y + SPRITE_SIZE_X), firePower, firePowerLeft,
+							"Down"));
 				} else if (fireType.compareTo("Left") == 0
 						&& fireExpansion.get("Left").booleanValue()) {
-					universe.addGameEntity(new Fire(defaultCanvas, new Point(x
-							- SPRITE_SIZE_X, y), universe, firePower,
-							firePowerLeft, "Left"));
+					operation.addGameEntity(new Fire(defaultCanvas, new Point(x
+							- SPRITE_SIZE_X, y), firePower, firePowerLeft,
+							"Left"));
 				} else if (fireType.compareTo("Right") == 0
 						&& fireExpansion.get("Right").booleanValue()) {
-					universe.addGameEntity(new Fire(defaultCanvas, new Point(x
-							+ SPRITE_SIZE_X, y), universe, firePower,
-							firePowerLeft, "Right"));
+					operation.addGameEntity(new Fire(defaultCanvas, new Point(x
+							+ SPRITE_SIZE_X, y), firePower, firePowerLeft,
+							"Right"));
 				}
 			} else if (firePowerLeft == 0) {
 				if (fireType.compareTo("Up") == 0) {
-					universe.addGameEntity(new Fire(defaultCanvas, new Point(x,
-							y - SPRITE_SIZE_Y), universe, 1, 0, "UpExt"));
+					operation.addGameEntity(new Fire(defaultCanvas, new Point(
+							x, y - SPRITE_SIZE_Y), 1, 0, "UpExt"));
 				} else if (fireType.compareTo("Down") == 0) {
-					universe.addGameEntity(new Fire(defaultCanvas, new Point(x,
-							y + SPRITE_SIZE_Y), universe, 1, 0, "DownExt"));
+					operation.addGameEntity(new Fire(defaultCanvas, new Point(
+							x, y + SPRITE_SIZE_Y), 1, 0, "DownExt"));
 				} else if (fireType.compareTo("Left") == 0) {
-					universe.addGameEntity(new Fire(defaultCanvas, new Point(x
-							- SPRITE_SIZE_X, y), universe, 1, 0, "LeftExt"));
+					operation.addGameEntity(new Fire(defaultCanvas, new Point(x
+							- SPRITE_SIZE_X, y), 1, 0, "LeftExt"));
 				} else if (fireType.compareTo("Right") == 0) {
-					universe.addGameEntity(new Fire(defaultCanvas, new Point(x
-							+ SPRITE_SIZE_X, y), universe, 1, -1, "RightExt"));
+					operation.addGameEntity(new Fire(defaultCanvas, new Point(x
+							+ SPRITE_SIZE_X, y), 1, -1, "RightExt"));
 				}
 			}
 		}
