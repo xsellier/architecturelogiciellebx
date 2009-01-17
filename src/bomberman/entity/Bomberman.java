@@ -37,7 +37,7 @@ public class Bomberman extends AbstractEntity {
 		this.defaultCanvas = defaultCanvas;
 
 		if (imgMap == null) {
-			imgMap = LoadImage.loadImagePlayer(defaultCanvas, playerType);
+			imgMap = LoadImage.getImgPlayer(defaultCanvas, playerType);
 		}
 	}
 

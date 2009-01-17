@@ -37,7 +37,7 @@ public class Fire extends AbstractEntity {
 			int firePowerLeft, String fireType) {
 		super(null);
 		if (imgMap == null) {
-			imgMap = LoadImage.loadImageFire(defaultCanvas);
+			imgMap = LoadImage.getImgFire(defaultCanvas);
 		}
 
 		position = pos;
