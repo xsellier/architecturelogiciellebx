@@ -1,18 +1,17 @@
 package bomberman.base;
 
-import gameframework.base.MoveStrategy;
+import static bomberman.game.ConstantValues.SPRITE_SIZE_X;
+import static bomberman.game.ConstantValues.SPRITE_SIZE_Y;
+import gameframework.base.MoveStrategyKeyboard;
 import gameframework.base.SpeedVector;
 import gameframework.base.SpeedVectorDefaultImpl;
 
 import java.awt.Point;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import bomberman.entity.Bomberman;
 
-import static bomberman.game.ConstantValues.*;
-
-public class MoveStrategyKeyboardExt extends KeyAdapter implements MoveStrategy {
+public class MoveStrategyKeyboardExt extends MoveStrategyKeyboard {
 
 	private SpeedVector currentMove = new SpeedVectorDefaultImpl(
 			new Point(0, 0));
@@ -20,10 +19,17 @@ public class MoveStrategyKeyboardExt extends KeyAdapter implements MoveStrategy 
 	private Bomberman bm;
 	private Point currentPosition;
 	private Point nextPosition = new Point(-1, -1);
+	private MoveStrategyKeyboardMethodFactory player;
 
-	public MoveStrategyKeyboardExt(Bomberman bm) {
+	public MoveStrategyKeyboardExt(Bomberman bm, int numberPlayer) {
 		this.bm = bm;
 		currentPosition = bm.getPosition();
+		
+		if (numberPlayer == 1) {
+			player = new MoveStrategyKeyboardPlayer1();
+		} else if (numberPlayer == 2) {
+			player = new MoveStrategyKeyboardPlayer2();
+		}
 	}
 
 	public SpeedVector getSpeedVector() {
@@ -38,59 +44,21 @@ public class MoveStrategyKeyboardExt extends KeyAdapter implements MoveStrategy 
 	public void keyPressed(KeyEvent event) {
 		int keycode = event.getKeyCode();
 		currentPosition = bm.getPosition();
-		
-		switch (keycode) {
-		
-		case KeyEvent.VK_D:
+
+		if (keycode == player.right()) {
 			currentMove.setDir(new Point(1, 0));
 			nextPosition = new Point(currentPosition.x + SPRITE_SIZE_X, -1);
-			break;
-		case KeyEvent.VK_Q:
+		} else if (keycode == player.left()) {
 			currentMove.setDir(new Point(-1, 0));
 			nextPosition = new Point(currentPosition.x - SPRITE_SIZE_X, -1);
-			break;
-		case KeyEvent.VK_Z:
-			currentMove.setDir(new Point(0, -1));
-			nextPosition = new Point(-1, currentPosition.y - SPRITE_SIZE_Y);
-			break;
-		case KeyEvent.VK_S:
+		} else if (keycode == player.down()) {
 			currentMove.setDir(new Point(0, 1));
 			nextPosition = new Point(-1, currentPosition.y + SPRITE_SIZE_Y);
-			break;
-		case KeyEvent.VK_SPACE:
+		} else if (keycode == player.up()) {
+			currentMove.setDir(new Point(0, -1));
+			nextPosition = new Point(-1, currentPosition.y - SPRITE_SIZE_Y);
+		} else if (keycode == player.action()) {
 			bm.putBomb();
-			break;
 		}
 	}
-	
-//	public SpeedVector getSpeedVector() {
-//		return currentMove;
-//	}
-//
-//	@Override
-//	public void keyPressed(KeyEvent event) {
-//		int keycode = event.getKeyCode();
-//		switch (keycode) {
-//		case KeyEvent.VK_RIGHT:
-//			currentMove.setDir(new Point(1, 0));
-//			break;
-//		case KeyEvent.VK_LEFT:
-//			currentMove.setDir(new Point(-1, 0));
-//			break;
-//		case KeyEvent.VK_UP:
-//			currentMove.setDir(new Point(0, -1));
-//			break;
-//		case KeyEvent.VK_DOWN:
-//			currentMove.setDir(new Point(0, 1));
-//			break;
-//		case KeyEvent.VK_SPACE:
-//			bm.putBomb();
-//			break;
-//		}
-//	}
-	
-//	@Override
-//	public void keyReleased(KeyEvent event) {
-//		currentMove.setDir(new Point(0, 0));
-//	}
 }
