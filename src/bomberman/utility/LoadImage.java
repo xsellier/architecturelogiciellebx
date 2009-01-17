@@ -8,14 +8,26 @@ import java.util.HashMap;
 
 public class LoadImage {
 
-	private static final String DIRECTORY_PLAYER = "images/Sprite/Player/";
-	private static final String DIRECTORY_FIRE = "images/Sprite/Fire/";
 	private static final String DIRECTORY_LEVEL = "images/Level/LevelSnow/";
 	private static final String DIRECTORY_ITEM = "images/Item/";
+	private static final String DIRECTORY_SPRITE = "images/Sprite/";
 
 	private static HashMap<String, DrawableImage> imgLevel = null;
 	private static HashMap<String, DrawableImage> imgItem = null;
 	private static HashMap<String, HashMap<String, Integer>> mapPlayer = null;
+
+	private static ArrayList<DrawableImage> loadImg(Canvas canvas, String dir,
+			String name, String extension, int number) {
+		ArrayList<DrawableImage> result = new ArrayList<DrawableImage>(number);
+
+		for (int i = 0; i < number; i++) {
+			String s = dir + name + i + "." + extension;
+			DrawableImage tmp = new DrawableImage(s, canvas);
+			result.add(tmp);
+		}
+
+		return result;
+	}
 
 	public static void initMapPlayer() {
 		mapPlayer = new HashMap<String, HashMap<String, Integer>>();
@@ -39,7 +51,7 @@ public class LoadImage {
 		mapLink.put("Die", 4);
 
 		mapPlayer.put("Link", mapLink);
-		
+
 		HashMap<String, Integer> mapKitKat = new HashMap<String, Integer>();
 		mapKitKat.put("Left", 8);
 		mapKitKat.put("Right", 8);
@@ -49,7 +61,7 @@ public class LoadImage {
 		mapKitKat.put("Die", 4);
 
 		mapPlayer.put("KitKat", mapKitKat);
-		
+
 		HashMap<String, Integer> mapPetitGros = new HashMap<String, Integer>();
 		mapPetitGros.put("Left", 10);
 		mapPetitGros.put("Right", 10);
@@ -59,7 +71,7 @@ public class LoadImage {
 		mapPetitGros.put("Die", 6);
 
 		mapPlayer.put("PetitGros", mapPetitGros);
-		
+
 		HashMap<String, Integer> mapPetitMaigre = new HashMap<String, Integer>();
 		mapPetitMaigre.put("Left", 8);
 		mapPetitMaigre.put("Right", 8);
@@ -72,16 +84,16 @@ public class LoadImage {
 
 	}
 
-	public static HashMap<String, ArrayList<DrawableImage>> loadImagePlayer(
+	public static HashMap<String, ArrayList<DrawableImage>> getImgPlayer(
 			Canvas canvas, String playerType) {
 		HashMap<String, ArrayList<DrawableImage>> imgMap = new HashMap<String, ArrayList<DrawableImage>>();
 
 		if (mapPlayer == null) {
 			initMapPlayer();
 		}
-		
-		String path = DIRECTORY_PLAYER + playerType + "/";
-		
+
+		String path = DIRECTORY_SPRITE + "Player/" + playerType + "/";
+
 		ArrayList<DrawableImage> imgListLeft = loadImg(canvas, path, "Left",
 				"gif", mapPlayer.get(playerType).get("Left"));
 		ArrayList<DrawableImage> imgListRight = loadImg(canvas, path, "Right",
@@ -105,42 +117,35 @@ public class LoadImage {
 		return imgMap;
 
 	}
-
-	private static ArrayList<DrawableImage> loadImg(Canvas canvas, String dir,
-			String name, String extension, int number) {
-		ArrayList<DrawableImage> result = new ArrayList<DrawableImage>(number);
-
-		for (int i = 0; i < number; i++) {
-			String s = dir + name + i + "." + extension;
-			DrawableImage tmp = new DrawableImage(s, canvas);
-			result.add(tmp);
-		}
-
-		return result;
+	
+	public static ArrayList<DrawableImage> getImgBomb(Canvas canvas) {
+		return loadImg(canvas, DIRECTORY_SPRITE + "Bomb/", "Bomb", "gif", 3);
 	}
 
-	public static HashMap<String, ArrayList<DrawableImage>> loadImageFire(
+	public static HashMap<String, ArrayList<DrawableImage>> getImgFire(
 			Canvas canvas) {
 		HashMap<String, ArrayList<DrawableImage>> imgMap = new HashMap<String, ArrayList<DrawableImage>>();
 
-		ArrayList<DrawableImage> imgListCenter = loadImg(canvas, DIRECTORY_FIRE
+		String path =  DIRECTORY_SPRITE + "Fire/";
+		
+		ArrayList<DrawableImage> imgListCenter = loadImg(canvas, path
 				+ "Center/", "Center", "gif", 4);
-		ArrayList<DrawableImage> imgListLeft = loadImg(canvas, DIRECTORY_FIRE
+		ArrayList<DrawableImage> imgListLeft = loadImg(canvas, path
 				+ "Left/", "Left", "gif", 4);
-		ArrayList<DrawableImage> imgListRight = loadImg(canvas, DIRECTORY_FIRE
+		ArrayList<DrawableImage> imgListRight = loadImg(canvas, path
 				+ "Right/", "Right", "gif", 4);
-		ArrayList<DrawableImage> imgListDown = loadImg(canvas, DIRECTORY_FIRE
+		ArrayList<DrawableImage> imgListDown = loadImg(canvas, path
 				+ "Down/", "Down", "gif", 4);
-		ArrayList<DrawableImage> imgListUp = loadImg(canvas, DIRECTORY_FIRE
+		ArrayList<DrawableImage> imgListUp = loadImg(canvas, path
 				+ "Up/", "Up", "gif", 4);
 		ArrayList<DrawableImage> imgListLeftExt = loadImg(canvas,
-				DIRECTORY_FIRE + "LeftExt/", "LeftExt", "gif", 4);
+				path + "LeftExt/", "LeftExt", "gif", 4);
 		ArrayList<DrawableImage> imgListRightExt = loadImg(canvas,
-				DIRECTORY_FIRE + "RightExt/", "RightExt", "gif", 4);
-		ArrayList<DrawableImage> imgListUpExt = loadImg(canvas, DIRECTORY_FIRE
+				path + "RightExt/", "RightExt", "gif", 4);
+		ArrayList<DrawableImage> imgListUpExt = loadImg(canvas, path
 				+ "UpExt/", "UpExt", "gif", 4);
 		ArrayList<DrawableImage> imgListDownExt = loadImg(canvas,
-				DIRECTORY_FIRE + "DownExt/", "DownExt", "gif", 4);
+				path + "DownExt/", "DownExt", "gif", 4);
 
 		imgMap.put("Center", imgListCenter);
 		imgMap.put("Left", imgListLeft);
