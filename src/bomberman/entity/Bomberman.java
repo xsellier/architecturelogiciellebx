@@ -1,12 +1,9 @@
 package bomberman.entity;
 
-import static bomberman.game.ConstantValues.*;
-import gameframework.base.Drawable;
+import static bomberman.game.ConstantValues.DEFAULT_FIRE_POWER;
+import static bomberman.game.ConstantValues.SPRITE_SIZE_X;
+import static bomberman.game.ConstantValues.SPRITE_SIZE_Y;
 import gameframework.base.DrawableImage;
-import gameframework.base.Overlappable;
-import gameframework.game.GameEntity;
-import gameframework.game.GameMovable;
-import gameframework.game.GameUniverse;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
@@ -17,28 +14,28 @@ import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import bomberman.GameEntityObserver;
 import bomberman.utility.LoadImage;
 
-public class Bomberman extends GameMovable implements Drawable, GameEntity,
-		Overlappable {
+public class Bomberman extends AbstractEntity {
 	protected Canvas defaultCanvas;
 	private int spriteNumber = -1;
 	protected String spriteType;
 	private int spriteMax;
 	protected boolean movable = true;
-	private GameUniverse universe;
 	private boolean isDead = false;
 	private Timer timer;
 	private int firePower = DEFAULT_FIRE_POWER;
-//	private int nbBomb = DEFAULT_NB_BOMB;
+	// private int nbBomb = DEFAULT_NB_BOMB;
 	private int nbBomb = 99;
 
 	private HashMap<String, ArrayList<DrawableImage>> imgMap = null;
 
-	public Bomberman(Canvas defaultCanvas, GameUniverse universe, String playerType) {
+	public Bomberman(Canvas defaultCanvas, String playerType,
+			GameEntityObserver o) {
+		super(o);
 		this.defaultCanvas = defaultCanvas;
-		this.universe = universe;
-		
+
 		if (imgMap == null) {
 			imgMap = LoadImage.loadImagePlayer(defaultCanvas, playerType);
 		}
@@ -59,7 +56,7 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 			System.out.println("spriteNumberDead = " + spriteNumber);
 			cycle++;
 			if (cycle > maxCycle) {
-				universe.removeGameEntity(Bomberman.this);
+				operation.removeGameEntity(Bomberman.this);
 				this.cancel();
 			}
 		}
@@ -109,7 +106,7 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 		return (new Rectangle(getPosition().x, getPosition().y, SPRITE_SIZE_X,
 				SPRITE_SIZE_Y));
 	}
-	
+
 	public void updateNbBomb() {
 		nbBomb++;
 	}
@@ -117,12 +114,12 @@ public class Bomberman extends GameMovable implements Drawable, GameEntity,
 	public void updateFirePower() {
 		firePower++;
 	}
-	
+
 	public void putBomb() {
 		if (nbBomb > 0) {
 			nbBomb--;
-			universe.addGameEntity(new Bomb(defaultCanvas, new Point(
-					getPosition()), this, firePower, universe));
+			operation.addGameEntity(new Bomb(defaultCanvas, new Point(
+					getPosition()), this, firePower));
 		}
 	}
 

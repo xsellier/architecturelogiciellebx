@@ -2,11 +2,7 @@ package bomberman.entity;
 
 import static bomberman.game.ConstantValues.SPRITE_SIZE_X;
 import static bomberman.game.ConstantValues.SPRITE_SIZE_Y;
-import gameframework.base.Drawable;
 import gameframework.base.DrawableImage;
-import gameframework.base.Overlappable;
-import gameframework.game.GameEntity;
-import gameframework.game.GameUniverse;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
@@ -16,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Bomb implements Drawable, GameEntity, Overlappable {
+public class Bomb extends AbstractEntity {
 	protected static DrawableImage image0 = null;
 	protected static DrawableImage image1 = null;
 	protected static DrawableImage image2 = null;
@@ -27,13 +23,12 @@ public class Bomb implements Drawable, GameEntity, Overlappable {
 	protected Point position;
 	private Timer timer;
 	private int spriteNumber = -1;
-	private GameUniverse universe;
 	private int firePower;
 	private Bomberman bm;
 	private boolean isActive = true;
 
-	public Bomb(Canvas defaultCanvas, Point pos, Bomberman bm, int firePower,
-			GameUniverse universe) {
+	public Bomb(Canvas defaultCanvas, Point pos, Bomberman bm, int firePower) {
+		super(null);
 		if (image0 == null || image1 == null || image2 == null) {
 			image0 = new DrawableImage("images/Sprite/Bomb/Bomb0.gif",
 					defaultCanvas);
@@ -49,7 +44,6 @@ public class Bomb implements Drawable, GameEntity, Overlappable {
 
 		canvas = defaultCanvas;
 		position = pos;
-		this.universe = universe;
 		this.bm = bm;
 		this.firePower = firePower;
 
@@ -79,10 +73,10 @@ public class Bomb implements Drawable, GameEntity, Overlappable {
 
 	public void exploseBomb() {
 		isActive = false;
-		universe.removeGameEntity(Bomb.this);
+		operation.removeGameEntity(Bomb.this);
 		bm.updateNbBomb();
-		universe.addGameEntity(new Fire(canvas, getPosition(), universe,
-				firePower, firePower, "Center"));
+		operation.addGameEntity(new Fire(canvas, getPosition(), firePower,
+				firePower, "Center"));
 		timer.cancel();
 	}
 
@@ -99,5 +93,10 @@ public class Bomb implements Drawable, GameEntity, Overlappable {
 	public Rectangle getBoundingBox() {
 		return (new Rectangle((int) position.getX(), (int) position.getY(),
 				SPRITE_SIZE_X, SPRITE_SIZE_Y));
+	}
+
+	@Override
+	public void oneStepMoveHandler() throws UnsupportedOperationException {
+
 	}
 }
