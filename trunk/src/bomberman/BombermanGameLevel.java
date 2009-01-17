@@ -179,16 +179,11 @@ public class BombermanGameLevel extends GameLevelDefaultImpl implements
 
 				try {
 					if (operation.compareTo("add") == 0) {
-						System.out.println("add ");
 						universe.addGameEntity(entity);
-
 					} else if (operation.compareTo("r") == 0) {
-						System.out.println("remove ");
 						universe.removeGameEntity(entity);
 					}
 					isAvailable = false;
-
-					System.out.println("Sortie size = " + entities.size());
 				} finally {
 					l.unlock();
 				}
@@ -207,7 +202,6 @@ public class BombermanGameLevel extends GameLevelDefaultImpl implements
 		isAvailable = true;
 		entities.add(entity);
 		entitiesOperation.add(operation);
-		System.out.println("Entrée : size = " + entities.size());
 	}
 
 	@Override
