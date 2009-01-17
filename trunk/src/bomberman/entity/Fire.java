@@ -129,8 +129,6 @@ public class Fire extends AbstractEntity {
 					type = "Up";
 				} else if (fireType.compareTo("Down") == 0
 						&& fireExpansion.get("Down").booleanValue()) {
-					System.out.println(fireType + "BIS="
-							+ fireExpansion.get(fireType));
 					p = new Point(x, y + SPRITE_SIZE_Y);
 					type = "Down";
 				} else if (fireType.compareTo("Left") == 0
