@@ -12,6 +12,8 @@ import java.awt.Canvas;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import bomberman.utility.LoadImage;
 
@@ -40,6 +42,33 @@ public abstract class AbstractItem implements Drawable, GameEntity, Overlappable
 				SPRITE_SIZE_X  / 5, SPRITE_SIZE_Y / 5));
 	}
 	
-	public abstract void burnItem();
+	public void burnItem() {
+		isActive = false;
+		Timer timer = new Timer();
+		timer.scheduleAtFixedRate(new TimerTaskExt(4), 0, 250);
+	}
+	
+	private class TimerTaskExt extends TimerTask {
+		int maxCycle;
+		private int cycle = 0;
+		
+		public TimerTaskExt(int maxCycle) {
+			this.maxCycle = maxCycle;
+		}
+
+		public void run() {
+			spriteNumber++;
+			spriteNumber = spriteNumber % 7;
+			cycle++;
+			if (cycle == maxCycle) {
+				removeItem();
+				this.cancel();
+			}
+		}
+	};
+	
+	private void removeItem() {
+		universe.removeGameEntity(this);
+	}
 
 }
