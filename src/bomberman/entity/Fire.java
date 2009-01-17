@@ -60,8 +60,6 @@ public class Fire extends AbstractEntity {
 
 		timer = new Timer();
 		timer.scheduleAtFixedRate(new TimerTaskExt(4), 0, 100);
-
-		System.out.println(fireType);
 	}
 
 	private class TimerTaskExt extends TimerTask {
