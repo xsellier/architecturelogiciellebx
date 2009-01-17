@@ -5,7 +5,6 @@ import static bomberman.game.ConstantValues.SPRITE_SIZE_Y;
 import gameframework.base.DrawableImage;
 import gameframework.base.Overlappable;
 import gameframework.game.GameUniverse;
-import gameframework.game.MoveBlocker;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
@@ -18,7 +17,7 @@ import bomberman.entity.item.BombItem;
 import bomberman.entity.item.FireItem;
 import bomberman.utility.LoadImage;
 
-public class Wall extends AbstractLevel implements Overlappable, MoveBlocker {
+public class Wall extends AbstractLevel implements Overlappable {
 	protected static DrawableImage image = null;
 	protected static ArrayList<DrawableImage> imgBurnWallList = null;
 
@@ -68,7 +67,6 @@ public class Wall extends AbstractLevel implements Overlappable, MoveBlocker {
 			cycle++;
 			if (cycle == maxCycle) {
 				universe.removeGameEntity(Wall.this);
-//				universe.addGameEntity(new Floor(canvas, new Point(position.x, position.y)));
 				randSetItem();
 				this.cancel();
 			}

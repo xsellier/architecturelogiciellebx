@@ -18,4 +18,6 @@ public class ConstantValues {
 	public static final int NUMBER_OF_LIVES = 1;
 	
 	public static final int DEFAULT_FIRE_POWER = 1;
+	
+	public static final int DEFAULT_NB_BOMB = 1;
 }

@@ -4,30 +4,30 @@ import static bomberman.game.ConstantValues.NB_COLUMNS;
 import static bomberman.game.ConstantValues.NB_ROWS;
 import static bomberman.game.ConstantValues.SPRITE_SIZE_X;
 import static bomberman.game.ConstantValues.SPRITE_SIZE_Y;
+import gameframework.base.MoveStrategyKeyboard;
 import gameframework.game.CanvasDefaultImpl;
 import gameframework.game.Game;
 import gameframework.game.GameLevelDefaultImpl;
 import gameframework.game.GameMovableDriverDefaultImpl;
 import gameframework.game.GameUniverseDefaultImpl;
+import gameframework.game.GameUniverseViewPortDefaultImpl;
 import gameframework.game.MoveBlockerChecker;
 import gameframework.game.MoveBlockerCheckerDefaultImpl;
 import gameframework.game.OverlapProcessor;
+import gameframework.game.OverlapProcessorDefaultImpl;
 import gameframework.game.OverlapRuleApplier;
 
 import java.awt.Canvas;
 import java.awt.Point;
 
 import bomberman.base.MoveStrategyKeyboardExt;
-import bomberman.base.MoveStrategyKeyboardExtP2;
 import bomberman.entity.Bomberman;
+import bomberman.entity.Floor;
 import bomberman.entity.item.BombItem;
 import bomberman.entity.item.FireItem;
 import bomberman.entity.level.BlocAround;
-import bomberman.entity.level.Floor;
 import bomberman.entity.level.SuperWall;
 import bomberman.entity.level.Wall;
-import bomberman.game.GameUniverseViewPortDefaultImplExt;
-import bomberman.game.OverlapProcessorDefaultImplExt;
 import bomberman.rule.BombermanMoveBlockers;
 import bomberman.rule.BombermanOverlaps;
 
@@ -37,26 +37,26 @@ public class BombermanGameLevel extends GameLevelDefaultImpl {
 	// Flames;
 	static int[][] tab = {
 		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-		{ 1, 0, 0, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1 },
+		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1 },
 		{ 1, 0, 2, 3, 2, 3, 0, 2, 3, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 1 },
-		{ 1, 3, 3, 3, 3, 3, 0, 3, 3, 3, 0, 3, 0, 2, 2, 0, 2, 2, 2, 1 },
-		{ 1, 5, 2, 3, 2, 3, 0, 2, 3, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 1 },
+		{ 1, 5, 3, 3, 3, 3, 0, 3, 3, 3, 0, 3, 0, 2, 2, 0, 2, 2, 2, 1 },
+		{ 1, 4, 2, 3, 2, 3, 0, 2, 3, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 1 },
 		{ 1, 5, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-		{ 1, 5, 2, 3, 2, 3, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 1 },
-		{ 1, 5, 0, 3, 3, 3, 0, 2, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 1 },
-		{ 1, 5, 2, 3, 2, 3, 0, 3, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 1 },
-		{ 1, 2, 0, 3, 3, 3, 0, 2, 0, 0, 0, 0, 0, 2, 2, 5, 2, 2, 2, 1 },
-		{ 1, 2, 2, 3, 2, 3, 0, 2, 0, 0, 0, 0, 0, 2, 2, 5, 2, 2, 2, 1 },
-		{ 1, 2, 0, 3, 3, 3, 0, 2, 2, 2, 2, 2, 2, 2, 5, 5, 5, 5, 5, 1 },
-		{ 1, 2, 2, 3, 2, 3, 0, 2, 2, 5, 2, 2, 2, 3, 3, 2, 2, 2, 5, 1 },
-		{ 1, 2, 0, 3, 3, 3, 0, 2, 2, 5, 2, 4, 4, 4, 4, 4, 4, 2, 5, 1 },
-		{ 1, 5, 5, 5, 5, 5, 0, 5, 5, 5, 2, 4, 4, 4, 4, 4, 4, 2, 0, 1 },
+		{ 1, 4, 2, 3, 2, 3, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 1 },
+		{ 1, 0, 0, 3, 3, 3, 0, 2, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 1 },
+		{ 1, 0, 2, 3, 2, 3, 0, 3, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 1 },
+		{ 1, 2, 0, 3, 3, 3, 0, 2, 0, 0, 0, 0, 0, 2, 2, 0, 2, 2, 2, 1 },
+		{ 1, 2, 2, 3, 2, 3, 0, 2, 0, 0, 0, 0, 0, 2, 2, 0, 2, 2, 2, 1 },
+		{ 1, 2, 0, 3, 3, 3, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 1 },
+		{ 1, 2, 2, 3, 2, 3, 0, 2, 2, 0, 2, 2, 2, 3, 3, 2, 2, 2, 0, 1 },
+		{ 1, 2, 0, 3, 3, 3, 0, 2, 2, 0, 2, 4, 4, 4, 4, 4, 4, 2, 0, 1 },
+		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 4, 4, 4, 4, 4, 4, 2, 0, 1 },
 		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }};
 		
 
 	@Override
 	protected void init() {
-		OverlapProcessor overlapProcessor = new OverlapProcessorDefaultImplExt();
+		OverlapProcessor overlapProcessor = new OverlapProcessorDefaultImpl();
 		OverlapRuleApplier overlapRules = new BombermanOverlaps(new Point(
 				1 * SPRITE_SIZE_X, 1 * SPRITE_SIZE_Y), life[0], score[0]);
 		overlapProcessor.setOverlapRules(overlapRules);
@@ -68,8 +68,8 @@ public class BombermanGameLevel extends GameLevelDefaultImpl {
 				overlapProcessor);
 		overlapRules.setUniverse(universe);
 
-		gameBoard = new GameUniverseViewPortDefaultImplExt(canvas, universe);
-		((GameUniverseViewPortDefaultImplExt) gameBoard).setBackground("images/Level/LevelSnow/Floor.gif");
+		gameBoard = new GameUniverseViewPortDefaultImpl(canvas, universe);
+		((GameUniverseViewPortDefaultImpl) gameBoard).setBackground("images/Level/LevelSnow/Floor.gif");
 		
 		((CanvasDefaultImpl) canvas).setDrawingGameBoard(gameBoard);
 		
@@ -83,9 +83,6 @@ public class BombermanGameLevel extends GameLevelDefaultImpl {
 				} else if (tab[i][j] == 2) {
 					universe.addGameEntity(new SuperWall(canvas, new Point(j
 							* SPRITE_SIZE_X, i * SPRITE_SIZE_Y)));
-//				} else if (tab[i][j] == 3) {
-//					universe.addGameEntity(new Wall(canvas, new Point(j * SPRITE_SIZE_X,
-//							i * SPRITE_SIZE_Y), universe));
 				} else {
 				
 					universe.addGameEntity(new Floor(canvas, new Point(j
@@ -115,9 +112,10 @@ public class BombermanGameLevel extends GameLevelDefaultImpl {
 		 *  - PetitGros
 		 *  - PetitMaigre
 		 */
+		// Player 1
 		Bomberman bm = new Bomberman(canvas, universe, "Bomberman");
 		GameMovableDriverDefaultImpl bmDriver = new GameMovableDriverDefaultImpl();
-		MoveStrategyKeyboardExt keyStrBm = new MoveStrategyKeyboardExt(bm);
+		MoveStrategyKeyboard keyStrBm = new MoveStrategyKeyboardExt(bm, 1);
 		bmDriver.setStrategy(keyStrBm);
 		bmDriver.setmoveBlockerChecker(moveBlockerChecker);
 		canvas.addKeyListener(keyStrBm);
@@ -128,7 +126,7 @@ public class BombermanGameLevel extends GameLevelDefaultImpl {
 		// Player 2
 		Bomberman link = new Bomberman(canvas, universe, "Link");
 		GameMovableDriverDefaultImpl linkDriver = new GameMovableDriverDefaultImpl();
-		MoveStrategyKeyboardExtP2 keyStrLink = new MoveStrategyKeyboardExtP2(link);
+		MoveStrategyKeyboard keyStrLink = new MoveStrategyKeyboardExt(link, 2);
 		linkDriver.setStrategy(keyStrLink);
 		linkDriver.setmoveBlockerChecker(moveBlockerChecker);
 		canvas.addKeyListener(keyStrLink);
