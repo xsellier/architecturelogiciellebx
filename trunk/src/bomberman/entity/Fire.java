@@ -118,45 +118,47 @@ public class Fire extends AbstractEntity {
 			int x = getPosition().x;
 			int y = getPosition().y;
 
+			String type = "";
+			Point p = new Point();
+
 			if (firePowerLeft > 0) {
 				firePowerLeft--;
 				if (fireType.compareTo("Up") == 0
 						&& fireExpansion.get("Up").booleanValue()) {
-					operation.addGameEntity(new Fire(defaultCanvas, new Point(
-							x, y - SPRITE_SIZE_Y), firePower, firePowerLeft,
-							"Up"));
+					p = new Point(x, y - SPRITE_SIZE_Y);
+					type = "Up";
 				} else if (fireType.compareTo("Down") == 0
 						&& fireExpansion.get("Down").booleanValue()) {
 					System.out.println(fireType + "BIS="
 							+ fireExpansion.get(fireType));
-					operation.addGameEntity(new Fire(defaultCanvas, new Point(
-							x, y + SPRITE_SIZE_X), firePower, firePowerLeft,
-							"Down"));
+					p = new Point(x, y + SPRITE_SIZE_Y);
+					type = "Down";
 				} else if (fireType.compareTo("Left") == 0
 						&& fireExpansion.get("Left").booleanValue()) {
-					operation.addGameEntity(new Fire(defaultCanvas, new Point(x
-							- SPRITE_SIZE_X, y), firePower, firePowerLeft,
-							"Left"));
+					p = new Point(x - SPRITE_SIZE_X, y);
+					type = "Left";
 				} else if (fireType.compareTo("Right") == 0
 						&& fireExpansion.get("Right").booleanValue()) {
-					operation.addGameEntity(new Fire(defaultCanvas, new Point(x
-							+ SPRITE_SIZE_X, y), firePower, firePowerLeft,
-							"Right"));
+					p = new Point(x + SPRITE_SIZE_X, y);
+					type = "Right";
 				}
+				operation.addGameEntity(new Fire(defaultCanvas, p, firePower,
+						firePowerLeft, type));
 			} else if (firePowerLeft == 0) {
 				if (fireType.compareTo("Up") == 0) {
-					operation.addGameEntity(new Fire(defaultCanvas, new Point(
-							x, y - SPRITE_SIZE_Y), 1, 0, "UpExt"));
+					p = new Point(x, y - SPRITE_SIZE_Y);
+					type = "Up";
 				} else if (fireType.compareTo("Down") == 0) {
-					operation.addGameEntity(new Fire(defaultCanvas, new Point(
-							x, y + SPRITE_SIZE_Y), 1, 0, "DownExt"));
+					p = new Point(x, y + SPRITE_SIZE_Y);
+					type = "Down";
 				} else if (fireType.compareTo("Left") == 0) {
-					operation.addGameEntity(new Fire(defaultCanvas, new Point(x
-							- SPRITE_SIZE_X, y), 1, 0, "LeftExt"));
+					p = new Point(x - SPRITE_SIZE_X, y);
+					type = "Left";
 				} else if (fireType.compareTo("Right") == 0) {
-					operation.addGameEntity(new Fire(defaultCanvas, new Point(x
-							+ SPRITE_SIZE_X, y), 1, -1, "RightExt"));
+					p = new Point(x + SPRITE_SIZE_X, y);
+					type = "Right";
 				}
+				operation.addGameEntity(new Fire(defaultCanvas, p, 1, 0, type));
 			}
 		}
 	}
