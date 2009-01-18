@@ -1,37 +1,576 @@
 % -*- mode: latex; coding: latin-1-unix -*- %
 
+Avant de commencer le rapport du projet, voici l'usage du jeu.
 
-%\begin{figure}[!h]
-%\begin{center}
-%  \includegraphics[scale = 0.5]{gantt-cp}
-%  \caption{Diagramme de squence}
-%  \label{gantt-cp}
-%\end{center}
-%\end{figure}
+\begin{figure}[!h]
+\begin{center}
+ \includegraphics[scale = 0.4]{keyboard}
+ \caption{Touches du clavier}
+ \label{keyboard}
+\end{center}
+\end{figure}
 
 \section{Bomberman}
 
+Le jeu que nous allons essayer d'implémenter est le Bomberman, le
+poseur de bombes. Le but de ce jeu est d'éliminer son adversaire avec
+les bombes à notre disposition ou user de ruse pour que l'ennemi tombe
+sous ses propres bombes.
 
-\subsection{Joueur}
+Tout d'abord, listons les entités du jeu dont nous aurons besoin. Ceci
+est une liste non exhaustive qui représente les entités et leurs
+caractéristiques que l'on peut trouver en général dans les Bomberman.
 
-\subsection{Niveau}
+\subsection{Composition minimal}
 
-\subsubsection{Murs indestructibles}
-
-\subsubsection{Murs destructibles}
-
-\subsection{Objets}
+\subsubsection{Joueur}
+Entité centrale du jeu, le joueur qui est représenté par un avatar qui
+peut se déplacer sur la carte et avoir certaines actions dont le
+posage de bombes. Un joueur en déplacement est bloqué par les murs qui
+composent le jeu.
 
 \subsubsection{Bombe}
+L'autre pièce maîtresse du jeu, la bombe une fois posée, explose après
+un certains laps de temps et on a une expansion de flamme. Elle peut
+posséder une facteur de puissance.
 
-\subsubsection{Flame}
+\subsubsection{Flamme}
+Une entité qui est assez abstraite, elle est la représentation d'une
+explosion de bombe. Suivant l'implémentation choisie, on pourrait voir
+la flamme comme une entité invisible, le tout étant qu'il faille
+qu'elle intéragisse avec l'environnement après une explosion de bombe.
+
+\subsection{Niveau}
+Tout jeu possède des niveaux, ceux des Bomberman sont caractérisés par
+les deux types de murs suivant.
+
+\subsubsection{Murs indestructibles}
+Ces murs ne peuvent être traversés. Elle délimite le niveau du jeu et
+sont insensibles aux explosions des bombes.
+
+\subsubsection{Murs destructibles}
+Ensuite nous avons les murs destructibles qui s'éffritent sous les
+vagues des bombes.
+
+\subsection{Objets}
+Les Bomberman de maintenant possèdent des objets qui ajoutent de
+nouvelles capacités à l'avatar du joueur mais ce n'est pas
+obligatoire, un bomberman pourrait très bien ne pas comporter de
+bonus, le minimum étant qu'il puisse poser des bombes explosives.\\
+
+Voici, une liste des principaux objets que contient un Bomberman.
+
+\subsubsection{Bombe}
+Un Bomberman peut généralement poser une seule bombe à la fois mais
+cet objet lui permet d'augmenter sa capacité maximale.
+
+\subsubsection{Flamme}
+Un autre objet bonus classique des Bomberman est la flamme qui permet
+d'augmenter la puissance d'explosion d'une bombe.
 
 \subsubsection{Autres}
+Ensuite, nous pouvons trouver divers objets qui ajoutent des nouvelles
+capacités au joueur ou tout simplement augmentent ou décroient les
+caractéristiques de son avatar.\\
+
+On pourra par exemple citer les bottes de vitesse qui augmentent la
+vitesse de déplacement du joueur, les gants de fer qui lui permettent
+de pousser les bombes. Dans les objets qui apportent un malus, on a
+celui qui donne un contrôle aléatoire de son avatar ou ceux qui
+baissent le nombre total de bombes. Il existe une multitude d'objets
+bonus qui sont laissés libre à l'imagination du joueur.
 
 \subsection{Intéractions}
+Essayons de lister les intéractions dont nous aurons besoins afin de
+faire marcher notre jeu. On peut voir une première représentation des
+différentes intéractions entre les entités sur la figure
+\ref{interaction}.
+
+
+\begin{figure}[!h]
+\begin{center}
+ \includegraphics[scale = 0.27]{interaction}
+ \caption{Schéma d'intéraction entre les entités}
+ \label{interaction}
+\end{center}
+\end{figure}
+
 
 \section{Architecture}
+Pour faire notre Bomberman, nous avons à notre disposition un «
+  framework » de jeu.
+
+\subsubsection{Framework}
+Le « framework » se décompose en plusieurs parties, chacune gérant une
+activité. Nous allons le voir avec l'exemple du jeu Pacman fourni.\\
+
+Légende :
+\begin{itemize}
+\item \textcolor{black}{Noir} : Classes du « framework »
+\item \textcolor{blue}{Bleu} : Classes de l'API Java
+\item \textcolor{red}{Rouge} : Classes spécifiques au jeu
+\end{itemize}
+
+\paragraph*{Gestion du jeu}
+Cette partie est le lien avec l'utilisateur, elle permet de lancer le
+jeu.
+
+\begin{figure}[!h]
+\begin{center}
+ \includegraphics[scale = 0.22]{gestionJeu}
+ \caption{Gestion du jeu}
+ \label{gestionJeu}
+\end{center}
+\end{figure}
+
+\clearpage
+
+\paragraph*{Gestion du niveau} 
+La composition d'un niveau de jeu est gérée par ces classes. Elles
+définissent entre autres les entités présentes, comment sont placées
+les entités par rapport aux autres sur la carte.
+
+\begin{figure}[!h]
+\begin{center}
+ \includegraphics[scale = 0.22]{gestionNiveau}
+ \caption{Gestion d'un niveau}
+ \label{gestionNiveau}
+\end{center}
+\end{figure}
+
+\paragraph*{Gestion de l'environnement d'un niveau}
+Là où la gestion du niveau s'occupait du placement des entités, cette
+partie s'occupe de tout ce qu'il y a derrière, c'est à dire qu'elle se
+charge de permettre une intéraction entre les entités du jeu, que les
+entités sont bien transmis à la partie qui gère l'affichage, etc\dots
+
+\begin{figure}[!h]
+\begin{center}
+ \includegraphics[scale = 0.22]{gestionEnvironnement}
+ \caption{Gestion de l'environnement d'un niveau}
+ \label{gestionEnvironnement}
+\end{center}
+\end{figure}
+
+\clearpage
+
+\paragraph*{Gestion des déplacements}
+Nous avons ensuite, une partie qui gère la façon dont vont se déplacer
+les entités dans le jeu.
+
+\begin{figure}[!h]
+\begin{center}
+ \includegraphics[scale = 0.2]{gestionDeplacement}
+ \caption{Gestion des déplacements}
+ \label{gestionDeplacement}
+\end{center}
+\end{figure}
+
+\paragraph*{Gestion des stratégies de déplacement}
+Ici, nous avons une forme de spécialisation de la partie
+précedente. On va définir des stratégies de déplacement à suivre pour
+les entités qui peuvent être controlées par l'IA ou par le joueur via
+le clavier.
+
+\begin{figure}[!h]
+\begin{center}
+ \includegraphics[scale = 0.27]{gestionStrategieDeplacement}
+ \caption{Gestion des stratégies de déplacement}
+ \label{gestionStrategieDeplacement}
+\end{center}
+\end{figure}
+
+\clearpage
+
+\paragraph*{Gestion des collisions}
+Voici, la partie qui est spécialisée dans la gestion des
+collisions. Elle définit les règles de collisions, de ce qu'ils se
+passent lorsqu'une collision se produit entre deux entités du jeu.
+
+\begin{figure}[!h]
+\begin{center}
+ \includegraphics[scale = 0.27]{gestionCollision}
+ \caption{Gestion des collisions}
+ \label{gestionCollision}
+\end{center}
+\end{figure}
+
+\paragraph*{Gestions des dessins}
+Pour en terminer avec les classes du « framework », il reste la partie
+qui se charge de ce qu'on peut voir sur notre écran de jeu, c'est à
+dire ce qui est déssinable.
+
+\begin{figure}[!h]
+\begin{center}
+ \includegraphics[scale = 0.27]{gestionDessin}
+ \caption{Gestion des dessins}
+ \label{gestionDessin}
+\end{center}
+\end{figure}
+
+\paragraph*{Classes spécifiques au jeu}
+Ensuite nous avons les classes qui font que le jeu est le jeu. Ces
+classes définissent chacune des entités. Voici un exemple sur la
+figure \ref{classeSpecifiqueJeu} avec celui du jeu Pacman.
+
+\begin{figure}[!h]
+\begin{center}
+ \includegraphics[scale = 0.27]{classeSpecifiqueJeu}
+ \caption{Entités du jeu Pacman}
+ \label{classeSpecifiqueJeu}
+\end{center}
+\end{figure}
+
+
+\bigskip
+On peut voir sur la figure \ref{architectureGlobaleSimplifiee} une
+architecture globale simplifiée.
+
+\begin{figure}[!h]
+\begin{center}
+ \includegraphics[scale = 0.08]{architectureGlobaleSimplifiee}
+ \caption{Architecture globale simplifiée}
+ \label{architectureGlobaleSimplifiee}
+\end{center}
+\end{figure}
+
+\section{Implémentation d'un Bomberman}
+En utilisant ce « framework », nous allons créer le jeu Bomberman.
+
+\subsection{Extension du « framework »}
+Tout d'abord, nous avons choisi de ne pas toucher au code source du «
+  framework » donné. Toutes les modifications nécéssaire se feront
+sous forme d'extension, le plus souvent par un simple héritage de la
+classe que l'on veut modifier. Les extensions se trouvent dans les
+paquetages « bomberman.game » et « bomberman.base » qui extendent
+respectivement les paquetages « framework.game » et « framework.base ».\\
+
+Pour un soucis de confort, nous avons décide d'extendre la classe
+\textsl{GameDefaultImpl}. Cette classe gère la taille du panneau Java
+et la taille de la grille. La méthode dont nous avions besoin de
+surcharger était \textsl{createGUI}, cette dernière faisait appel à
+deux méthodes privées que nous avons dû dupliquer dans cette
+classe. Les modifications faites vont nous permettre de lancer notre
+jeu sur une grille de taille et une résolution arbitraire.\\
+
+Ensuite, l'autre modification que nous avons appliqué était la gestion
+du clavier. Pour se faire, nous avons étendu la classe
+\textsl{MoveStrategyKeyboard}. 
+
+Tout d'abord, les modifications dans cette classe va permettre de
+changer la stratégie du clavier qui sur Pacman était une avance
+automatique, c'est à dire que lorsqu'on lui indique une direction,
+l'avatar continue jusqu'à rencontrer un obstacle.
+
+Nous avons au passage utilisé le modèle de conception « Méthode de
+  fabrication » , que l'on peut voir sur la figure
+\ref{strategyKeyboard}, afin de gérer les claviers des joueurs. On ne
+connait pas à l'avance les touches du clavier qui seront associées au
+déplacement et à l'action mais chaque avatar des joueurs se
+comporteront de la même façon.
+
+\begin{figure}[!h]
+\begin{center}
+ \includegraphics[scale = 0.27]{strategyKeyboard}
+ \caption{Gestion du clavier}
+ \label{strategyKeyboard}
+\end{center}
+\end{figure}
 
 \subsection{Refactoring}
+Le code des entités du jeu Pacman possèdait des variables de classes
+tels que \textsl{SPRITE\_SIZE} déclarées dans plusieurs classes ce qui
+n'est pas bon pour la maintenabilité. Nous avons crée une classe
+\textsl{ConstantValues} qui contient les diverses constantes du jeu.
 
+\subsection{Paquetages}
+Sans avoir une reflexion très poussée sur le sujet, plusieurs
+variables dans les classes des entités du jeu de Pacman était
+déclarées en « protected », il n'y avait pas vraiment d'encapsulation.\\
+
+Nous avons crée une forme de hiérarchie que l'on peut voir sur la
+figure \ref{package}. Nous avons regroupé les entités par rôle dans le
+jeu. Ainsi dans le paquetage \textsl{bomberman.entity.item}, nous
+trouverons tous les objets bonus. On peut noter le paquetage
+\textsl{utility} qui contient la classe qui se charge des chargements
+des images.
+
+\begin{figure}[!h]
+\begin{center}
+ \includegraphics[scale = 0.35]{package}
+ \caption{Paquetages}
+ \label{package}
+\end{center}
+\end{figure}
+
+\subsection{Architecture du jeu}
+Nous allons présenté une architecture que nous avions implémentée dans
+un premier temps mais qui n'est pas forcément l'architecture
+finale. Nous expliquerons les raisons de ces changements.
+
+\subsubsection{Timer}
+Avant de commencer à expliquer notre architecture, présentons la
+classe \textsl{Timer} du paquetage \textsl{java.util} fourni par l'API
+Java. Cette classe nous a été d'un grand secours, elle nous permet
+entre autres de gérer l'animation des « sprites ».
+
+\subsubsection{Entités principales}
+La figure \ref{mainEntities} montre les trois principales entités du
+jeu avec les principales variables et méthodes.
+
+\begin{figure}[!h]
+\begin{center}
+ \includegraphics[scale = 0.3]{mainEntities}
+ \caption{Entités principales}
+ \label{mainEntities}
+\end{center}
+\end{figure}
+
+\paragraph*{Bomberman}
+Les noms des méthodes sont assez explicites pour en rajouter sur ce
+qu'elles font.
+
+\paragraph*{Fire}
+Nous avons considéré cet entité comme une entité « Movable », ce qui
+va nous permettre de gérer les collisions avec les autres entités.
+
+La principale fonction à noter est \textsl{fireExpansion} qui fait le
+calcul de l'expansion lors d'une explosion.
+
+\paragraph*{Bomb}
+Dernière des trois entités, il n'y a pas grand chose à dire sur cette
+entité si ce n'est que la méthode \textsl{exploseBomb} déclenche
+l'explosion de la bombe.
+
+Pour gérér le compte à rebours de la bombe, nous avons utilisé la
+classe \textsl{Timer}.
+
+
+\subsubsection{Objets}
+La gestion des objets bonus est représentée par la figure
+\ref{mainItem}. La classe abstraite \textsl{AbstractItem} factorise le
+code de la combustion d'un objet qui se produit au contact de flamme
+en mettant la variable \textsl{isActive} à faux.
+
+\begin{figure}[!h]
+\begin{center}
+ \includegraphics[scale = 0.3]{mainItem}
+ \caption{Objets bonus principaux}
+ \label{mainItem}
+\end{center}
+\end{figure}
+
+
+\subsubsection{Niveau}
+Ce groupe contient, les éléments du décor. Nous avons l'entité
+\textsl{BlocAround} qui est en fait une \textsl{SuperWall} avec une
+représentation différente, nous aurions pu éviter de faire une classe
+pour cet entité et chercher à utiliser un modèle de conception ou tout
+simplement avoir en argument au constructeur de la classe l'image à
+afficher. Mais nous avons fait simple et cela nous aide à nous
+représenter l'entité dans le jeu. Les \textsl{BlocAround} sont les
+murs qui délimitent le jeu sur les extérieurs.\\
+
+Les entités \textsl{BlocAround}, \textsl{SuperWall} et \textsl{Wall}
+sont de type \textsl{MoveBlocker}, elles ne peuvent être
+traversées. En plus de cela, l'entité \textsl{Wall} est aussi de type
+\textsl{Overlappable}, ce qui permet de gérer la collision avec une
+flamme.\\
+
+Pour les besoins de notre jeu, nous avons intégrer l'entité
+\textsl{Floor} qui va nous permettre de calculer l'expansion d'une
+explosion.
+
+\clearpage
+
+\begin{figure}[!h]
+\begin{center}
+ \includegraphics[scale = 0.3]{mainLevel}
+ \caption{Principales entités du décor}
+ \label{mainLevel}
+\end{center}
+\end{figure}
+
+\subsubsection{Pré-architecture globale}
+Tout ceci donne l'architecture figure \ref{preArchitecture}.
+
+\begin{figure}[!h]
+\begin{center}
+ \includegraphics[scale = 0.2]{preArchitecture}
+ \caption{Première architecture}
+ \label{preArchitecture}
+\end{center}
+\end{figure}
+
+\section{Difficultés rencontrées}
+La création d'un jeu avec un « framework » n'est pas toujours évident,
+il faut essayer de s'imprégner de ce qui se fait et respecter les
+rôles définis par chaque groupe de gestion.
+
+\subsection{Posage de bombes}
+La première difficulté que nous avons rencontré et qui nous as demandé
+un gros temps de travail dessus est le posage de bombes. Sur le
+Pacman, toutes les entités étaient ajoutées à l'univers avant que la
+partie ne commence réellement par l'usage de la méthode
+\textsl{addGameEntity}.\\
+
+En essayant de poser des bombes, il arrivait que le jeu levait des
+exceptions du type :
+
+
+\bigskip
+\colorbox{gray}{\begin{minipage}{0.9\textwidth} 
+   \textcolor{red}{Exception in thread "Thread-2" \textcolor{blue}{java.util.ConcurrentModificationException}\\
+	at java.util.AbstractList$Itr.checkForComodification(Unknown Source)\\
+	at java.util.AbstractList$Itr.next(Unknown Source)\\
+	at gameframework.game.Game...Impl.allOneStepMoves(\textcolor{blue}{Game...Impl.java:44})\\
+	at gameframework.game.Game...Impl.run(\textcolor{blue}{Game...Impl.java:46})}
+\end{minipage}}
+
+\bigskip ou encore
+
+\bigskip
+\colorbox{gray}{\begin{minipage}{0.9\textwidth} \textcolor{red}{Exception in thread
+    "Thread-2" \textcolor{blue}{java.util.ConcurrentModificationException}\\ at
+    java.util.AbstractList\$Itr.checkForComodification(Unknown
+    Source)\\ at java.util.AbstractList\$Itr.next(Unknown Source)\\ at
+    bomberman.game.Game...ImplExt.paint(\textcolor{blue}{Game...ImplExt.java:40})\\ at
+    gameframework.game.Game...Impl.run(\textcolor{blue}{Game...Impl.java:45})}
+\end{minipage}}
+
+\bigskip Ce genre d'exception est un problème récurrent de la
+programmation avec les « threads ».\\
+
+Nous avons un thread qui s'occupe du mise à jour de ce qu'on peut voir
+dans l'écran, le « framework » utilise un itérateur pour manipuler les
+entités. Or un itérateur ne permet pas d'accès concurrent, ce qui lève
+l'exception précédent.\\
+
+En ayant conscience de cela, on peut voir que la boucle de jeu se
+trouve dans la classe \textsl{GameLevelDefaultImpl} et qu'elle boucle
+sur principalement trois fonctions :
+
+\bigskip
+\begin{itemize}
+\item \textsl{paint}
+\item \textsl{allOneStepMoves}
+\item \textsl{processAllOverlaps}
+\end{itemize}
+
+\bigskip Le jeu Pacman tournant correctement, on peut supposer que si
+l'on essaye de faire un \textsl{addGameEntity} dans l'une de ces trois
+fonctions, la stabilité du jeu n'est pas assurée.\\
+
+Une solution auquelle nous avons pensé est de faire une fonction qui
+sera appelée à la suite des ces trois fonctions. Cette fonction
+s'occuperait de l'ajout des entités que l'on souhaite. Pour
+implémenter notre solution, nous avons utilisé le patron de conception
+« Observateur ». Nous allons surveiller les appels aux méthodes
+\textsl{addGameEntity} et \textsl{removeGameEntity}.
+
+Lorsque l'on souhaite ajouter une entité dans l'univers du jeu, est
+placé dans une file, une fois les trois précédentes fonctions
+terminées, on se charge de vider la file, c'est à dire ajouter
+réellement dans l'univers l'entité.\\
+
+La classe \textsl{GameLevelDefaultImpl} fait partie du « framework »
+ce qui ne nous permet pas de modification mais la classe
+\textsl{BombermanGameLevel} étend la précédente classe, ce qui va nous
+permettre de surcharger la méthode qui contient la boucle de jeu.\\
+
+La figure \ref{observer} donne une schématisation de l'implémentation.
+
+\begin{figure}[!h]
+\begin{center}
+ \includegraphics[scale = 0.3]{observer}
+ \caption{Observateur}
+ \label{observer}
+\end{center}
+\end{figure}
+
+\bigskip Nous sommes conscients que nous forçons le comportement de la
+bombe à être de type \textsl{Movable}. Nous avons voulu factoriser le
+code de l'ajout et suppresion d'entité au sein de l'univers. La classe
+abstraite \textsl{AbstractEntity} va permettre aux trois entités
+d'avoir accès à une instance de la classe \textsl{EntityOperation} qui
+est observée par la classe \textsl{BombermanGameLevel}, qui au passage
+est maintenant aussi un observateur.\\
+
+Précédemment, lorsque nous avions un « universe.addGameEntity(e) »,
+nous allons maintenant faire appel à la méthode \textsl{addGameEntity}
+de la classe \textsl{EntityOperation}. Ce qui donne donc «
+  operation.addGameEntity(e) ».\\
+
+La classe n'ajoute pas directement à l'univers l'entité, elle se
+charge de transmettre à l'observateur l'entité qui va la mettre dans
+une file en attendant consommation de celle-ci.
+
+\subsection{Calcul des expansions}
+Un autre problème qui s'est posé est le calcul des expansions des
+explosions. Avant tout, présentons notre solution.\\
+
+Lorsqu'une bombe est posée, elle va exploser après un laps de
+temps. Cette explosion va générer une première flamme le « centre »
+qui va ensuite commencer l'expansion sur les quatres points
+cardinaux. Quatres autres flammes sont alors créées, chaque flamme va
+tester d'abord si elle peut s'afficher ou dit autrement si elle peut
+brûler. Ainsi, on n'affichera rien sur les murs dits « indestructibles ».\\
+
+L'expansion de flamme se fait grâce à l'entité \textsl{Floor} qui
+indique que c'est une passage vide et donc qu'elle peut continuer,
+tout ceci jusqu'à ce que la puissance de la flamme s'estompe ou que
+cette dernière soit arrêtée par un mur. Pour cela, on maintient une
+table d'association qui va indiquer si on peut ou pas continuer
+l'expansion. Lorsque la flamme rencontrait un mur destructible, elle
+mettait à jour la table.\\
+
+Le problème que nous rencontrions est que dans l'ordre de tests des
+collisions entre entités, la flamme faisait d'abord le test avec
+l'entité \textsl{Floor} avant de le faire sur l'entité
+\textsl{Wall}. Ce qui fait qu'elle mettait la table d'association un
+cycle trop tard, donc ne s'arrêtait pas au première obstable mais
+continuait à « +1 ».\\
+
+Une solution que nous avons trouvé pour reglér ce problème qui n'en
+est pas vraiment une et qui s'apparente plus à du bricolage est de
+passer la classe \textsl{Wall} en \textsl{Movable} et mettre de mettre
+la règle de collision correspondante. Ce qui donne un comportement qui
+n'est pas vraiment pertinent, un mur peut-il se déplacer ? Une
+solution qui marche mais non satisfaisante en terme d'architecture
+logicielle.
+
+\subsection{Architecture finale}
+Toutes ces modications nous le diagramme figure \ref{architectureFinale}.
+
+\begin{figure}[!h]
+\begin{center}
+ \includegraphics[scale = 0.2]{architectureFinale}
+ \caption{Architecture finale}
+ \label{architectureFinale}
+\end{center}
+\end{figure}
+
+\section{Bilan}
+Dans la finalité, nous avons un jeu qui semble marcher malgré que sur
+la fin l'architecture proposée ne nous satisfait pas. Une grosse
+partie du temps consacré à ce projet aura été sur la compréhension de
+l'exception levée qui est décrite plus haut. Dans un premier temps,
+nous étions passés par le système des « synchronized » et consorts que
+propose l'API Java. Cela ne résolvait pas le problème mais réduisait
+les exceptions.\\
+
+Comme le jeu n'était pas stable (problème avec les « threads » et
+itérateurs) et que la solution de calcul des expansions n'a été résolu
+que peu de temps avant la « deadline ». Nous n'avons pas pu intégrer
+des tests unitaires afin de valider le comportement du jeu en vue de
+le maintenir.
+
+\subsection{« TODO »}
+Comme dit plus haut, il faudrait établir une batterie de tests
+unitaires. Ensuite, il y a un travail à faire dans tout ce qui est des
+menus et de l'environnement lorsque le joueur gagne une partie, veut
+mettre en pause, etc\dots\\
+
+Au niveau du jeu, nous avons le comportement minimal, on pourrait
+s'amuser à gérer d'autres objets bonus.
 

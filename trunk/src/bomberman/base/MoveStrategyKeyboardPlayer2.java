@@ -21,7 +21,7 @@ public class MoveStrategyKeyboardPlayer2 implements MoveStrategyKeyboardMethodFa
 	}
 	
 	public int action() {
-		return KeyEvent.VK_M;
+		return KeyEvent.VK_NUMPAD0;
 	}
 
 }
