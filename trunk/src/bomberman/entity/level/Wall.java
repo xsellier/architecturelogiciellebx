@@ -2,13 +2,18 @@ package bomberman.entity.level;
 
 import static bomberman.game.ConstantValues.SPRITE_SIZE_X;
 import static bomberman.game.ConstantValues.SPRITE_SIZE_Y;
+import gameframework.base.Drawable;
 import gameframework.base.DrawableImage;
 import gameframework.base.Overlappable;
+import gameframework.game.GameEntity;
+import gameframework.game.GameMovable;
 import gameframework.game.GameUniverse;
+import gameframework.game.MoveBlocker;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -17,7 +22,7 @@ import bomberman.entity.item.BombItem;
 import bomberman.entity.item.FireItem;
 import bomberman.utility.LoadImage;
 
-public class Wall extends AbstractLevel implements Overlappable {
+public class Wall extends GameMovable implements Overlappable, Drawable, GameEntity, MoveBlocker {
 	protected static DrawableImage image = null;
 	protected static ArrayList<DrawableImage> imgBurnWallList = null;
 
@@ -25,6 +30,17 @@ public class Wall extends AbstractLevel implements Overlappable {
 	private int spriteNumber = -1;
 	protected GameUniverse universe;
 	private Canvas canvas;
+	
+	protected Point position;
+
+	public Point getPosition() {
+		return position;
+	}
+
+	public Rectangle getBoundingBox() {
+		return (new Rectangle(position.x, position.y, SPRITE_SIZE_X,
+				SPRITE_SIZE_Y));
+	}
 
 	public Wall(Canvas defaultCanvas, Point position, GameUniverse universe) {
 		if (image == null) {
@@ -50,20 +66,22 @@ public class Wall extends AbstractLevel implements Overlappable {
 	public void burnWall() {
 		isActive = false;
 		Timer timer = new Timer();
-		timer.scheduleAtFixedRate(new TimerTaskExt(4), 0, 250);
+		timer.scheduleAtFixedRate(new TimerTaskExt(4, imgBurnWallList.size()), 0, 250);
 	}
 
 	private class TimerTaskExt extends TimerTask {
 		int maxCycle;
 		private int cycle = 0;
+		private int imgNumber;
 
-		public TimerTaskExt(int maxCycle) {
+		public TimerTaskExt(int maxCycle, int imgNumber) {
 			this.maxCycle = maxCycle;
+			this.imgNumber = imgNumber;
 		}
 
 		public void run() {
 			spriteNumber++;
-			spriteNumber = spriteNumber % 5;
+			spriteNumber = spriteNumber % imgNumber;
 			cycle++;
 			if (cycle == maxCycle) {
 				universe.removeGameEntity(Wall.this);
@@ -84,5 +102,11 @@ public class Wall extends AbstractLevel implements Overlappable {
 				universe.addGameEntity(new FireItem(canvas, new Point(position.x, position.y), universe));
 			}
 		}
+	}
+
+	@Override
+	public void oneStepMoveHandler() {
+		// TODO Auto-generated method stub
+		
 	}
 }

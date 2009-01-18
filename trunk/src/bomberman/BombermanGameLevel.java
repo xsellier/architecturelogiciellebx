@@ -156,7 +156,9 @@ public class BombermanGameLevel extends GameLevelDefaultImpl implements
 		while (!stopGameLoop && !this.isInterrupted()) {
 			start = new Date().getTime();
 			gameBoard.paint();
+			updateEntity();
 			universe.allOneStepMoves();
+			updateEntity();
 			universe.processAllOverlaps();
 			updateEntity();
 			try {

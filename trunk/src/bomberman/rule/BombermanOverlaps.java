@@ -43,13 +43,13 @@ public class BombermanOverlaps extends OverlapRuleApplierDefaultImpl {
 	public void overlapRule(Bomberman bm, BombItem b) {
 		score.setValue(score.getValue() + 1);
 		bm.updateNbBomb();
-		universe.removeGameEntity(b);
+		bm.getOperation().removeGameEntity(b);
 	}
 
 	public void overlapRule(Bomberman bm, FireItem f) {
 		life.setValue(life.getValue() + 1);
 		bm.updateFirePower();
-		universe.removeGameEntity(f);
+		bm.getOperation().removeGameEntity(f);
 	}
 
 	public void overlapRule(Fire f, FireItem fi) {
@@ -68,19 +68,32 @@ public class BombermanOverlaps extends OverlapRuleApplierDefaultImpl {
 		f.stopExpansion(f.getType());
 	}
 	
+	public void overlapRule(Wall w, Fire f) {
+		f.setBurnable();
+		w.burnWall();
+		f.stopExpansion(f.getType());
+	}
+	
 	public void overlapRule(Fire f, Floor fl) {
 		f.setBurnable();
 		if (Fire.getFireExpansion().get(f.getType()).booleanValue()) {
 			f.fireExpansion(f.getType(), f.getPower());
 		}
 	}
-	
+
 	public void overlapRule(Fire f, Bomb b) {
 		b.exploseBomb();
 	}
+	
+	public void overlapRule(Bomb b, Fire f) {
+		b.exploseBomb();
+	}
+	
+	public void overlapRule(Bomberman bm, Bomb b) {
+	}
 
 	public void overlapRule(Bomberman bm, Fire f) {
-		// bm.die();
+//		bm.die();
 	}
 
 }
