@@ -1,8 +1,6 @@
 package bomberman.entity;
 
-import static bomberman.game.ConstantValues.DEFAULT_FIRE_POWER;
-import static bomberman.game.ConstantValues.SPRITE_SIZE_X;
-import static bomberman.game.ConstantValues.SPRITE_SIZE_Y;
+import static bomberman.game.ConstantValues.*;
 import gameframework.base.DrawableImage;
 
 import java.awt.Canvas;
@@ -26,8 +24,7 @@ public class Bomberman extends AbstractEntity {
 	private boolean isDead = false;
 	private Timer timer;
 	private int firePower = DEFAULT_FIRE_POWER;
-	// private int nbBomb = DEFAULT_NB_BOMB;
-	private int nbBomb = 99;
+	private int nbBomb = DEFAULT_NB_BOMB;
 
 	private HashMap<String, ArrayList<DrawableImage>> imgMap = null;
 
@@ -44,15 +41,17 @@ public class Bomberman extends AbstractEntity {
 	private class TimerTaskExt extends TimerTask {
 		int maxCycle;
 		private int cycle = 0;
-
-		public TimerTaskExt(int maxCycle) {
+		private int imgNumber;
+		
+		public TimerTaskExt(int maxCycle, int imgNumber) {
 			this.maxCycle = maxCycle;
 			spriteNumber = -1;
+			this.imgNumber = imgNumber;
 		}
 
 		public void run() {
 			spriteNumber++;
-			spriteNumber = spriteNumber % 4;
+			spriteNumber = spriteNumber % imgNumber;
 			System.out.println("spriteNumberDead = " + spriteNumber);
 			cycle++;
 			if (cycle > maxCycle) {
@@ -127,6 +126,6 @@ public class Bomberman extends AbstractEntity {
 		isDead = true;
 		movable = false;
 		timer = new Timer();
-		timer.scheduleAtFixedRate(new TimerTaskExt(4), 0, 300);
+		timer.scheduleAtFixedRate(new TimerTaskExt(4, imgMap.get("Die").size()), 0, 300);
 	}
 }

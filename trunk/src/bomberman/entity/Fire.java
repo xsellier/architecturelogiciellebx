@@ -59,20 +59,22 @@ public class Fire extends AbstractEntity {
 		}
 
 		timer = new Timer();
-		timer.scheduleAtFixedRate(new TimerTaskExt(4), 0, 100);
+		timer.scheduleAtFixedRate(new TimerTaskExt(4, imgMap.get(fireType).size()), 0, 100);
 	}
 
 	private class TimerTaskExt extends TimerTask {
 		int maxCycle;
 		private int cycle = 0;
-
-		public TimerTaskExt(int maxCycle) {
+		private int imgNumber;
+		
+		public TimerTaskExt(int maxCycle, int imgNumber) {
 			this.maxCycle = maxCycle;
+			this.imgNumber = imgNumber;
 		}
 
 		public void run() {
 			spriteNumber++;
-			spriteNumber = spriteNumber % 4;
+			spriteNumber = spriteNumber % imgNumber;
 			cycle++;
 			if (cycle > maxCycle) {
 				operation.removeGameEntity(Fire.this);
@@ -145,18 +147,18 @@ public class Fire extends AbstractEntity {
 			} else if (firePowerLeft == 0) {
 				if (fireType.compareTo("Up") == 0) {
 					p = new Point(x, y - SPRITE_SIZE_Y);
-					type = "Up";
+					type = "UpExt";
 				} else if (fireType.compareTo("Down") == 0) {
 					p = new Point(x, y + SPRITE_SIZE_Y);
-					type = "Down";
+					type = "DownExt";
 				} else if (fireType.compareTo("Left") == 0) {
 					p = new Point(x - SPRITE_SIZE_X, y);
-					type = "Left";
+					type = "LeftExt";
 				} else if (fireType.compareTo("Right") == 0) {
 					p = new Point(x + SPRITE_SIZE_X, y);
-					type = "Right";
+					type = "RightExt";
 				}
-				operation.addGameEntity(new Fire(defaultCanvas, p, 1, 0, type));
+				operation.addGameEntity(new Fire(defaultCanvas, p, 1, -1, type));
 			}
 		}
 	}

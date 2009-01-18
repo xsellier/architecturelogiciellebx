@@ -37,20 +37,22 @@ public class Bomb extends AbstractEntity {
 		this.firePower = firePower;
 
 		timer = new Timer();
-		timer.scheduleAtFixedRate(new TimerTaskExt(9), 0, 250);
+		timer.scheduleAtFixedRate(new TimerTaskExt(9, imgList.size()), 0, 250);
 	}
 
 	private class TimerTaskExt extends TimerTask {
 		int maxCycle;
 		private int cycle = 0;
-
-		public TimerTaskExt(int maxCycle) {
+		private int imgNumber;
+		
+		public TimerTaskExt(int maxCycle, int imgNumber) {
 			this.maxCycle = maxCycle;
+			this.imgNumber = imgNumber;
 		}
 
 		public void run() {
 			spriteNumber++;
-			spriteNumber = spriteNumber % 3;
+			spriteNumber = spriteNumber % imgNumber;
 			cycle++;
 			if (cycle == maxCycle) {
 				if (isActive) {
