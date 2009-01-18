@@ -52,7 +52,6 @@ public class Bomberman extends AbstractEntity {
 		public void run() {
 			spriteNumber++;
 			spriteNumber = spriteNumber % imgNumber;
-			System.out.println("spriteNumberDead = " + spriteNumber);
 			cycle++;
 			if (cycle > maxCycle) {
 				operation.removeGameEntity(Bomberman.this);
@@ -63,8 +62,8 @@ public class Bomberman extends AbstractEntity {
 
 	public void draw(Graphics g) {
 		Point tmp = getSpeedVector().getDir();
-		movable = true;
 		if (!isDead) {
+			movable = true;
 			if (tmp.getX() == 1) {
 				spriteType = "Right";
 			} else if (tmp.getX() == -1) {
@@ -115,7 +114,7 @@ public class Bomberman extends AbstractEntity {
 	}
 
 	public void putBomb() {
-		if (nbBomb > 0) {
+		if (nbBomb > 0 && !isDead) {
 			nbBomb--;
 			operation.addGameEntity(new Bomb(defaultCanvas, new Point(
 					getPosition()), this, firePower));
@@ -126,6 +125,10 @@ public class Bomberman extends AbstractEntity {
 		isDead = true;
 		movable = false;
 		timer = new Timer();
-		timer.scheduleAtFixedRate(new TimerTaskExt(4, imgMap.get("Die").size()), 0, 300);
+		timer.scheduleAtFixedRate(new TimerTaskExt(1, imgMap.get("Die").size()), 0, 700);
+	}
+	
+	public EntityOperation getOperation() {
+		return operation;
 	}
 }
