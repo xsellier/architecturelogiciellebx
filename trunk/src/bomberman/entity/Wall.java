@@ -1,4 +1,4 @@
-package bomberman.entity.level;
+package bomberman.entity;
 
 import static bomberman.game.ConstantValues.SPRITE_SIZE_X;
 import static bomberman.game.ConstantValues.SPRITE_SIZE_Y;
