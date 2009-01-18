@@ -27,11 +27,11 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import bomberman.base.MoveStrategyKeyboardExt;
 import bomberman.entity.Bomberman;
-import bomberman.entity.Floor;
 import bomberman.entity.Wall;
 import bomberman.entity.item.BombItem;
 import bomberman.entity.item.FireItem;
 import bomberman.entity.level.BlocAround;
+import bomberman.entity.level.Floor;
 import bomberman.entity.level.SuperWall;
 import bomberman.rule.BombermanMoveBlockers;
 import bomberman.rule.BombermanOverlaps;
@@ -43,17 +43,17 @@ public class BombermanGameLevel extends GameLevelDefaultImpl implements
 	// Flames;
 	static int[][] tab = {
 			{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1 },
+			{ 1, 0, 0, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1 },
 			{ 1, 0, 2, 3, 2, 3, 0, 2, 3, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 1 },
-			{ 1, 5, 3, 3, 3, 3, 0, 3, 3, 3, 0, 3, 0, 2, 2, 0, 2, 2, 2, 1 },
-			{ 1, 4, 2, 3, 2, 3, 0, 2, 3, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 1 },
-			{ 1, 5, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-			{ 1, 4, 2, 3, 2, 3, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 1 },
+			{ 1, 3, 3, 3, 3, 3, 0, 3, 3, 3, 0, 3, 0, 2, 2, 0, 2, 2, 2, 1 },
+			{ 1, 3, 2, 3, 2, 3, 0, 2, 3, 2, 2, 2, 0, 2, 2, 0, 2, 2, 2, 1 },
+			{ 1, 3, 0, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+			{ 1, 3, 2, 3, 2, 3, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 1 },
 			{ 1, 0, 0, 3, 3, 3, 0, 2, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 1 },
 			{ 1, 0, 2, 3, 2, 3, 0, 3, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 1 },
 			{ 1, 2, 0, 3, 3, 3, 0, 2, 0, 0, 0, 0, 0, 2, 2, 0, 2, 2, 2, 1 },
 			{ 1, 2, 2, 3, 2, 3, 0, 2, 0, 0, 0, 0, 0, 2, 2, 0, 2, 2, 2, 1 },
-			{ 1, 2, 0, 3, 3, 3, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 5, 1 },
+			{ 1, 2, 0, 3, 3, 3, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 1 },
 			{ 1, 2, 2, 3, 2, 3, 0, 2, 2, 0, 2, 2, 2, 3, 3, 2, 2, 2, 0, 1 },
 			{ 1, 2, 0, 3, 3, 3, 0, 2, 2, 0, 2, 4, 4, 4, 4, 4, 4, 2, 0, 1 },
 			{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 4, 4, 4, 4, 4, 4, 2, 0, 1 },
