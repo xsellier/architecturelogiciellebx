@@ -28,11 +28,11 @@ import java.util.concurrent.locks.ReentrantLock;
 import bomberman.base.MoveStrategyKeyboardExt;
 import bomberman.entity.Bomberman;
 import bomberman.entity.Floor;
+import bomberman.entity.Wall;
 import bomberman.entity.item.BombItem;
 import bomberman.entity.item.FireItem;
 import bomberman.entity.level.BlocAround;
 import bomberman.entity.level.SuperWall;
-import bomberman.entity.level.Wall;
 import bomberman.rule.BombermanMoveBlockers;
 import bomberman.rule.BombermanOverlaps;
 

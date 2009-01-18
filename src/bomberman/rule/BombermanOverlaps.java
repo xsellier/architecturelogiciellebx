@@ -12,9 +12,9 @@ import bomberman.entity.Bomb;
 import bomberman.entity.Bomberman;
 import bomberman.entity.Fire;
 import bomberman.entity.Floor;
+import bomberman.entity.Wall;
 import bomberman.entity.item.BombItem;
 import bomberman.entity.item.FireItem;
-import bomberman.entity.level.Wall;
 
 public class BombermanOverlaps extends OverlapRuleApplierDefaultImpl {
 	protected GameUniverse universe;
